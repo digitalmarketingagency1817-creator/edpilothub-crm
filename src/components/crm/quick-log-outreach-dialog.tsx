@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod/v4";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import {
   Dialog,
@@ -56,12 +56,13 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
   const [schoolSearch, setSchoolSearch] = useState("");
   const [selectedSchool, setSelectedSchool] = useState<{ id: string; name: string } | null>(null);
 
-  const { data: schoolData } = useSuspenseQuery(
-    trpc.school.list.queryOptions({
+  const { data: schoolData } = useQuery({
+    ...trpc.school.list.queryOptions({
       limit: 10,
       search: schoolSearch || undefined,
-    })
-  );
+    }),
+    placeholderData: (prev) => prev,
+  });
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -126,9 +127,9 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                       className="border-slate-700 bg-slate-800 pl-9 text-white placeholder:text-slate-500"
                     />
                   </div>
-                  {schoolSearch && schoolData.schools.length > 0 && (
+                  {schoolSearch && (schoolData?.schools?.length ?? 0) > 0 && (
                     <div className="rounded-lg border border-slate-700 bg-slate-800">
-                      {schoolData.schools.map((school) => (
+                      {(schoolData?.schools ?? []).map((school) => (
                         <button
                           key={school.id}
                           type="button"
