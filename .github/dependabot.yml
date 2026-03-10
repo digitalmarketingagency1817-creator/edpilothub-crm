@@ -1,0 +1,46 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      next-ecosystem:
+        patterns:
+          - "next"
+          - "next-intl"
+          - "@next/*"
+      trpc:
+        patterns:
+          - "@trpc/*"
+      tanstack:
+        patterns:
+          - "@tanstack/*"
+      auth:
+        patterns:
+          - "better-auth"
+          - "@better-auth/*"
+      ai:
+        patterns:
+          - "ai"
+          - "@ai-sdk/*"
+      prisma:
+        patterns:
+          - "prisma"
+          - "@prisma/*"
+      inngest:
+        patterns:
+          - "inngest"
+          - "inngest-cli"
+      dx-tooling:
+        patterns:
+          - "prettier"
+          - "prettier-plugin-*"
+          - "eslint"
+          - "eslint-*"
+          - "@typescript-eslint/*"
+          - "husky"
+          - "lint-staged"
+          - "@commitlint/*"
+          - "cspell"
+          - "@t3-oss/*"

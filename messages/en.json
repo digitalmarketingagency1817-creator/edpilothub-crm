@@ -1,0 +1,215 @@
+{
+  "HomePage": {
+    "title": "Welcome to our app",
+    "description": "Built with Next.js, tRPC, Better Auth, Prisma, and more.",
+    "dashboardCta": "Dashboard",
+    "signInCta": "Sign in",
+    "metaTitle": "Home",
+    "metaDescription": "Built with Next.js, tRPC, Better Auth, Prisma, and more."
+  },
+  "LocaleSwitcher": {
+    "ariaLabel": "Change language",
+    "english": "English",
+    "serbian": "Srpski"
+  },
+  "Theme": {
+    "toggleAriaLabel": "Toggle theme"
+  },
+  "AuthPages": {
+    "signInTitle": "Welcome back",
+    "signInDescription": "Sign in to your account",
+    "signUpTitle": "Create an account",
+    "signUpDescription": "Enter your details to get started",
+    "resetPasswordTitle": "Reset password",
+    "resetPasswordDescription": "Enter your email to receive a password reset link.",
+    "verifyEmailTitle": "Check your email",
+    "verifyEmailDescription": "We've sent you a verification link. Please check your email to verify your account.",
+    "verifyEmailHint": "Didn't receive an email? Check your spam folder or try signing up again.",
+    "signInMetaTitle": "Sign In",
+    "signInMetaDescription": "Sign in to your account.",
+    "signUpMetaTitle": "Sign Up",
+    "signUpMetaDescription": "Create a new account.",
+    "resetPasswordMetaTitle": "Reset Password",
+    "resetPasswordMetaDescription": "Reset your account password.",
+    "verifyEmailMetaTitle": "Verify Email",
+    "verifyEmailMetaDescription": "Verify your email address."
+  },
+  "AuthForms": {
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "nameLabel": "Name",
+    "emailPlaceholder": "john@example.com",
+    "passwordPlaceholder": "••••••••",
+    "namePlaceholder": "John Doe",
+    "signInSubmitting": "Signing in...",
+    "signInSubmit": "Sign in",
+    "signInNoAccount": "Don't have an account?",
+    "signInNoAccountLink": "Sign up",
+    "forgotPassword": "Forgot password?",
+    "signUpSubmitting": "Creating account...",
+    "signUpSubmit": "Sign up",
+    "signUpHasAccount": "Already have an account?",
+    "signUpHasAccountLink": "Sign in",
+    "resetSubmitting": "Sending...",
+    "resetSubmit": "Send reset link",
+    "resetSent": "If an account exists with that email, you'll receive a reset link shortly.",
+    "backToSignIn": "Back to sign in",
+    "toastSignInSuccess": "Signed in successfully",
+    "toastSignInError": "Invalid email or password",
+    "toastSignUpSuccess": "Account created successfully",
+    "toastSignUpError": "Could not create account",
+    "toastResetSuccess": "If an account exists with that email, you will receive a reset link shortly.",
+    "toastResetError": "Could not send reset link"
+  },
+  "DashboardPage": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {name}!",
+    "metaTitle": "Dashboard",
+    "metaDescription": "Your personal dashboard."
+  },
+  "DashboardPostList": {
+    "empty": "No posts yet. Create your first post!"
+  },
+  "CreatePost": {
+    "newPost": "New Post",
+    "title": "Create Post",
+    "description": "Write a new post. It will be visible to everyone.",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Post title",
+    "contentLabel": "Content",
+    "contentPlaceholder": "Write your post content...",
+    "imageLabel": "Image (optional)",
+    "imagePreviewAlt": "Post image preview",
+    "uploadErrorFallback": "Upload failed",
+    "uploadTypeError": "Only JPEG, PNG, and WebP images are allowed",
+    "uploading": "Uploading...",
+    "dropzonePrompt": "Drag & drop or click to upload",
+    "dropzoneHint": "JPEG, PNG, or WebP",
+    "createSubmitting": "Creating...",
+    "createSubmit": "Create Post"
+  },
+  "SettingsPage": {
+    "title": "Settings",
+    "description": "Manage your account settings.",
+    "profileTitle": "Profile",
+    "profileDescription": "Your profile information.",
+    "name": "Name",
+    "email": "Email",
+    "metaTitle": "Settings",
+    "metaDescription": "Manage your account settings."
+  },
+  "Sidebar": {
+    "appName": "My App",
+    "dashboard": "Dashboard",
+    "settings": "Settings"
+  },
+  "Header": {
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "MarketingLayout": {
+    "home": "Home",
+    "pricing": "Pricing",
+    "signIn": "Sign In",
+    "rightsReserved": "© {year} MyApp. All rights reserved."
+  },
+  "PricingPage": {
+    "title": "Pricing",
+    "subtitle": "Choose the plan that works for you.",
+    "popular": "Popular",
+    "perMonth": "/month",
+    "getStarted": "Get started",
+    "contactUs": "Contact us",
+    "plans": [
+      {
+        "name": "Free",
+        "price": "$0",
+        "description": "Get started for free",
+        "customPrice": false,
+        "popular": false,
+        "features": ["Up to 3 projects", "Basic analytics", "Community support"]
+      },
+      {
+        "name": "Pro",
+        "price": "$19",
+        "description": "For growing teams",
+        "customPrice": false,
+        "popular": true,
+        "features": [
+          "Unlimited projects",
+          "Advanced analytics",
+          "Priority support",
+          "Custom domains"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "price": "Custom",
+        "description": "For large organizations",
+        "customPrice": true,
+        "popular": false,
+        "features": ["Everything in Pro", "SSO", "Dedicated support", "SLA", "Custom integrations"]
+      }
+    ],
+    "metaTitle": "Pricing",
+    "metaDescription": "Choose the plan that works for you."
+  },
+  "Errors": {
+    "tryAgain": "Try again",
+    "globalTitle": "Something went wrong",
+    "globalDescription": "An unexpected error occurred. Please try again.",
+    "authTitle": "Authentication Error",
+    "authDescription": "Something went wrong with authentication. Please try again.",
+    "dashboardTitle": "Dashboard Error",
+    "dashboardDescription": "Something went wrong loading the dashboard. Please try again.",
+    "marketingTitle": "Page Error",
+    "marketingDescription": "Something went wrong loading this page. Please try again.",
+    "queryFailed": "Failed to load",
+    "unexpected": "An unexpected error occurred."
+  },
+  "Chat": {
+    "title": "AI Chat",
+    "inputPlaceholder": "Type a message..."
+  },
+  "Upload": {
+    "uploading": "Uploading...",
+    "upload": "Upload",
+    "uploadFailed": "Upload failed"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back!",
+    "noPosts": "No posts yet. Create your first one!"
+  },
+  "Auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "Settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to home"
+  }
+}
