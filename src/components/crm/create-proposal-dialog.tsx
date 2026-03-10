@@ -57,10 +57,10 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-slate-700 bg-slate-900 text-white sm:max-w-2xl">
+      <DialogContent className="border-[#2a2a2a] bg-[#0F0F0F] text-white sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-white">Create Proposal</DialogTitle>
-          <p className="text-sm text-slate-400">{rfpTitle}</p>
+          <p className="text-sm text-[#6E6E73]">{rfpTitle}</p>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -69,9 +69,9 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-slate-300">Proposal Title</FormLabel>
+                  <FormLabel className="text-[#F2F2F2]">Proposal Title</FormLabel>
                   <FormControl>
-                    <Input {...field} className="border-slate-700 bg-slate-800 text-white" />
+                    <Input {...field} className="border-[#2a2a2a] bg-[#161617] text-white" />
                   </FormControl>
                 </FormItem>
               )}
@@ -81,14 +81,14 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
               name="content"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-slate-300">
+                  <FormLabel className="text-[#F2F2F2]">
                     Proposal Content
-                    <span className="ml-2 text-xs text-slate-500">Markdown supported</span>
+                    <span className="ml-2 text-xs text-[#6E6E73]">Markdown supported</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="min-h-64 border-slate-700 bg-slate-800 font-mono text-sm text-white"
+                      className="min-h-64 border-[#2a2a2a] bg-[#161617] font-mono text-sm text-white"
                       placeholder={`# Executive Summary\n\nWe are pleased to submit our proposal for...\n\n## Our Solution\n\n## Pricing\n\n## Timeline`}
                     />
                   </FormControl>
@@ -100,14 +100,14 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="text-slate-300 hover:text-white"
+                className="text-[#F2F2F2] hover:text-white"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="bg-blue-600 text-white hover:bg-blue-700"
+                className="bg-[#6247AA] text-white hover:bg-[#5239A1]"
               >
                 {isPending ? "Creating…" : "Create Proposal"}
               </Button>

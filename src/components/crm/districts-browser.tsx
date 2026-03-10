@@ -35,9 +35,9 @@ export function DistrictsBrowser() {
         <div>
           <h1 className="text-2xl font-bold text-white">Districts</h1>
           <div className="flex items-center gap-3">
-            <p className="text-sm text-slate-400">{total} districts</p>
+            <p className="text-sm text-[#6E6E73]">{total} districts</p>
             {isFetching && (
-              <div className="flex items-center gap-1.5 text-xs text-slate-500">
+              <div className="flex items-center gap-1.5 text-xs text-[#6E6E73]">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
                 Updating…
               </div>
@@ -47,7 +47,7 @@ export function DistrictsBrowser() {
       </div>
 
       <div className="relative max-w-sm">
-        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6E6E73]" />
         <Input
           placeholder="Search districts…"
           value={search}
@@ -55,35 +55,35 @@ export function DistrictsBrowser() {
             void setSearch(e.target.value || null);
             void setPage(1);
           }}
-          className="border-slate-700 bg-slate-800 pl-9 text-white placeholder:text-slate-500"
+          className="border-[#2a2a2a] bg-[#161617] pl-9 text-white placeholder:text-[#6E6E73]"
         />
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-slate-800">
+      <div className="overflow-hidden rounded-lg border border-[#2a2a2a]">
         <Table>
           <TableHeader>
-            <TableRow className="border-slate-800 hover:bg-transparent">
-              <TableHead className="text-slate-400">District Name</TableHead>
-              <TableHead className="text-slate-400">County</TableHead>
-              <TableHead className="text-slate-400">City</TableHead>
-              <TableHead className="text-slate-400">Schools</TableHead>
-              <TableHead className="text-slate-400">Website</TableHead>
+            <TableRow className="border-[#2a2a2a] hover:bg-transparent">
+              <TableHead className="text-[#6E6E73]">District Name</TableHead>
+              <TableHead className="text-[#6E6E73]">County</TableHead>
+              <TableHead className="text-[#6E6E73]">City</TableHead>
+              <TableHead className="text-[#6E6E73]">Schools</TableHead>
+              <TableHead className="text-[#6E6E73]">Website</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {districts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="py-12 text-center text-slate-500">
+                <TableCell colSpan={5} className="py-12 text-center text-[#6E6E73]">
                   No districts found.
                 </TableCell>
               </TableRow>
             ) : (
               districts.map((district) => (
-                <TableRow key={district.id} className="border-slate-800 hover:bg-slate-800/50">
+                <TableRow key={district.id} className="border-[#2a2a2a] hover:bg-[#161617]/50">
                   <TableCell className="font-medium text-white">{district.name}</TableCell>
-                  <TableCell className="text-slate-300">{district.county ?? "—"}</TableCell>
-                  <TableCell className="text-slate-300">{district.city ?? "—"}</TableCell>
-                  <TableCell className="text-slate-300">
+                  <TableCell className="text-[#F2F2F2]">{district.county ?? "—"}</TableCell>
+                  <TableCell className="text-[#F2F2F2]">{district.city ?? "—"}</TableCell>
+                  <TableCell className="text-[#F2F2F2]">
                     {district._count.schools.toLocaleString()}
                   </TableCell>
                   <TableCell>
@@ -92,13 +92,13 @@ export function DistrictsBrowser() {
                         href={district.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300"
+                        className="flex items-center gap-1 text-sm text-[#CABDFD] hover:text-[#CABDFD]"
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                         Visit
                       </a>
                     ) : (
-                      <span className="text-slate-600">—</span>
+                      <span className="text-[#6E6E73]">—</span>
                     )}
                   </TableCell>
                 </TableRow>
@@ -110,7 +110,7 @@ export function DistrictsBrowser() {
 
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm">
-          <span className="text-slate-400">
+          <span className="text-[#6E6E73]">
             Page {page} of {pages}
           </span>
           <div className="flex gap-2">
@@ -119,7 +119,7 @@ export function DistrictsBrowser() {
               size="sm"
               onClick={() => void setPage(page - 1)}
               disabled={page <= 1}
-              className="border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700"
+              className="border-[#2a2a2a] bg-[#161617] text-[#F2F2F2] hover:bg-[#2a2a2a]"
             >
               <ChevronLeft className="h-4 w-4" /> Prev
             </Button>
@@ -128,7 +128,7 @@ export function DistrictsBrowser() {
               size="sm"
               onClick={() => void setPage(page + 1)}
               disabled={page >= pages}
-              className="border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700"
+              className="border-[#2a2a2a] bg-[#161617] text-[#F2F2F2] hover:bg-[#2a2a2a]"
             >
               Next <ChevronRight className="h-4 w-4" />
             </Button>
