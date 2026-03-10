@@ -1,6 +1,4 @@
 import { createTRPCRouter } from "../init";
-import { postRouter } from "./post";
-import { aiRouter } from "./ai";
 import { schoolRouter } from "./school";
 import { districtRouter } from "./district";
 import { contactRouter } from "./contact";
@@ -10,8 +8,6 @@ import { outreachRouter } from "./outreach";
 import { pipelineRouter } from "./pipeline";
 
 export const appRouter = createTRPCRouter({
-  post: postRouter,
-  ai: aiRouter,
   school: schoolRouter,
   district: districtRouter,
   contact: contactRouter,
