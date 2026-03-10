@@ -48,13 +48,13 @@ export function SchoolNotes({ schoolId }: { schoolId: string }) {
           placeholder="Add an internal note… (visible to all team members)"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="min-h-[80px] resize-none border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+          className="min-h-[80px] resize-none border-[#2a2a2a] bg-[#161617] text-white placeholder:text-[#6E6E73]"
         />
         <div className="flex justify-end">
           <Button
             onClick={() => createNote({ schoolId, content })}
             disabled={!content.trim() || isCreating}
-            className="bg-blue-600 text-white hover:bg-blue-700"
+            className="bg-[#6247AA] text-white hover:bg-[#5239A1]"
             size="sm"
           >
             {isCreating ? "Saving…" : "Add Note"}
@@ -64,30 +64,30 @@ export function SchoolNotes({ schoolId }: { schoolId: string }) {
 
       {/* Notes list */}
       {isLoading ? (
-        <div className="text-sm text-slate-500">Loading notes…</div>
+        <div className="text-sm text-[#6E6E73]">Loading notes…</div>
       ) : notes.length === 0 ? (
-        <div className="flex flex-col items-center gap-2 py-8 text-slate-600">
+        <div className="flex flex-col items-center gap-2 py-8 text-[#6E6E73]">
           <StickyNote className="h-8 w-8" />
           <p className="text-sm">No internal notes yet</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">
           {notes.map((note) => (
-            <div key={note.id} className="rounded-lg border border-slate-800 bg-slate-900 p-4">
+            <div key={note.id} className="rounded-lg border border-[#2a2a2a] bg-[#0F0F0F] p-4">
               <div className="flex items-start justify-between gap-2">
-                <p className="flex-1 text-sm whitespace-pre-wrap text-slate-200">{note.content}</p>
+                <p className="flex-1 text-sm whitespace-pre-wrap text-[#F2F2F2]">{note.content}</p>
                 {(note.userId === session?.user?.id || userRole === "ADMIN") && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => deleteNote({ id: note.id })}
-                    className="h-7 w-7 shrink-0 p-0 text-slate-600 hover:text-red-400"
+                    className="h-7 w-7 shrink-0 p-0 text-[#6E6E73] hover:text-red-400"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>
                 )}
               </div>
-              <div className="mt-2 flex items-center gap-2 text-xs text-slate-500">
+              <div className="mt-2 flex items-center gap-2 text-xs text-[#6E6E73]">
                 <span>{note.user.name ?? note.user.email}</span>
                 <span>·</span>
                 <span>{new Date(note.createdAt).toLocaleString()}</span>

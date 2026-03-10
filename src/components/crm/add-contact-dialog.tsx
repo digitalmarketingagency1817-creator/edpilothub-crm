@@ -63,7 +63,7 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-slate-700 bg-slate-900 text-white sm:max-w-md">
+      <DialogContent className="border-[#2a2a2a] bg-[#0F0F0F] text-white sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-white">Add Contact</DialogTitle>
         </DialogHeader>
@@ -74,11 +74,11 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-slate-300">Name *</FormLabel>
+                  <FormLabel className="text-[#F2F2F2]">Name *</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-slate-700 bg-slate-800 text-white"
+                      className="border-[#2a2a2a] bg-[#161617] text-white"
                       placeholder="Jane Smith"
                     />
                   </FormControl>
@@ -90,11 +90,11 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-slate-300">Title</FormLabel>
+                  <FormLabel className="text-[#F2F2F2]">Title</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-slate-700 bg-slate-800 text-white"
+                      className="border-[#2a2a2a] bg-[#161617] text-white"
                       placeholder="Principal"
                     />
                   </FormControl>
@@ -107,12 +107,12 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-300">Email</FormLabel>
+                    <FormLabel className="text-[#F2F2F2]">Email</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="email"
-                        className="border-slate-700 bg-slate-800 text-white"
+                        className="border-[#2a2a2a] bg-[#161617] text-white"
                         placeholder="jane@school.edu"
                       />
                     </FormControl>
@@ -124,11 +124,11 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-300">Phone</FormLabel>
+                    <FormLabel className="text-[#F2F2F2]">Phone</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-slate-700 bg-slate-800 text-white"
+                        className="border-[#2a2a2a] bg-[#161617] text-white"
                         placeholder="(555) 000-0000"
                       />
                     </FormControl>
@@ -141,11 +141,11 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
               name="linkedinUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-slate-300">LinkedIn URL</FormLabel>
+                  <FormLabel className="text-[#F2F2F2]">LinkedIn URL</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-slate-700 bg-slate-800 text-white"
+                      className="border-[#2a2a2a] bg-[#161617] text-white"
                       placeholder="https://linkedin.com/in/..."
                     />
                   </FormControl>
@@ -157,11 +157,11 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-slate-300">Notes</FormLabel>
+                  <FormLabel className="text-[#F2F2F2]">Notes</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border-slate-700 bg-slate-800 text-white"
+                      className="border-[#2a2a2a] bg-[#161617] text-white"
                       placeholder="Any notes about this contact..."
                       rows={3}
                     />
@@ -174,14 +174,14 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="text-slate-300 hover:text-white"
+                className="text-[#F2F2F2] hover:text-white"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="bg-blue-600 text-white hover:bg-blue-700"
+                className="bg-[#6247AA] text-white hover:bg-[#5239A1]"
               >
                 {isPending ? "Adding…" : "Add Contact"}
               </Button>

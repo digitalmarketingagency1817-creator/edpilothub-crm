@@ -21,20 +21,20 @@ import { CreateProposalDialog } from "./create-proposal-dialog";
 import { RfpStatus } from "@/generated/prisma";
 
 const STATUS_COLORS: Record<string, string> = {
-  NEW: "bg-blue-900/50 text-blue-300",
+  NEW: "bg-blue-900/50 text-[#CABDFD]",
   REVIEWING: "bg-yellow-900/50 text-yellow-300",
   PROPOSAL_REQUESTED: "bg-orange-900/50 text-orange-300",
   PROPOSAL_DRAFTED: "bg-indigo-900/50 text-indigo-300",
   SUBMITTED: "bg-purple-900/50 text-purple-300",
   WON: "bg-green-900/50 text-green-300",
   LOST: "bg-red-900/50 text-red-300",
-  PASSED: "bg-slate-800 text-slate-400",
+  PASSED: "bg-[#161617] text-[#6E6E73]",
 };
 
 const PROPOSAL_STATUS_COLORS: Record<string, string> = {
-  DRAFT: "bg-slate-800 text-slate-300",
+  DRAFT: "bg-[#161617] text-[#F2F2F2]",
   REVIEW: "bg-yellow-900/50 text-yellow-300",
-  APPROVED: "bg-blue-900/50 text-blue-300",
+  APPROVED: "bg-blue-900/50 text-[#CABDFD]",
   SUBMITTED: "bg-green-900/50 text-green-300",
 };
 
@@ -74,7 +74,7 @@ export function RFPDetail({ id }: { id: string }) {
   return (
     <div className="flex max-w-4xl flex-col gap-6 p-6">
       <Link href={"/rfp" as Parameters<typeof Link>[0]["href"]}>
-        <Button variant="ghost" size="sm" className="gap-1.5 text-slate-400 hover:text-white">
+        <Button variant="ghost" size="sm" className="gap-1.5 text-[#6E6E73] hover:text-white">
           <ArrowLeft className="h-4 w-4" />
           RFP Radar
         </Button>
@@ -84,19 +84,19 @@ export function RFPDetail({ id }: { id: string }) {
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           <h1 className="text-2xl font-bold text-white">{rfp.title}</h1>
-          <p className="mt-1 text-slate-400">
+          <p className="mt-1 text-[#6E6E73]">
             {rfp.agencyName}
             {rfp.agencyState ? ` · ${rfp.agencyState}` : ""}
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
             {rfp.dueDate && (
-              <span className="flex items-center gap-1 text-slate-400">
+              <span className="flex items-center gap-1 text-[#6E6E73]">
                 <Calendar className="h-3.5 w-3.5" />
                 Due {new Date(rfp.dueDate).toLocaleDateString()}
               </span>
             )}
             {rfp.estimatedValue && (
-              <span className="flex items-center gap-1 text-slate-400">
+              <span className="flex items-center gap-1 text-[#6E6E73]">
                 <DollarSign className="h-3.5 w-3.5" />
                 {rfp.estimatedValue}
               </span>
@@ -106,7 +106,7 @@ export function RFPDetail({ id }: { id: string }) {
                 href={rfp.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-blue-400 hover:text-blue-300"
+                className="flex items-center gap-1 text-[#CABDFD] hover:text-[#CABDFD]"
               >
                 <ExternalLink className="h-3.5 w-3.5" />
                 Source
@@ -122,10 +122,10 @@ export function RFPDetail({ id }: { id: string }) {
             value={rfp.status}
             onValueChange={(v) => updateStatus({ id, status: v as RfpStatus })}
           >
-            <SelectTrigger className="w-44 border-slate-700 bg-slate-800 text-white">
+            <SelectTrigger className="w-44 border-[#2a2a2a] bg-[#161617] text-white">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="border-slate-700 bg-slate-800">
+            <SelectContent className="border-[#2a2a2a] bg-[#161617]">
               {[
                 "NEW",
                 "REVIEWING",
@@ -147,18 +147,18 @@ export function RFPDetail({ id }: { id: string }) {
 
       {/* Description */}
       {rfp.description && (
-        <Card className="border-slate-800 bg-slate-900">
+        <Card className="border-[#2a2a2a] bg-[#0F0F0F]">
           <CardHeader>
             <CardTitle className="text-base text-white">Description</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm whitespace-pre-wrap text-slate-300">{rfp.description}</p>
+            <p className="text-sm whitespace-pre-wrap text-[#F2F2F2]">{rfp.description}</p>
           </CardContent>
         </Card>
       )}
 
       {/* Analysis Notes */}
-      <Card className="border-slate-800 bg-slate-900">
+      <Card className="border-[#2a2a2a] bg-[#0F0F0F]">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-base text-white">Analysis Notes</CardTitle>
@@ -167,7 +167,7 @@ export function RFPDetail({ id }: { id: string }) {
                 variant="ghost"
                 size="sm"
                 onClick={startEditingNotes}
-                className="text-slate-400 hover:text-white"
+                className="text-[#6E6E73] hover:text-white"
               >
                 Edit
               </Button>
@@ -180,7 +180,7 @@ export function RFPDetail({ id }: { id: string }) {
               <Textarea
                 value={notesValue}
                 onChange={(e) => setNotesValue(e.target.value)}
-                className="min-h-32 border-slate-700 bg-slate-800 text-white"
+                className="min-h-32 border-[#2a2a2a] bg-[#161617] text-white"
                 placeholder="Add analysis notes, key requirements, win probability..."
               />
               <div className="flex gap-2">
@@ -188,7 +188,7 @@ export function RFPDetail({ id }: { id: string }) {
                   size="sm"
                   onClick={() => saveNotes({ id, analysisNotes: notesValue })}
                   disabled={savingNotes}
-                  className="bg-blue-600 text-white hover:bg-blue-700"
+                  className="bg-[#6247AA] text-white hover:bg-[#5239A1]"
                 >
                   {savingNotes ? "Saving…" : "Save"}
                 </Button>
@@ -196,14 +196,14 @@ export function RFPDetail({ id }: { id: string }) {
                   size="sm"
                   variant="ghost"
                   onClick={() => setEditingNotes(false)}
-                  className="text-slate-400 hover:text-white"
+                  className="text-[#6E6E73] hover:text-white"
                 >
                   Cancel
                 </Button>
               </div>
             </div>
           ) : (
-            <p className="text-sm whitespace-pre-wrap text-slate-400">
+            <p className="text-sm whitespace-pre-wrap text-[#6E6E73]">
               {rfp.analysisNotes || "No analysis notes yet. Click Edit to add."}
             </p>
           )}
@@ -211,7 +211,7 @@ export function RFPDetail({ id }: { id: string }) {
       </Card>
 
       {/* Proposals */}
-      <Card className="border-slate-800 bg-slate-900">
+      <Card className="border-[#2a2a2a] bg-[#0F0F0F]">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-base text-white">
@@ -220,7 +220,7 @@ export function RFPDetail({ id }: { id: string }) {
             <Button
               size="sm"
               onClick={() => setShowCreateProposal(true)}
-              className="bg-blue-600 text-white hover:bg-blue-700"
+              className="bg-[#6247AA] text-white hover:bg-[#5239A1]"
             >
               <Plus className="mr-2 h-4 w-4" />
               Create Proposal
@@ -229,15 +229,15 @@ export function RFPDetail({ id }: { id: string }) {
         </CardHeader>
         <CardContent>
           {rfp.proposals.length === 0 ? (
-            <p className="text-sm text-slate-500">No proposals yet.</p>
+            <p className="text-sm text-[#6E6E73]">No proposals yet.</p>
           ) : (
             <div className="flex flex-col gap-3">
               {rfp.proposals.map((proposal) => (
-                <div key={proposal.id} className="rounded-lg border border-slate-800 p-4">
+                <div key={proposal.id} className="rounded-lg border border-[#2a2a2a] p-4">
                   <div className="flex items-start justify-between">
                     <div>
                       <p className="font-medium text-white">{proposal.title}</p>
-                      <p className="mt-0.5 text-xs text-slate-500">
+                      <p className="mt-0.5 text-xs text-[#6E6E73]">
                         {new Date(proposal.createdAt).toLocaleDateString()}
                       </p>
                     </div>
@@ -246,7 +246,7 @@ export function RFPDetail({ id }: { id: string }) {
                     </Badge>
                   </div>
                   {proposal.content && (
-                    <p className="mt-2 line-clamp-3 text-sm text-slate-400">{proposal.content}</p>
+                    <p className="mt-2 line-clamp-3 text-sm text-[#6E6E73]">{proposal.content}</p>
                   )}
                 </div>
               ))}

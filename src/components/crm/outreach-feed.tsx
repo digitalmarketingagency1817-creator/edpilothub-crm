@@ -29,15 +29,15 @@ const OUTCOME_LABELS: Record<string, string> = {
 };
 
 const OUTCOME_COLORS: Record<string, string> = {
-  NO_ANSWER: "text-slate-400",
-  LEFT_VOICEMAIL: "text-slate-300",
+  NO_ANSWER: "text-[#6E6E73]",
+  LEFT_VOICEMAIL: "text-[#F2F2F2]",
   SPOKE_TO_GATEKEEPER: "text-yellow-400",
-  CONNECTED: "text-blue-400",
+  CONNECTED: "text-[#CABDFD]",
   MEETING_BOOKED: "text-green-400",
   NOT_INTERESTED: "text-red-400",
   CALLBACK_SCHEDULED: "text-orange-400",
-  EMAIL_SENT: "text-slate-300",
-  EMAIL_OPENED: "text-blue-400",
+  EMAIL_SENT: "text-[#F2F2F2]",
+  EMAIL_OPENED: "text-[#CABDFD]",
   EMAIL_REPLIED: "text-green-400",
 };
 
@@ -74,9 +74,9 @@ export function OutreachFeed() {
         <div>
           <h1 className="text-2xl font-bold text-white">Outreach Log</h1>
           <div className="flex items-center gap-3">
-            <p className="text-sm text-slate-400">{total.toLocaleString()} activities recorded</p>
+            <p className="text-sm text-[#6E6E73]">{total.toLocaleString()} activities recorded</p>
             {isFetching && (
-              <div className="flex items-center gap-1.5 text-xs text-slate-500">
+              <div className="flex items-center gap-1.5 text-xs text-[#6E6E73]">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
                 Updating…
               </div>
@@ -94,10 +94,10 @@ export function OutreachFeed() {
             void setPage(1);
           }}
         >
-          <SelectTrigger className="w-44 border-slate-700 bg-slate-800 text-white">
+          <SelectTrigger className="w-44 border-[#2a2a2a] bg-[#161617] text-white">
             <SelectValue placeholder="All Types" />
           </SelectTrigger>
-          <SelectContent className="border-slate-700 bg-slate-800">
+          <SelectContent className="border-[#2a2a2a] bg-[#161617]">
             <SelectItem value="all" className="text-white">
               All Types
             </SelectItem>
@@ -120,17 +120,17 @@ export function OutreachFeed() {
       {/* Feed */}
       <div className="flex flex-col gap-2">
         {logs.length === 0 ? (
-          <div className="rounded-lg border border-slate-800 py-12 text-center text-slate-500">
+          <div className="rounded-lg border border-[#2a2a2a] py-12 text-center text-[#6E6E73]">
             No outreach logged yet.
           </div>
         ) : (
           logs.map((log) => (
             <div
               key={log.id}
-              className="flex items-start gap-4 rounded-lg border border-slate-800 bg-slate-900/50 p-4"
+              className="flex items-start gap-4 rounded-lg border border-[#2a2a2a] bg-[#0F0F0F]/50 p-4"
             >
               {/* Type icon */}
-              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-slate-800 text-slate-400">
+              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#161617] text-[#6E6E73]">
                 {TYPE_ICONS[log.type] ?? <Clock className="h-3.5 w-3.5" />}
               </div>
 
@@ -140,17 +140,17 @@ export function OutreachFeed() {
                   {/* School link */}
                   <Link
                     href={`/schools/${log.school.id}` as Parameters<typeof Link>[0]["href"]}
-                    className="font-medium text-white hover:text-blue-400"
+                    className="font-medium text-white hover:text-[#CABDFD]"
                   >
                     {log.school.name}
                   </Link>
                   {log.school.city && (
-                    <span className="text-xs text-slate-500">{log.school.city}</span>
+                    <span className="text-xs text-[#6E6E73]">{log.school.city}</span>
                   )}
-                  <span className="text-slate-600">·</span>
+                  <span className="text-[#6E6E73]">·</span>
                   {/* Outcome */}
                   <span
-                    className={`text-sm font-medium ${log.outcome != null ? (OUTCOME_COLORS[String(log.outcome)] ?? "text-slate-300") : "text-slate-300"}`}
+                    className={`text-sm font-medium ${log.outcome != null ? (OUTCOME_COLORS[String(log.outcome)] ?? "text-[#F2F2F2]") : "text-[#F2F2F2]"}`}
                   >
                     {log.outcome != null
                       ? (OUTCOME_LABELS[String(log.outcome)] ?? String(log.outcome))
@@ -158,22 +158,22 @@ export function OutreachFeed() {
                   </span>
                   {log.contact && (
                     <>
-                      <span className="text-slate-600">·</span>
-                      <span className="text-sm text-slate-400">
+                      <span className="text-[#6E6E73]">·</span>
+                      <span className="text-sm text-[#6E6E73]">
                         with {log.contact.name}
                         {log.contact.title ? ` (${log.contact.title})` : ""}
                       </span>
                     </>
                   )}
                 </div>
-                {log.subject && <p className="mt-0.5 text-sm text-slate-400">{log.subject}</p>}
+                {log.subject && <p className="mt-0.5 text-sm text-[#6E6E73]">{log.subject}</p>}
                 {log.notes && (
-                  <p className="mt-1 line-clamp-2 text-xs text-slate-500">{log.notes}</p>
+                  <p className="mt-1 line-clamp-2 text-xs text-[#6E6E73]">{log.notes}</p>
                 )}
               </div>
 
               {/* Timestamp */}
-              <div className="flex-shrink-0 text-xs text-slate-600">
+              <div className="flex-shrink-0 text-xs text-[#6E6E73]">
                 {new Date(log.createdAt).toLocaleDateString()}
               </div>
             </div>
@@ -184,7 +184,7 @@ export function OutreachFeed() {
       {/* Pagination */}
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm">
-          <span className="text-slate-400">
+          <span className="text-[#6E6E73]">
             Page {page} of {pages} ({total.toLocaleString()} total)
           </span>
           <div className="flex gap-2">
@@ -193,7 +193,7 @@ export function OutreachFeed() {
               size="sm"
               onClick={() => void setPage(page - 1)}
               disabled={page <= 1}
-              className="border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700"
+              className="border-[#2a2a2a] bg-[#161617] text-[#F2F2F2] hover:bg-[#2a2a2a]"
             >
               <ChevronLeft className="h-4 w-4" />
               Prev
@@ -203,7 +203,7 @@ export function OutreachFeed() {
               size="sm"
               onClick={() => void setPage(page + 1)}
               disabled={page >= pages}
-              className="border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700"
+              className="border-[#2a2a2a] bg-[#161617] text-[#F2F2F2] hover:bg-[#2a2a2a]"
             >
               Next
               <ChevronRight className="h-4 w-4" />

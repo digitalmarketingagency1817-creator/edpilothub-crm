@@ -6,31 +6,31 @@ export function TableSkeleton({ rows = 8 }: { rows?: number }) {
     <div className="flex flex-col gap-6 p-6">
       <div className="flex items-center justify-between">
         <div className="space-y-2">
-          <Skeleton className="h-7 w-32 bg-slate-700" />
-          <Skeleton className="h-4 w-48 bg-slate-800" />
+          <Skeleton className="h-7 w-32 bg-[#2a2a2a]" />
+          <Skeleton className="h-4 w-48 bg-[#161617]" />
         </div>
-        <Skeleton className="h-9 w-28 bg-slate-700" />
+        <Skeleton className="h-9 w-28 bg-[#2a2a2a]" />
       </div>
       <div className="flex gap-3">
-        <Skeleton className="h-10 flex-1 bg-slate-800" />
-        <Skeleton className="h-10 w-44 bg-slate-800" />
-        <Skeleton className="h-10 w-48 bg-slate-800" />
+        <Skeleton className="h-10 flex-1 bg-[#161617]" />
+        <Skeleton className="h-10 w-44 bg-[#161617]" />
+        <Skeleton className="h-10 w-48 bg-[#161617]" />
       </div>
-      <div className="overflow-hidden rounded-lg border border-slate-800">
-        <div className="flex gap-4 border-b border-slate-800 bg-slate-900 px-4 py-3">
+      <div className="overflow-hidden rounded-lg border border-[#2a2a2a]">
+        <div className="flex gap-4 border-b border-[#2a2a2a] bg-[#0F0F0F] px-4 py-3">
           {[140, 80, 80, 60, 100, 90, 80].map((w, i) => (
-            <Skeleton key={i} className="h-4 bg-slate-700" style={{ width: w }} />
+            <Skeleton key={i} className="h-4 bg-[#2a2a2a]" style={{ width: w }} />
           ))}
         </div>
         {Array.from({ length: rows }).map((_, i) => (
-          <div key={i} className="flex items-center gap-4 border-b border-slate-800/50 px-4 py-3.5">
-            <Skeleton className="h-4 w-48 bg-slate-800" />
-            <Skeleton className="h-4 w-20 bg-slate-800" />
-            <Skeleton className="h-4 w-20 bg-slate-800" />
-            <Skeleton className="h-5 w-16 rounded-full bg-slate-800" />
-            <Skeleton className="h-4 w-24 bg-slate-800" />
-            <Skeleton className="h-5 w-20 rounded-full bg-slate-800" />
-            <Skeleton className="h-4 w-20 bg-slate-800" />
+          <div key={i} className="flex items-center gap-4 border-b border-[#2a2a2a]/50 px-4 py-3.5">
+            <Skeleton className="h-4 w-48 bg-[#161617]" />
+            <Skeleton className="h-4 w-20 bg-[#161617]" />
+            <Skeleton className="h-4 w-20 bg-[#161617]" />
+            <Skeleton className="h-5 w-16 rounded-full bg-[#161617]" />
+            <Skeleton className="h-4 w-24 bg-[#161617]" />
+            <Skeleton className="h-5 w-20 rounded-full bg-[#161617]" />
+            <Skeleton className="h-4 w-20 bg-[#161617]" />
           </div>
         ))}
       </div>
@@ -42,23 +42,23 @@ export function DetailSkeleton() {
   return (
     <div className="flex flex-col gap-6 p-6">
       <div className="flex items-center gap-3">
-        <Skeleton className="h-8 w-8 bg-slate-700" />
-        <Skeleton className="h-7 w-64 bg-slate-700" />
+        <Skeleton className="h-8 w-8 bg-[#2a2a2a]" />
+        <Skeleton className="h-7 w-64 bg-[#2a2a2a]" />
       </div>
       <div className="grid grid-cols-3 gap-4">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="space-y-2 rounded-lg border border-slate-800 p-4">
-            <Skeleton className="h-4 w-24 bg-slate-700" />
-            <Skeleton className="h-6 w-32 bg-slate-800" />
+          <div key={i} className="space-y-2 rounded-lg border border-[#2a2a2a] p-4">
+            <Skeleton className="h-4 w-24 bg-[#2a2a2a]" />
+            <Skeleton className="h-6 w-32 bg-[#161617]" />
           </div>
         ))}
       </div>
       <div className="flex gap-2">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-9 w-28 bg-slate-700" />
+          <Skeleton key={i} className="h-9 w-28 bg-[#2a2a2a]" />
         ))}
       </div>
-      <Skeleton className="h-64 w-full bg-slate-800" />
+      <Skeleton className="h-64 w-full bg-[#161617]" />
     </div>
   );
 }

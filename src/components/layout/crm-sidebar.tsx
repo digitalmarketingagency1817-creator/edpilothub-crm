@@ -11,6 +11,7 @@ import {
   Settings,
   LogOut,
   ChevronRight,
+  X,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -26,7 +27,11 @@ const navItems = [
 
 const adminItems = [{ href: "/settings", label: "Settings", icon: Settings }];
 
-export function CRMSidebar() {
+interface CRMSidebarProps {
+  onClose?: () => void;
+}
+
+export function CRMSidebar({ onClose }: CRMSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
@@ -50,24 +55,29 @@ export function CRMSidebar() {
   };
 
   return (
-    <aside className="flex h-screen w-64 flex-shrink-0 flex-col" style={{ background: "#0f172a" }}>
+    <aside className="flex h-screen w-64 flex-shrink-0 flex-col bg-[#0F0F0F]">
       {/* Logo */}
-      <div className="flex h-16 items-center border-b border-white/10 px-5">
+      <div className="flex h-16 items-center justify-between border-b border-[#2a2a2a] px-5">
         <div className="flex items-center gap-2">
-          <div
-            className="flex h-8 w-8 items-center justify-center rounded-lg"
-            style={{ background: "#3b82f6" }}
-          >
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#6247AA]">
             <School className="h-4 w-4 text-white" />
           </div>
-          <span className="text-lg font-bold text-white">EdPilotHub</span>
+          <span className="text-lg font-bold text-[#F2F2F2]">EdPilotHub</span>
         </div>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="rounded-md p-1 text-[#6E6E73] hover:bg-[#1f1f1f] hover:text-[#F2F2F2] md:hidden"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        )}
       </div>
 
       {/* Navigation */}
       <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-3">
         <div className="mb-2">
-          <p className="px-3 py-1 text-xs font-semibold tracking-wider text-slate-400 uppercase">
+          <p className="px-3 py-1 text-xs font-semibold tracking-wider text-[#6E6E73] uppercase">
             CRM
           </p>
         </div>
@@ -75,13 +85,17 @@ export function CRMSidebar() {
         {navItems.map((item) => {
           const active = pathname.startsWith(item.href);
           return (
-            <Link key={item.href} href={item.href as Parameters<typeof Link>[0]["href"]}>
+            <Link
+              key={item.href}
+              href={item.href as Parameters<typeof Link>[0]["href"]}
+              onClick={onClose}
+            >
               <div
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                   active
-                    ? "bg-blue-600/20 text-blue-400"
-                    : "text-slate-400 hover:bg-white/5 hover:text-white"
+                    ? "rounded-l-none border-l-2 border-[#6247AA] bg-[#6247AA]/20 text-[#CABDFD]"
+                    : "text-[#6E6E73] hover:bg-[#1f1f1f] hover:text-[#F2F2F2]"
                 )}
               >
                 <item.icon className="h-4 w-4 flex-shrink-0" />
@@ -95,20 +109,24 @@ export function CRMSidebar() {
         {isAdmin && (
           <>
             <div className="mt-4 mb-2">
-              <p className="px-3 py-1 text-xs font-semibold tracking-wider text-slate-400 uppercase">
+              <p className="px-3 py-1 text-xs font-semibold tracking-wider text-[#6E6E73] uppercase">
                 Admin
               </p>
             </div>
             {adminItems.map((item) => {
               const active = pathname.startsWith(item.href);
               return (
-                <Link key={item.href} href={item.href as Parameters<typeof Link>[0]["href"]}>
+                <Link
+                  key={item.href}
+                  href={item.href as Parameters<typeof Link>[0]["href"]}
+                  onClick={onClose}
+                >
                   <div
                     className={cn(
                       "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                       active
-                        ? "bg-blue-600/20 text-blue-400"
-                        : "text-slate-400 hover:bg-white/5 hover:text-white"
+                        ? "rounded-l-none border-l-2 border-[#6247AA] bg-[#6247AA]/20 text-[#CABDFD]"
+                        : "text-[#6E6E73] hover:bg-[#1f1f1f] hover:text-[#F2F2F2]"
                     )}
                   >
                     <item.icon className="h-4 w-4 flex-shrink-0" />
@@ -122,19 +140,19 @@ export function CRMSidebar() {
       </nav>
 
       {/* User footer */}
-      <div className="border-t border-white/10 p-3">
+      <div className="border-t border-[#2a2a2a] p-3">
         <div className="flex items-center gap-3 rounded-lg px-3 py-2.5">
           <Avatar className="h-8 w-8 flex-shrink-0">
             <AvatarImage src={user?.image ?? undefined} alt={user?.name ?? "User"} />
-            <AvatarFallback className="bg-blue-600 text-xs text-white">{initials}</AvatarFallback>
+            <AvatarFallback className="bg-[#6247AA] text-xs text-white">{initials}</AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-white">{user?.name ?? "Agent"}</p>
-            <p className="truncate text-xs text-slate-400">{user?.email}</p>
+            <p className="truncate text-sm font-medium text-[#F2F2F2]">{user?.name ?? "Agent"}</p>
+            <p className="truncate text-xs text-[#6E6E73]">{user?.email}</p>
           </div>
           <button
             onClick={handleSignOut}
-            className="flex-shrink-0 rounded p-1 text-slate-400 transition-colors hover:text-white"
+            className="flex-shrink-0 rounded p-1 text-[#6E6E73] transition-colors hover:text-[#F2F2F2]"
             title="Sign out"
           >
             <LogOut className="h-4 w-4" />
