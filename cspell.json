@@ -1,0 +1,47 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "trpc",
+    "tanstack",
+    "prisma",
+    "neon",
+    "inngest",
+    "shadcn",
+    "lucide",
+    "zustand",
+    "nuqs",
+    "tailwindcss",
+    "commitlint",
+    "husky",
+    "vercel",
+    "nextjs",
+    "resend",
+    "hookform",
+    "intl",
+    "superjson",
+    "cuid",
+    "signin",
+    "signup",
+    "signout",
+    "fullstack",
+    "middlewares",
+    "revalidate",
+    "dehydrate",
+    "prefetch",
+    "hydration",
+    "geist"
+  ],
+  "ignorePaths": [
+    "node_modules",
+    ".next",
+    "package-lock.json",
+    "src/generated",
+    "src/components/ui",
+    "*.min.js"
+  ],
+  "ignoreRegExpList": [
+    "/(sk|re|vercel_blob)_[a-zA-Z0-9]+/",
+    "/https?:\\/\\/[^\\s]+/"
+  ]
+}
