@@ -1,7 +1,7 @@
 "use client";
 
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import {
   Table,
@@ -14,25 +14,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import { Link } from "@/i18n/navigation";
 
 export function DistrictsBrowser() {
   const trpc = useTRPC();
   const [search, setSearch] = useQueryState("q", parseAsString.withDefault(""));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
 
-  const { data } = useSuspenseQuery(
-    trpc.district.list.queryOptions({ limit: 50, page, search: search || undefined })
-  );
+  const { data, isFetching } = useQuery({
+    ...trpc.district.list.queryOptions({ limit: 50, page, search: search || undefined }),
+    placeholderData: (prev) => prev,
+  });
 
-  const { districts, total, pages } = data;
+  const districts = data?.districts ?? [];
+  const total = data?.total ?? 0;
+  const pages = data?.pages ?? 1;
 
   return (
     <div className="flex flex-col gap-6 p-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Districts</h1>
-          <p className="text-sm text-slate-400">{total} districts</p>
+          <div className="flex items-center gap-3">
+            <p className="text-sm text-slate-400">{total} districts</p>
+            {isFetching && (
+              <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
+                Updating…
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

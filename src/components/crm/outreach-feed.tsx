@@ -1,7 +1,7 @@
 "use client";
 
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useQueryState, parseAsInteger, parseAsString } from "nuqs";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "@/i18n/navigation";
-import { Search, ChevronLeft, ChevronRight, Phone, Mail, Linkedin, Clock } from "lucide-react";
+import { ChevronLeft, ChevronRight, Phone, Mail, Linkedin, Clock } from "lucide-react";
 import { OutreachType } from "@/generated/prisma";
 
 const OUTCOME_LABELS: Record<string, string> = {
@@ -54,15 +54,18 @@ export function OutreachFeed() {
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
   const [type, setType] = useQueryState("type", parseAsString.withDefault(""));
 
-  const { data } = useSuspenseQuery(
-    trpc.outreach.listAll.queryOptions({
+  const { data, isFetching } = useQuery({
+    ...trpc.outreach.listAll.queryOptions({
       limit: 50,
       page,
       type: (type as OutreachType) || undefined,
-    })
-  );
+    }),
+    placeholderData: (prev) => prev,
+  });
 
-  const { logs, total, pages } = data;
+  const logs = data?.logs ?? [];
+  const total = data?.total ?? 0;
+  const pages = data?.pages ?? 1;
 
   return (
     <div className="flex flex-col gap-6 p-6">
@@ -70,7 +73,15 @@ export function OutreachFeed() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Outreach Log</h1>
-          <p className="text-sm text-slate-400">{total.toLocaleString()} activities recorded</p>
+          <div className="flex items-center gap-3">
+            <p className="text-sm text-slate-400">{total.toLocaleString()} activities recorded</p>
+            {isFetching && (
+              <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
+                Updating…
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

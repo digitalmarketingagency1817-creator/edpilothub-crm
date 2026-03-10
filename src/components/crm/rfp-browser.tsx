@@ -1,7 +1,7 @@
 "use client";
 
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useQueryState, parseAsInteger, parseAsString } from "nuqs";
 import {
   Table,
@@ -55,16 +55,19 @@ export function RFPBrowser() {
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
   const [status, setStatus] = useQueryState("status", parseAsString.withDefault(""));
 
-  const { data } = useSuspenseQuery(
-    trpc.rfp.list.queryOptions({
+  const { data, isFetching } = useQuery({
+    ...trpc.rfp.list.queryOptions({
       limit: 50,
       page,
       search: search || undefined,
       status: (status as RfpStatus) || undefined,
-    })
-  );
+    }),
+    placeholderData: (prev) => prev,
+  });
 
-  const { rfps, total, pages } = data;
+  const rfps = data?.rfps ?? [];
+  const total = data?.total ?? 0;
+  const pages = data?.pages ?? 1;
 
   const { mutate: updateStatus } = useMutation(
     trpc.rfp.updateStatus.mutationOptions({
@@ -82,7 +85,15 @@ export function RFPBrowser() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">RFP Radar</h1>
-          <p className="text-sm text-slate-400">{total.toLocaleString()} opportunities tracked</p>
+          <div className="flex items-center gap-3">
+            <p className="text-sm text-slate-400">{total.toLocaleString()} opportunities tracked</p>
+            {isFetching && (
+              <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
+                Updating…
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
