@@ -7,19 +7,102 @@ datasource db {
   provider = "postgresql"
 }
 
+// ===== Enums =====
+
+enum UserRole {
+  ADMIN
+  AGENT
+}
+
+enum SchoolType {
+  PUBLIC
+  PRIVATE
+  CHARTER
+}
+
+enum TechDetectionStatus {
+  PENDING
+  DETECTED
+  FAILED
+}
+
+enum RfpSource {
+  SAM_GOV
+  BIDNET
+  DEMANDSTAR
+  STATE_PORTAL
+  OTHER
+}
+
+enum RfpStatus {
+  NEW
+  REVIEWING
+  PROPOSAL_REQUESTED
+  PROPOSAL_DRAFTED
+  SUBMITTED
+  WON
+  LOST
+  PASSED
+}
+
+enum ProposalStatus {
+  DRAFT
+  REVIEW
+  APPROVED
+  SUBMITTED
+}
+
+enum OutreachType {
+  CALL
+  EMAIL
+  LINKEDIN
+  OTHER
+}
+
+enum OutreachDirection {
+  OUTBOUND
+  INBOUND
+}
+
+enum OutreachOutcome {
+  NO_ANSWER
+  LEFT_VOICEMAIL
+  SPOKE_TO_GATEKEEPER
+  CONNECTED
+  MEETING_BOOKED
+  NOT_INTERESTED
+  CALLBACK_SCHEDULED
+  EMAIL_SENT
+  EMAIL_OPENED
+  EMAIL_REPLIED
+}
+
+enum PipelineStage {
+  UNCONTACTED
+  CONTACTED
+  ENGAGED
+  DEMO_SCHEDULED
+  PROPOSAL_SENT
+  NEGOTIATING
+  CLOSED_WON
+  CLOSED_LOST
+  NOT_A_FIT
+}
+
 // ===== Better Auth tables =====
+
 model User {
   id            String    @id @default(cuid())
   name          String
   email         String    @unique
   emailVerified Boolean   @default(false)
   image         String?
+  role          UserRole  @default(AGENT)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
   sessions Session[]
   accounts Account[]
-  posts    Post[]
 }
 
 model Session {
@@ -62,17 +145,120 @@ model Verification {
   updatedAt  DateTime @updatedAt
 }
 
-// ===== App-specific tables =====
-model Post {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  imageUrl  String?
-  authorId  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// ===== CRM tables =====
 
-  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+model District {
+  id          String   @id @default(cuid())
+  name        String
+  ncesId      String?  @unique
+  city        String?
+  county      String?
+  state       String   @default("FL")
+  website     String?
+  schoolCount Int      @default(0)
+  schools     School[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 
-  @@index([authorId])
+model School {
+  id                  String              @id @default(cuid())
+  name                String
+  ncesId              String?             @unique
+  address             String?
+  city                String?
+  county              String?
+  state               String              @default("FL")
+  zipCode             String?
+  phone               String?
+  email               String?
+  website             String?
+  schoolType          SchoolType          @default(PUBLIC)
+  gradeRange          String?
+  studentCount        Int?
+  teacherCount        Int?
+  districtId          String?
+  district            District?           @relation(fields: [districtId], references: [id])
+  techStack           String?
+  techDetectedAt      DateTime?
+  techDetectionStatus TechDetectionStatus @default(PENDING)
+  contacts            Contact[]
+  outreachLogs        OutreachLog[]
+  pipelineStatus      SchoolPipelineStatus?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+}
+
+model Contact {
+  id           String        @id @default(cuid())
+  schoolId     String
+  school       School        @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  name         String
+  title        String?
+  email        String?
+  phone        String?
+  isPrimary    Boolean       @default(false)
+  linkedinUrl  String?
+  notes        String?
+  outreachLogs OutreachLog[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model RfpOpportunity {
+  id             String         @id @default(cuid())
+  title          String
+  agencyName     String
+  agencyState    String?
+  sourceUrl      String?        @unique
+  sourcePlatform RfpSource      @default(OTHER)
+  description    String?        @db.Text
+  postedDate     DateTime?
+  dueDate        DateTime?
+  estimatedValue String?
+  status         RfpStatus      @default(NEW)
+  analysisNotes  String?        @db.Text
+  proposals      Proposal[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Proposal {
+  id               String         @id @default(cuid())
+  rfpOpportunityId String
+  rfpOpportunity   RfpOpportunity @relation(fields: [rfpOpportunityId], references: [id])
+  title            String
+  content          String         @db.Text
+  status           ProposalStatus @default(DRAFT)
+  createdById      String
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+model OutreachLog {
+  id                String            @id @default(cuid())
+  schoolId          String
+  school            School            @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  contactId         String?
+  contact           Contact?          @relation(fields: [contactId], references: [id])
+  agentId           String
+  type              OutreachType
+  direction         OutreachDirection @default(OUTBOUND)
+  subject           String?
+  notes             String?           @db.Text
+  outcome           OutreachOutcome?
+  scheduledFollowUp DateTime?
+  createdAt         DateTime          @default(now())
+}
+
+model SchoolPipelineStatus {
+  id              String        @id @default(cuid())
+  schoolId        String        @unique
+  school          School        @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  agentId         String?
+  stage           PipelineStage @default(UNCONTACTED)
+  lastContactedAt DateTime?
+  nextFollowUpAt  DateTime?
+  notes           String?       @db.Text
+  updatedAt       DateTime      @updatedAt
 }
