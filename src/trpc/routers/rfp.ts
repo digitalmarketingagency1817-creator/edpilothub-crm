@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { createTRPCRouter, protectedProcedure } from "../init";
-import { RfpStatus, RfpSource } from "@/generated/prisma";
+import { RfpStatus, RfpSourcePlatform } from "@/generated/prisma";
 
 export const rfpRouter = createTRPCRouter({
   list: protectedProcedure
@@ -47,18 +47,16 @@ export const rfpRouter = createTRPCRouter({
       };
     }),
 
-  getById: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
-      return ctx.db.rfpOpportunity.findUniqueOrThrow({
-        where: { id: input.id },
-        include: {
-          proposals: {
-            orderBy: { createdAt: "desc" },
-          },
+  getById: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+    return ctx.db.rfpOpportunity.findUniqueOrThrow({
+      where: { id: input.id },
+      include: {
+        proposals: {
+          orderBy: { createdAt: "desc" },
         },
-      });
-    }),
+      },
+    });
+  }),
 
   upsert: protectedProcedure
     .input(
@@ -68,7 +66,7 @@ export const rfpRouter = createTRPCRouter({
         agencyName: z.string().min(1),
         agencyState: z.string().optional(),
         sourceUrl: z.url().optional(),
-        sourcePlatform: z.nativeEnum(RfpSource).default(RfpSource.OTHER),
+        sourcePlatform: z.nativeEnum(RfpSourcePlatform).default(RfpSourcePlatform.OTHER),
         description: z.string().optional(),
         postedDate: z.coerce.date().optional(),
         dueDate: z.coerce.date().optional(),
@@ -79,10 +77,25 @@ export const rfpRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;
+      const cleanData = {
+        title: data.title,
+        agencyName: data.agencyName,
+        agencyState: data.agencyState ?? null,
+        sourceUrl: data.sourceUrl ?? null,
+        sourcePlatform: data.sourcePlatform,
+        description: data.description ?? null,
+        postedDate: data.postedDate ?? null,
+        dueDate: data.dueDate ?? null,
+        estimatedValue: data.estimatedValue ?? null,
+        status: data.status,
+        analysisNotes: data.analysisNotes ?? null,
+      };
       if (id) {
-        return ctx.db.rfpOpportunity.update({ where: { id }, data });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return ctx.db.rfpOpportunity.update({ where: { id }, data: cleanData as any });
       }
-      return ctx.db.rfpOpportunity.create({ data });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return ctx.db.rfpOpportunity.create({ data: cleanData as any });
     }),
 
   updateStatus: protectedProcedure

@@ -63,25 +63,23 @@ export const schoolRouter = createTRPCRouter({
       };
     }),
 
-  getById: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
-      return ctx.db.school.findUniqueOrThrow({
-        where: { id: input.id },
-        include: {
-          district: true,
-          contacts: { orderBy: [{ isPrimary: "desc" }, { name: "asc" }] },
-          pipelineStatus: true,
-          outreachLogs: {
-            orderBy: { createdAt: "desc" },
-            take: 50,
-            include: {
-              contact: { select: { id: true, name: true } },
-            },
+  getById: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+    return ctx.db.school.findUniqueOrThrow({
+      where: { id: input.id },
+      include: {
+        district: true,
+        contacts: { orderBy: [{ isPrimary: "desc" }, { name: "asc" }] },
+        pipelineStatus: true,
+        outreachLogs: {
+          orderBy: { createdAt: "desc" },
+          take: 50,
+          include: {
+            contact: { select: { id: true, name: true } },
           },
         },
-      });
-    }),
+      },
+    });
+  }),
 
   create: protectedProcedure
     .input(
@@ -104,7 +102,8 @@ export const schoolRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.school.create({ data: input });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return ctx.db.school.create({ data: input as any });
     }),
 
   updateTechStack: protectedProcedure

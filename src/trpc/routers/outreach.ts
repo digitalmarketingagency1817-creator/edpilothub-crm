@@ -9,10 +9,10 @@ export const outreachRouter = createTRPCRouter({
         schoolId: z.string(),
         contactId: z.string().optional(),
         type: z.nativeEnum(OutreachType),
-        direction: z.nativeEnum(OutreachDirection).default(OutreachDirection.OUTBOUND),
+        direction: z.nativeEnum(OutreachDirection),
         subject: z.string().optional(),
         notes: z.string().optional(),
-        outcome: z.nativeEnum(OutreachOutcome).optional(),
+        outcome: z.nativeEnum(OutreachOutcome),
         scheduledFollowUp: z.coerce.date().optional(),
       })
     )
