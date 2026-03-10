@@ -4,5 +4,11 @@ export type {
   Session,
   Account,
   Verification,
-  Post,
+  School,
+  District,
+  Contact,
+  RfpOpportunity,
+  Proposal,
+  OutreachLog,
+  SchoolPipelineStatus,
 } from "@/generated/prisma";
