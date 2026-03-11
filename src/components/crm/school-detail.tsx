@@ -3,14 +3,9 @@
 import type { Prisma } from "@/generated/prisma";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod/v4";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -37,6 +32,7 @@ import {
 import { PipelineStage } from "@/generated/prisma";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useMemo } from "react";
 import { LogOutreachDialog } from "./log-outreach-dialog";
 import { AddContactDialog } from "./add-contact-dialog";
 
@@ -78,15 +74,6 @@ const OUTREACH_OUTCOME_LABELS: Record<string, string> = {
   EMAIL_REPLIED: "Email Replied",
 };
 
-const pipelineSchema = z.object({
-  stage: z.nativeEnum(PipelineStage),
-  notes: z.string().optional(),
-  nextFollowUpAt: z.string().optional(),
-  lastContactedAt: z.string().optional(),
-});
-
-type PipelineFormData = z.infer<typeof pipelineSchema>;
-
 interface SchoolDetailProps {
   id: string;
 }
@@ -103,30 +90,24 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
   const [showLogOutreach, setShowLogOutreach] = useState(false);
   const [isEditingWebsite, setIsEditingWebsite] = useState(false);
   const [websiteValue, setWebsiteValue] = useState(school.website ?? "");
+  const [currentStage, setCurrentStage] = useState<PipelineStage>(
+    school.pipelineStatus?.stage ?? PipelineStage.UNCONTACTED
+  );
 
-  const pipelineForm = useForm<PipelineFormData>({
-    resolver: zodResolver(pipelineSchema),
-    defaultValues: {
-      stage: school.pipelineStatus?.stage ?? PipelineStage.UNCONTACTED,
-      notes: school.pipelineStatus?.notes ?? "",
-      nextFollowUpAt: school.pipelineStatus?.nextFollowUpAt
-        ? new Date(school.pipelineStatus.nextFollowUpAt).toISOString().split("T")[0]
-        : "",
-      lastContactedAt: school.pipelineStatus?.lastContactedAt
-        ? new Date(school.pipelineStatus.lastContactedAt).toISOString().split("T")[0]
-        : "",
-    },
-  });
-
-  const { mutate: savePipeline, isPending: isPipelinePending } = useMutation(
+  const { mutate: savePipeline } = useMutation(
     trpc.pipeline.upsert.mutationOptions({
       onSuccess: () => {
-        toast.success("Pipeline updated");
+        toast.success("Stage updated");
         void queryClient.invalidateQueries({ queryKey: trpc.school.getById.queryKey({ id }) });
       },
       onError: (err) => toast.error(err.message),
     })
   );
+
+  const handleStageChange = (stage: PipelineStage) => {
+    setCurrentStage(stage);
+    savePipeline({ schoolId: id, stage });
+  };
 
   const { mutate: updateSchool, isPending: isUpdatingWebsite } = useMutation(
     trpc.school.update.mutationOptions({
@@ -149,23 +130,13 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
     setIsEditingWebsite(false);
   };
 
-  const onPipelineSubmit = (data: PipelineFormData) => {
-    savePipeline({
-      schoolId: id,
-      stage: data.stage,
-      notes: data.notes,
-      nextFollowUpAt: data.nextFollowUpAt ? new Date(data.nextFollowUpAt) : undefined,
-      lastContactedAt: data.lastContactedAt ? new Date(data.lastContactedAt) : undefined,
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F3F4F6]">
       {/* Sticky header */}
       <div className="sticky top-0 z-10 border-b border-[#E4E4E7] bg-white/95 px-4 py-3 backdrop-blur-sm md:px-6">
         <div className="flex items-center gap-3">
           <Link href="/schools">
-            <button className="rounded-md p-1.5 text-[#374151] hover:bg-white hover:text-[#09090B]">
+            <button className="rounded-md p-1.5 text-[#374151] hover:bg-[#F3F4F6] hover:text-[#09090B]">
               <ArrowLeft className="h-4 w-4" />
             </button>
           </Link>
@@ -176,6 +147,19 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
               {school.county ? `, ${school.county}` : ""} · {school.schoolType}
             </p>
           </div>
+          {/* Inline stage selector */}
+          <Select value={currentStage} onValueChange={(v) => handleStageChange(v as PipelineStage)}>
+            <SelectTrigger className="h-8 w-40 border-[#E4E4E7] bg-white text-xs text-[#09090B]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="border-[#E4E4E7] bg-white">
+              {PIPELINE_STAGES.map((s) => (
+                <SelectItem key={s.value} value={s.value} className="text-sm text-[#09090B]">
+                  {s.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <button
             onClick={() => setShowQuickLog(true)}
             className="rounded-md bg-[#435EBD] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#3B52A8]"
@@ -185,9 +169,9 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
         </div>
       </div>
 
-      <div className="space-y-0 px-4 py-6 md:px-6">
+      <div className="space-y-4 px-4 py-6 md:px-6">
         {/* Section: School Info */}
-        <section className="pb-6">
+        <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
           <h2 className="mb-4 text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
             School Info
           </h2>
@@ -344,106 +328,8 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             )}
           </div>
         </section>
-        <div className="border-t border-[#E4E4E7]" />
-
-        {/* Section: Pipeline */}
-        <section className="py-6">
-          <h2 className="mb-4 text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
-            Pipeline
-          </h2>
-          <Form {...pipelineForm}>
-            <form
-              onSubmit={pipelineForm.handleSubmit(onPipelineSubmit)}
-              className="max-w-lg space-y-4"
-            >
-              <FormField
-                control={pipelineForm.control}
-                name="stage"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-[#374151]">Stage</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="border-[#E4E4E7] bg-white text-[#09090B]">
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="border-[#E4E4E7] bg-white">
-                        {PIPELINE_STAGES.map((s) => (
-                          <SelectItem key={s.value} value={s.value} className="text-[#09090B]">
-                            {s.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormItem>
-                )}
-              />
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={pipelineForm.control}
-                  name="lastContactedAt"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#374151]">Last Contacted</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="date"
-                          className="border-[#E4E4E7] bg-white text-[#09090B]"
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={pipelineForm.control}
-                  name="nextFollowUpAt"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#374151]">Next Follow-up</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="date"
-                          className="border-[#E4E4E7] bg-white text-[#09090B]"
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                control={pipelineForm.control}
-                name="notes"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-[#374151]">Notes</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        {...field}
-                        className="border-[#E4E4E7] bg-white text-[#09090B] placeholder:text-[#374151]"
-                        rows={3}
-                        placeholder="Pipeline notes..."
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button
-                type="submit"
-                disabled={isPipelinePending}
-                className="bg-[#435EBD] text-white hover:bg-[#3B52A8]"
-              >
-                {isPipelinePending ? "Saving…" : "Save Pipeline"}
-              </Button>
-            </form>
-          </Form>
-        </section>
-        <div className="border-t border-[#E4E4E7]" />
-
         {/* Section: Contacts */}
-        <section className="py-6">
+        <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
               Contacts
@@ -490,10 +376,8 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             </div>
           )}
         </section>
-        <div className="border-t border-[#E4E4E7]" />
-
         {/* Section: Outreach History */}
-        <section className="py-6">
+        <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
               Outreach History
