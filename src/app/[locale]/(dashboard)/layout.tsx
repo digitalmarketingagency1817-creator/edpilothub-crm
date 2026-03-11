@@ -8,11 +8,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-[#0F0F0F] text-[#F2F2F2]">
+    <div className="flex h-screen bg-[#FAFAFA] text-[#09090B]">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-20 bg-black/60 md:hidden"
+          className="fixed inset-0 z-20 bg-black/30 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -28,16 +28,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         {/* Mobile header */}
-        <div className="flex h-14 shrink-0 items-center border-b border-[#2a2a2a] px-4 md:hidden">
+        <div className="flex h-14 shrink-0 items-center border-b border-[#E4E4E7] bg-white px-4 md:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="rounded-md p-2 text-[#6E6E73] hover:bg-[#1f1f1f] hover:text-[#F2F2F2]"
+            className="rounded-md p-2 text-[#71717A] hover:bg-[#F4F4F5] hover:text-[#09090B]"
           >
             <Menu className="h-5 w-5" />
           </button>
-          <span className="ml-3 text-sm font-semibold text-[#F2F2F2]">EdPilotHub</span>
+          <span className="ml-3 text-sm font-bold text-[#09090B]">EdPilotHub CRM</span>
         </div>
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 overflow-y-auto bg-[#FAFAFA]">{children}</main>
       </div>
     </div>
   );
