@@ -6,10 +6,10 @@ export function TableSkeleton({ rows = 8 }: { rows?: number }) {
     <div className="flex flex-col gap-6 p-6">
       <div className="flex items-center justify-between">
         <div className="space-y-2">
-          <Skeleton className="h-7 w-32 bg-[#F4F4F5]" />
+          <Skeleton className="h-7 w-32 bg-gray-100" />
           <Skeleton className="h-4 w-48 bg-[#FAFAFA]" />
         </div>
-        <Skeleton className="h-9 w-28 bg-[#F4F4F5]" />
+        <Skeleton className="h-9 w-28 bg-gray-100" />
       </div>
       <div className="flex gap-3">
         <Skeleton className="h-10 flex-1 bg-[#FAFAFA]" />
@@ -19,7 +19,7 @@ export function TableSkeleton({ rows = 8 }: { rows?: number }) {
       <div className="overflow-hidden rounded-lg border border-[#E4E4E7]">
         <div className="flex gap-4 border-b border-[#E4E4E7] bg-white px-4 py-3">
           {[140, 80, 80, 60, 100, 90, 80].map((w, i) => (
-            <Skeleton key={i} className="h-4 bg-[#F4F4F5]" style={{ width: w }} />
+            <Skeleton key={i} className="h-4 bg-gray-100" style={{ width: w }} />
           ))}
         </div>
         {Array.from({ length: rows }).map((_, i) => (
@@ -42,20 +42,20 @@ export function DetailSkeleton() {
   return (
     <div className="flex flex-col gap-6 p-6">
       <div className="flex items-center gap-3">
-        <Skeleton className="h-8 w-8 bg-[#F4F4F5]" />
-        <Skeleton className="h-7 w-64 bg-[#F4F4F5]" />
+        <Skeleton className="h-8 w-8 bg-gray-100" />
+        <Skeleton className="h-7 w-64 bg-gray-100" />
       </div>
       <div className="grid grid-cols-3 gap-4">
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="space-y-2 rounded-lg border border-[#E4E4E7] p-4">
-            <Skeleton className="h-4 w-24 bg-[#F4F4F5]" />
+            <Skeleton className="h-4 w-24 bg-gray-100" />
             <Skeleton className="h-6 w-32 bg-[#FAFAFA]" />
           </div>
         ))}
       </div>
       <div className="flex gap-2">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-9 w-28 bg-[#F4F4F5]" />
+          <Skeleton key={i} className="h-9 w-28 bg-gray-100" />
         ))}
       </div>
       <Skeleton className="h-64 w-full bg-[#FAFAFA]" />
