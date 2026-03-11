@@ -13,10 +13,11 @@ export const schoolRouter = createTRPCRouter({
         pipelineStage: z.nativeEnum(PipelineStage).optional(),
         techDetected: z.boolean().optional(),
         county: z.string().optional(),
+        state: z.string().optional(),
       })
     )
     .query(async ({ ctx, input }) => {
-      const { limit, page, search, schoolType, pipelineStage, techDetected, county } = input;
+      const { limit, page, search, schoolType, pipelineStage, techDetected, county, state } = input;
       const skip = (page - 1) * limit;
 
       const where = {
@@ -29,6 +30,7 @@ export const schoolRouter = createTRPCRouter({
         }),
         ...(schoolType && { schoolType }),
         ...(county && { county: { contains: county, mode: "insensitive" as const } }),
+        ...(state && { state: { equals: state, mode: "insensitive" as const } }),
         ...(techDetected !== undefined && {
           techDetectionStatus: techDetected
             ? TechDetectionStatus.DETECTED
