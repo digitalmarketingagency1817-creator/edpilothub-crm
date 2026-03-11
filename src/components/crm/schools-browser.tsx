@@ -41,15 +41,15 @@ const PIPELINE_STAGE_LABELS: Record<string, string> = {
 };
 
 const PIPELINE_STAGE_COLORS: Record<string, string> = {
-  UNCONTACTED: "bg-white text-[#09090B]",
-  CONTACTED: "bg-blue-900 text-[#435EBD]",
-  ENGAGED: "bg-indigo-900 text-indigo-300",
-  DEMO_SCHEDULED: "bg-purple-900 text-purple-300",
-  PROPOSAL_SENT: "bg-yellow-900 text-yellow-300",
-  NEGOTIATING: "bg-orange-900 text-orange-300",
-  CLOSED_WON: "bg-green-900 text-green-300",
-  CLOSED_LOST: "bg-red-900 text-red-300",
-  NOT_A_FIT: "bg-white text-[#374151]",
+  UNCONTACTED: "bg-gray-100 text-gray-600 border border-gray-200",
+  CONTACTED: "bg-blue-50 text-blue-700 border border-blue-200",
+  ENGAGED: "bg-indigo-50 text-indigo-700 border border-indigo-200",
+  DEMO_SCHEDULED: "bg-purple-50 text-purple-700 border border-purple-200",
+  PROPOSAL_SENT: "bg-yellow-50 text-yellow-700 border border-yellow-200",
+  NEGOTIATING: "bg-orange-50 text-orange-700 border border-orange-200",
+  CLOSED_WON: "bg-green-50 text-green-700 border border-green-200",
+  CLOSED_LOST: "bg-red-50 text-red-700 border border-red-200",
+  NOT_A_FIT: "bg-gray-100 text-gray-500 border border-gray-200",
 };
 
 export function SchoolsBrowser() {
@@ -79,7 +79,7 @@ export function SchoolsBrowser() {
   const pages = data?.pages ?? 1;
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="flex min-h-screen flex-col gap-6 bg-[#F3F4F6] p-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -170,7 +170,7 @@ export function SchoolsBrowser() {
       </div>
 
       {/* Table */}
-      <div className="overflow-hidden rounded-lg border border-[#E4E4E7]">
+      <div className="overflow-hidden rounded-xl border border-[#E4E4E7] bg-white shadow-sm">
         <Table>
           <TableHeader>
             <TableRow className="border-[#E4E4E7] hover:bg-transparent">
