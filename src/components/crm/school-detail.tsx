@@ -144,7 +144,8 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             <h1 className="truncate text-lg font-semibold text-[#09090B]">{school.name}</h1>
             <p className="text-xs text-[#374151]">
               {school.city}
-              {school.county ? `, ${school.county}` : ""} · {school.schoolType}
+              {school.county ? `, ${school.county}` : ""} ·{" "}
+              {(school as unknown as { state: string }).state ?? "FL"} · {school.schoolType}
             </p>
           </div>
           {/* Inline stage selector */}

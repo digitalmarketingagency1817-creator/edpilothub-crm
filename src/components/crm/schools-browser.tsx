@@ -62,6 +62,7 @@ export function SchoolsBrowser() {
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
   const [schoolType, setSchoolType] = useQueryState("type", parseAsString.withDefault(""));
   const [pipelineStage, setPipelineStage] = useQueryState("stage", parseAsString.withDefault(""));
+  const [stateFilter, setStateFilter] = useQueryState("state", parseAsString.withDefault(""));
 
   const { data, isFetching } = useQuery({
     ...trpc.school.list.queryOptions({
@@ -70,6 +71,7 @@ export function SchoolsBrowser() {
       search: search || undefined,
       schoolType: (schoolType as SchoolType) || undefined,
       pipelineStage: (pipelineStage as PipelineStage) || undefined,
+      state: stateFilter || undefined,
     }),
     placeholderData: (prev) => prev,
   });
@@ -167,6 +169,54 @@ export function SchoolsBrowser() {
             ))}
           </SelectContent>
         </Select>
+
+        {/* State filter */}
+        <Select
+          value={stateFilter || "all"}
+          onValueChange={(v) => {
+            void setStateFilter(v === "all" ? "" : v);
+            void setPage(1);
+          }}
+        >
+          <SelectTrigger className="w-32 border-[#E4E4E7] bg-white text-[#09090B]">
+            <SelectValue placeholder="State" />
+          </SelectTrigger>
+          <SelectContent className="border-[#E4E4E7] bg-white">
+            <SelectItem value="all" className="text-[#09090B]">
+              All States
+            </SelectItem>
+            <SelectItem value="FL" className="text-[#09090B]">
+              🌴 FL
+            </SelectItem>
+            <SelectItem value="TX" className="text-[#09090B]">
+              ⭐ TX
+            </SelectItem>
+            <SelectItem value="CA" className="text-[#09090B]">
+              🌞 CA
+            </SelectItem>
+            <SelectItem value="NY" className="text-[#09090B]">
+              🗽 NY
+            </SelectItem>
+            <SelectItem value="GA" className="text-[#09090B]">
+              🍑 GA
+            </SelectItem>
+            <SelectItem value="NC" className="text-[#09090B]">
+              NC
+            </SelectItem>
+            <SelectItem value="OH" className="text-[#09090B]">
+              OH
+            </SelectItem>
+            <SelectItem value="PA" className="text-[#09090B]">
+              PA
+            </SelectItem>
+            <SelectItem value="IL" className="text-[#09090B]">
+              IL
+            </SelectItem>
+            <SelectItem value="AZ" className="text-[#09090B]">
+              AZ
+            </SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Table */}
@@ -177,6 +227,7 @@ export function SchoolsBrowser() {
               <TableHead className="text-[#374151]">Name</TableHead>
               <TableHead className="text-[#374151]">City</TableHead>
               <TableHead className="hidden text-[#374151] md:table-cell">County</TableHead>
+              <TableHead className="text-[#374151]">State</TableHead>
               <TableHead className="text-[#374151]">Type</TableHead>
               <TableHead className="hidden text-[#374151] lg:table-cell">Tech Stack</TableHead>
               <TableHead className="text-[#374151]">Pipeline</TableHead>
@@ -207,14 +258,19 @@ export function SchoolsBrowser() {
                     {school.county ?? "—"}
                   </TableCell>
                   <TableCell>
+                    <span className="inline-flex items-center rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">
+                      {(school as unknown as { state: string }).state ?? "FL"}
+                    </span>
+                  </TableCell>
+                  <TableCell>
                     <Badge
                       variant="outline"
                       className={
                         school.schoolType === "PUBLIC"
-                          ? "border-[#435EBD]/40 text-[#435EBD]"
+                          ? "border-[#435EBD]/40 bg-[#EEF2FF] text-[#435EBD]"
                           : school.schoolType === "PRIVATE"
-                            ? "border-purple-800 text-purple-400"
-                            : "border-green-800 text-green-400"
+                            ? "border-purple-200 bg-purple-50 text-purple-700"
+                            : "border-green-200 bg-green-50 text-green-700"
                       }
                     >
                       {school.schoolType}
