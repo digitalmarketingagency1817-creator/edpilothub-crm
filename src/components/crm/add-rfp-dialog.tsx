@@ -75,9 +75,9 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-[#E4E4E7] bg-white text-white sm:max-w-lg">
+      <DialogContent className="border-[#E4E4E7] bg-white text-[#09090B] sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-white">Add RFP Opportunity</DialogTitle>
+          <DialogTitle className="text-[#09090B]">Add RFP Opportunity</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -90,7 +90,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-[#E4E4E7] bg-white text-white"
+                      className="border-[#E4E4E7] bg-white text-[#09090B]"
                       placeholder="RFP for Learning Management System"
                     />
                   </FormControl>
@@ -107,7 +107,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#E4E4E7] bg-white text-white"
+                        className="border-[#E4E4E7] bg-white text-[#09090B]"
                         placeholder="Miami-Dade County Schools"
                       />
                     </FormControl>
@@ -123,7 +123,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#E4E4E7] bg-white text-white"
+                        className="border-[#E4E4E7] bg-white text-[#09090B]"
                         placeholder="FL"
                       />
                     </FormControl>
@@ -140,24 +140,24 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                     <FormLabel className="text-[#09090B]">Source</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="border-[#E4E4E7] bg-white text-white">
+                        <SelectTrigger className="border-[#E4E4E7] bg-white text-[#09090B]">
                           <SelectValue />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="border-[#E4E4E7] bg-white">
-                        <SelectItem value="SAM_GOV" className="text-white">
+                        <SelectItem value="SAM_GOV" className="text-[#09090B]">
                           SAM.gov
                         </SelectItem>
-                        <SelectItem value="BIDNET" className="text-white">
+                        <SelectItem value="BIDNET" className="text-[#09090B]">
                           BidNet
                         </SelectItem>
-                        <SelectItem value="DEMANDSTAR" className="text-white">
+                        <SelectItem value="DEMANDSTAR" className="text-[#09090B]">
                           DemandStar
                         </SelectItem>
-                        <SelectItem value="STATE_PORTAL" className="text-white">
+                        <SelectItem value="STATE_PORTAL" className="text-[#09090B]">
                           State Portal
                         </SelectItem>
-                        <SelectItem value="OTHER" className="text-white">
+                        <SelectItem value="OTHER" className="text-[#09090B]">
                           Other
                         </SelectItem>
                       </SelectContent>
@@ -174,7 +174,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#E4E4E7] bg-white text-white"
+                        className="border-[#E4E4E7] bg-white text-[#09090B]"
                         placeholder="$50,000"
                       />
                     </FormControl>
@@ -193,7 +193,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                       <Input
                         {...field}
                         type="date"
-                        className="border-[#E4E4E7] bg-white text-white"
+                        className="border-[#E4E4E7] bg-white text-[#09090B]"
                       />
                     </FormControl>
                   </FormItem>
@@ -209,7 +209,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                       <Input
                         {...field}
                         type="date"
-                        className="border-[#E4E4E7] bg-white text-white"
+                        className="border-[#E4E4E7] bg-white text-[#09090B]"
                       />
                     </FormControl>
                   </FormItem>
@@ -225,7 +225,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-[#E4E4E7] bg-white text-white"
+                      className="border-[#E4E4E7] bg-white text-[#09090B]"
                       placeholder="https://sam.gov/opp/..."
                     />
                   </FormControl>
@@ -241,7 +241,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border-[#E4E4E7] bg-white text-white"
+                      className="border-[#E4E4E7] bg-white text-[#09090B]"
                       rows={3}
                       placeholder="Brief description of the opportunity..."
                     />
@@ -254,7 +254,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="text-[#09090B] hover:text-white"
+                className="text-[#09090B] hover:text-[#09090B]"
               >
                 Cancel
               </Button>

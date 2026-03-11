@@ -94,7 +94,7 @@ export function PipelineTab({ schoolId, pipeline }: PipelineTabProps) {
   return (
     <Card className="max-w-xl border-[#E4E4E7] bg-white">
       <CardHeader>
-        <CardTitle className="text-base text-white">Pipeline Status</CardTitle>
+        <CardTitle className="text-base text-[#09090B]">Pipeline Status</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -107,13 +107,13 @@ export function PipelineTab({ schoolId, pipeline }: PipelineTabProps) {
                   <FormLabel className="text-[#09090B]">Stage</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="border-[#E4E4E7] bg-[#F8F8F8] text-white">
+                      <SelectTrigger className="border-[#E4E4E7] bg-[#F8F8F8] text-[#09090B]">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="border-[#E4E4E7] bg-[#F8F8F8]">
                       {PIPELINE_STAGES.map((s) => (
-                        <SelectItem key={s.value} value={s.value} className="text-white">
+                        <SelectItem key={s.value} value={s.value} className="text-[#09090B]">
                           {s.label}
                         </SelectItem>
                       ))}
@@ -133,7 +133,7 @@ export function PipelineTab({ schoolId, pipeline }: PipelineTabProps) {
                       <Input
                         {...field}
                         type="date"
-                        className="border-[#E4E4E7] bg-[#F8F8F8] text-white"
+                        className="border-[#E4E4E7] bg-[#F8F8F8] text-[#09090B]"
                       />
                     </FormControl>
                   </FormItem>
@@ -149,7 +149,7 @@ export function PipelineTab({ schoolId, pipeline }: PipelineTabProps) {
                       <Input
                         {...field}
                         type="date"
-                        className="border-[#E4E4E7] bg-[#F8F8F8] text-white"
+                        className="border-[#E4E4E7] bg-[#F8F8F8] text-[#09090B]"
                       />
                     </FormControl>
                   </FormItem>
@@ -165,7 +165,7 @@ export function PipelineTab({ schoolId, pipeline }: PipelineTabProps) {
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border-[#E4E4E7] bg-[#F8F8F8] text-white"
+                      className="border-[#E4E4E7] bg-[#F8F8F8] text-[#09090B]"
                       rows={4}
                       placeholder="Pipeline notes..."
                     />
@@ -176,7 +176,7 @@ export function PipelineTab({ schoolId, pipeline }: PipelineTabProps) {
             <Button
               type="submit"
               disabled={isPending}
-              className="bg-blue-600 text-white hover:bg-blue-700"
+              className="bg-blue-600 text-[#09090B] hover:bg-blue-700"
             >
               {isPending ? "Saving…" : "Save Pipeline"}
             </Button>

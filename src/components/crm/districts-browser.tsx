@@ -33,7 +33,7 @@ export function DistrictsBrowser() {
     <div className="flex flex-col gap-6 p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Districts</h1>
+          <h1 className="text-2xl font-bold text-[#09090B]">Districts</h1>
           <div className="flex items-center gap-3">
             <p className="text-sm text-[#374151]">{total} districts</p>
             {isFetching && (
@@ -55,7 +55,7 @@ export function DistrictsBrowser() {
             void setSearch(e.target.value || null);
             void setPage(1);
           }}
-          className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#374151]"
+          className="border-[#E4E4E7] bg-white pl-9 text-[#09090B] placeholder:text-[#374151]"
         />
       </div>
 
@@ -80,7 +80,7 @@ export function DistrictsBrowser() {
             ) : (
               districts.map((district) => (
                 <TableRow key={district.id} className="border-[#E4E4E7] hover:bg-white/50">
-                  <TableCell className="font-medium text-white">{district.name}</TableCell>
+                  <TableCell className="font-medium text-[#09090B]">{district.name}</TableCell>
                   <TableCell className="text-[#09090B]">{district.county ?? "—"}</TableCell>
                   <TableCell className="text-[#09090B]">{district.city ?? "—"}</TableCell>
                   <TableCell className="text-[#09090B]">

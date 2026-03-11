@@ -84,7 +84,7 @@ export function RFPBrowser() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">RFP Radar</h1>
+          <h1 className="text-2xl font-bold text-[#09090B]">RFP Radar</h1>
           <div className="flex items-center gap-3">
             <p className="text-sm text-[#374151]">{total.toLocaleString()} opportunities tracked</p>
             {isFetching && (
@@ -108,7 +108,7 @@ export function RFPBrowser() {
               void setSearch(e.target.value || null);
               void setPage(1);
             }}
-            className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#374151]"
+            className="border-[#E4E4E7] bg-white pl-9 text-[#09090B] placeholder:text-[#374151]"
           />
         </div>
         <Select
@@ -118,15 +118,15 @@ export function RFPBrowser() {
             void setPage(1);
           }}
         >
-          <SelectTrigger className="w-52 border-[#E4E4E7] bg-white text-white">
+          <SelectTrigger className="w-52 border-[#E4E4E7] bg-white text-[#09090B]">
             <SelectValue placeholder="All Statuses" />
           </SelectTrigger>
           <SelectContent className="border-[#E4E4E7] bg-white">
-            <SelectItem value="all" className="text-white">
+            <SelectItem value="all" className="text-[#09090B]">
               All Statuses
             </SelectItem>
             {Object.entries(RFP_STATUS_LABELS).map(([value, label]) => (
-              <SelectItem key={value} value={value} className="text-white">
+              <SelectItem key={value} value={value} className="text-[#09090B]">
                 {label}
               </SelectItem>
             ))}
@@ -160,7 +160,7 @@ export function RFPBrowser() {
               rfps.map((rfp) => (
                 <TableRow key={rfp.id} className="border-[#E4E4E7] hover:bg-white/50">
                   <TableCell className="max-w-xs">
-                    <p className="truncate font-medium text-white">{rfp.title}</p>
+                    <p className="truncate font-medium text-[#09090B]">{rfp.title}</p>
                     <p className="text-xs text-[#374151]">{rfp.sourcePlatform}</p>
                   </TableCell>
                   <TableCell className="text-[#09090B]">{rfp.agencyName}</TableCell>
@@ -191,7 +191,7 @@ export function RFPBrowser() {
                       </SelectTrigger>
                       <SelectContent className="border-[#E4E4E7] bg-white">
                         {Object.entries(RFP_STATUS_LABELS).map(([value, label]) => (
-                          <SelectItem key={value} value={value} className="text-xs text-white">
+                          <SelectItem key={value} value={value} className="text-xs text-[#09090B]">
                             {label}
                           </SelectItem>
                         ))}

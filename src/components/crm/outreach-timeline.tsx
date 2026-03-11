@@ -86,7 +86,7 @@ export function OutreachTimeline({ logs }: { logs: Log[] }) {
             <div className="flex-1 rounded-lg border border-[#E4E4E7] bg-white p-4">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-medium text-white">
+                  <span className="text-sm font-medium text-[#09090B]">
                     {log.type} · {log.direction}
                   </span>
                   {log.outcome != null && (

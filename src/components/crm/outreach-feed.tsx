@@ -72,7 +72,7 @@ export function OutreachFeed() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Outreach Log</h1>
+          <h1 className="text-2xl font-bold text-[#09090B]">Outreach Log</h1>
           <div className="flex items-center gap-3">
             <p className="text-sm text-[#374151]">{total.toLocaleString()} activities recorded</p>
             {isFetching && (
@@ -94,23 +94,23 @@ export function OutreachFeed() {
             void setPage(1);
           }}
         >
-          <SelectTrigger className="w-44 border-[#E4E4E7] bg-white text-white">
+          <SelectTrigger className="w-44 border-[#E4E4E7] bg-white text-[#09090B]">
             <SelectValue placeholder="All Types" />
           </SelectTrigger>
           <SelectContent className="border-[#E4E4E7] bg-white">
-            <SelectItem value="all" className="text-white">
+            <SelectItem value="all" className="text-[#09090B]">
               All Types
             </SelectItem>
-            <SelectItem value="CALL" className="text-white">
+            <SelectItem value="CALL" className="text-[#09090B]">
               Calls
             </SelectItem>
-            <SelectItem value="EMAIL" className="text-white">
+            <SelectItem value="EMAIL" className="text-[#09090B]">
               Emails
             </SelectItem>
-            <SelectItem value="LINKEDIN" className="text-white">
+            <SelectItem value="LINKEDIN" className="text-[#09090B]">
               LinkedIn
             </SelectItem>
-            <SelectItem value="OTHER" className="text-white">
+            <SelectItem value="OTHER" className="text-[#09090B]">
               Other
             </SelectItem>
           </SelectContent>
@@ -140,7 +140,7 @@ export function OutreachFeed() {
                   {/* School link */}
                   <Link
                     href={`/schools/${log.school.id}` as Parameters<typeof Link>[0]["href"]}
-                    className="font-medium text-white hover:text-[#435EBD]"
+                    className="font-medium text-[#09090B] hover:text-[#435EBD]"
                   >
                     {log.school.name}
                   </Link>

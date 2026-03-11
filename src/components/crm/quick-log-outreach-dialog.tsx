@@ -93,9 +93,9 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-[#E4E4E7] bg-white text-white sm:max-w-md">
+      <DialogContent className="border-[#E4E4E7] bg-white text-[#09090B] sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-white">Log Outreach Activity</DialogTitle>
+          <DialogTitle className="text-[#09090B]">Log Outreach Activity</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -104,14 +104,14 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
               <FormLabel className="text-[#09090B]">School *</FormLabel>
               {selectedSchool ? (
                 <div className="flex items-center justify-between rounded-lg border border-[#E4E4E7] bg-white px-3 py-2">
-                  <span className="text-sm text-white">{selectedSchool.name}</span>
+                  <span className="text-sm text-[#09090B]">{selectedSchool.name}</span>
                   <button
                     type="button"
                     onClick={() => {
                       setSelectedSchool(null);
                       form.setValue("schoolId", "");
                     }}
-                    className="text-xs text-[#374151] hover:text-white"
+                    className="text-xs text-[#374151] hover:text-[#09090B]"
                   >
                     Change
                   </button>
@@ -124,7 +124,7 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                       value={schoolSearch}
                       onChange={(e) => setSchoolSearch(e.target.value)}
                       placeholder="Search school name..."
-                      className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#374151]"
+                      className="border-[#E4E4E7] bg-white pl-9 text-[#09090B] placeholder:text-[#374151]"
                     />
                   </div>
                   {schoolSearch && (schoolData?.schools?.length ?? 0) > 0 && (
@@ -138,7 +138,7 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                             form.setValue("schoolId", school.id);
                             setSchoolSearch("");
                           }}
-                          className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[#09090B] first:rounded-t-lg last:rounded-b-lg hover:bg-white hover:text-white"
+                          className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[#09090B] first:rounded-t-lg last:rounded-b-lg hover:bg-white hover:text-[#09090B]"
                         >
                           <span className="font-medium">{school.name}</span>
                           {school.city && <span className="text-[#374151]">{school.city}</span>}
@@ -158,21 +158,21 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                   <FormLabel className="text-[#09090B]">Type *</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className="border-[#E4E4E7] bg-white text-white">
+                      <SelectTrigger className="border-[#E4E4E7] bg-white text-[#09090B]">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="border-[#E4E4E7] bg-white">
-                      <SelectItem value="CALL" className="text-white">
+                      <SelectItem value="CALL" className="text-[#09090B]">
                         📞 Call
                       </SelectItem>
-                      <SelectItem value="EMAIL" className="text-white">
+                      <SelectItem value="EMAIL" className="text-[#09090B]">
                         📧 Email
                       </SelectItem>
-                      <SelectItem value="LINKEDIN" className="text-white">
+                      <SelectItem value="LINKEDIN" className="text-[#09090B]">
                         💼 LinkedIn
                       </SelectItem>
-                      <SelectItem value="OTHER" className="text-white">
+                      <SelectItem value="OTHER" className="text-[#09090B]">
                         Other
                       </SelectItem>
                     </SelectContent>
@@ -189,13 +189,13 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                   <FormLabel className="text-[#09090B]">Outcome</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="border-[#E4E4E7] bg-white text-white">
+                      <SelectTrigger className="border-[#E4E4E7] bg-white text-[#09090B]">
                         <SelectValue placeholder="Select outcome…" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="border-[#E4E4E7] bg-white">
                       {OUTCOMES.map((o) => (
-                        <SelectItem key={o.value} value={o.value} className="text-white">
+                        <SelectItem key={o.value} value={o.value} className="text-[#09090B]">
                           {o.label}
                         </SelectItem>
                       ))}
@@ -214,7 +214,7 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border-[#E4E4E7] bg-white text-white"
+                      className="border-[#E4E4E7] bg-white text-[#09090B]"
                       rows={3}
                       placeholder="What happened?"
                     />
@@ -233,7 +233,7 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                     <Input
                       {...field}
                       type="date"
-                      className="border-[#E4E4E7] bg-white text-white"
+                      className="border-[#E4E4E7] bg-white text-[#09090B]"
                     />
                   </FormControl>
                 </FormItem>
@@ -245,7 +245,7 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="text-[#09090B] hover:text-white"
+                className="text-[#09090B] hover:text-[#09090B]"
               >
                 Cancel
               </Button>

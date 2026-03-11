@@ -63,9 +63,9 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-[#E4E4E7] bg-white text-white sm:max-w-md">
+      <DialogContent className="border-[#E4E4E7] bg-white text-[#09090B] sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-white">Add Contact</DialogTitle>
+          <DialogTitle className="text-[#09090B]">Add Contact</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -78,7 +78,7 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-[#E4E4E7] bg-white text-white"
+                      className="border-[#E4E4E7] bg-white text-[#09090B]"
                       placeholder="Jane Smith"
                     />
                   </FormControl>
@@ -94,7 +94,7 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-[#E4E4E7] bg-white text-white"
+                      className="border-[#E4E4E7] bg-white text-[#09090B]"
                       placeholder="Principal"
                     />
                   </FormControl>
@@ -112,7 +112,7 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                       <Input
                         {...field}
                         type="email"
-                        className="border-[#E4E4E7] bg-white text-white"
+                        className="border-[#E4E4E7] bg-white text-[#09090B]"
                         placeholder="jane@school.edu"
                       />
                     </FormControl>
@@ -128,7 +128,7 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#E4E4E7] bg-white text-white"
+                        className="border-[#E4E4E7] bg-white text-[#09090B]"
                         placeholder="(555) 000-0000"
                       />
                     </FormControl>
@@ -145,7 +145,7 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-[#E4E4E7] bg-white text-white"
+                      className="border-[#E4E4E7] bg-white text-[#09090B]"
                       placeholder="https://linkedin.com/in/..."
                     />
                   </FormControl>
@@ -161,7 +161,7 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border-[#E4E4E7] bg-white text-white"
+                      className="border-[#E4E4E7] bg-white text-[#09090B]"
                       placeholder="Any notes about this contact..."
                       rows={3}
                     />
@@ -174,7 +174,7 @@ export function AddContactDialog({ schoolId, onClose }: AddContactDialogProps) {
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="text-[#09090B] hover:text-white"
+                className="text-[#09090B] hover:text-[#09090B]"
               >
                 Cancel
               </Button>

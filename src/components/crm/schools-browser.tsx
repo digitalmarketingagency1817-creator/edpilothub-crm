@@ -83,7 +83,7 @@ export function SchoolsBrowser() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Schools</h1>
+          <h1 className="text-2xl font-bold text-[#09090B]">Schools</h1>
           <div className="flex items-center gap-3">
             <p className="text-sm text-[#374151]">{total.toLocaleString()} schools in database</p>
             {isFetching && (
@@ -116,7 +116,7 @@ export function SchoolsBrowser() {
               void setSearch(e.target.value || null);
               void setPage(1);
             }}
-            className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#374151]"
+            className="border-[#E4E4E7] bg-white pl-9 text-[#09090B] placeholder:text-[#374151]"
           />
         </div>
 
@@ -127,20 +127,20 @@ export function SchoolsBrowser() {
             void setPage(1);
           }}
         >
-          <SelectTrigger className="w-44 border-[#E4E4E7] bg-white text-white">
+          <SelectTrigger className="w-44 border-[#E4E4E7] bg-white text-[#09090B]">
             <SelectValue placeholder="School Type" />
           </SelectTrigger>
           <SelectContent className="border-[#E4E4E7] bg-white">
-            <SelectItem value="all" className="text-white">
+            <SelectItem value="all" className="text-[#09090B]">
               All Types
             </SelectItem>
-            <SelectItem value="PUBLIC" className="text-white">
+            <SelectItem value="PUBLIC" className="text-[#09090B]">
               Public
             </SelectItem>
-            <SelectItem value="PRIVATE" className="text-white">
+            <SelectItem value="PRIVATE" className="text-[#09090B]">
               Private
             </SelectItem>
-            <SelectItem value="CHARTER" className="text-white">
+            <SelectItem value="CHARTER" className="text-[#09090B]">
               Charter
             </SelectItem>
           </SelectContent>
@@ -153,15 +153,15 @@ export function SchoolsBrowser() {
             void setPage(1);
           }}
         >
-          <SelectTrigger className="w-48 border-[#E4E4E7] bg-white text-white">
+          <SelectTrigger className="w-48 border-[#E4E4E7] bg-white text-[#09090B]">
             <SelectValue placeholder="Pipeline Stage" />
           </SelectTrigger>
           <SelectContent className="border-[#E4E4E7] bg-white">
-            <SelectItem value="all" className="text-white">
+            <SelectItem value="all" className="text-[#09090B]">
               All Stages
             </SelectItem>
             {Object.entries(PIPELINE_STAGE_LABELS).map(([value, label]) => (
-              <SelectItem key={value} value={value} className="text-white">
+              <SelectItem key={value} value={value} className="text-[#09090B]">
                 {label}
               </SelectItem>
             ))}
@@ -197,7 +197,7 @@ export function SchoolsBrowser() {
                   key={school.id}
                   className="cursor-pointer border-[#E4E4E7] hover:bg-white/50"
                 >
-                  <TableCell className="font-medium text-white">
+                  <TableCell className="font-medium text-[#09090B]">
                     <Link href={`/schools/${school.id}` as Parameters<typeof Link>[0]["href"]}>
                       <span className="hover:text-[#435EBD]">{school.name}</span>
                     </Link>
@@ -250,7 +250,7 @@ export function SchoolsBrowser() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-8 px-2 text-[#374151] hover:text-white"
+                        className="h-8 px-2 text-[#374151] hover:text-[#09090B]"
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                       </Button>
