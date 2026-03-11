@@ -74,7 +74,7 @@ export function RFPDetail({ id }: { id: string }) {
   return (
     <div className="flex max-w-4xl flex-col gap-6 p-6">
       <Link href={"/rfp" as Parameters<typeof Link>[0]["href"]}>
-        <Button variant="ghost" size="sm" className="gap-1.5 text-[#374151] hover:text-white">
+        <Button variant="ghost" size="sm" className="gap-1.5 text-[#374151] hover:text-[#09090B]">
           <ArrowLeft className="h-4 w-4" />
           RFP Radar
         </Button>
@@ -83,7 +83,7 @@ export function RFPDetail({ id }: { id: string }) {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-white">{rfp.title}</h1>
+          <h1 className="text-2xl font-bold text-[#09090B]">{rfp.title}</h1>
           <p className="mt-1 text-[#374151]">
             {rfp.agencyName}
             {rfp.agencyState ? ` · ${rfp.agencyState}` : ""}
@@ -122,7 +122,7 @@ export function RFPDetail({ id }: { id: string }) {
             value={rfp.status}
             onValueChange={(v) => updateStatus({ id, status: v as RfpStatus })}
           >
-            <SelectTrigger className="w-44 border-[#E4E4E7] bg-white text-white">
+            <SelectTrigger className="w-44 border-[#E4E4E7] bg-white text-[#09090B]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="border-[#E4E4E7] bg-white">
@@ -136,7 +136,7 @@ export function RFPDetail({ id }: { id: string }) {
                 "LOST",
                 "PASSED",
               ].map((s) => (
-                <SelectItem key={s} value={s} className="text-white">
+                <SelectItem key={s} value={s} className="text-[#09090B]">
                   {s.replace(/_/g, " ")}
                 </SelectItem>
               ))}
@@ -149,7 +149,7 @@ export function RFPDetail({ id }: { id: string }) {
       {rfp.description && (
         <Card className="border-[#E4E4E7] bg-white">
           <CardHeader>
-            <CardTitle className="text-base text-white">Description</CardTitle>
+            <CardTitle className="text-base text-[#09090B]">Description</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm whitespace-pre-wrap text-[#09090B]">{rfp.description}</p>
@@ -161,13 +161,13 @@ export function RFPDetail({ id }: { id: string }) {
       <Card className="border-[#E4E4E7] bg-white">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-base text-white">Analysis Notes</CardTitle>
+            <CardTitle className="text-base text-[#09090B]">Analysis Notes</CardTitle>
             {!editingNotes && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={startEditingNotes}
-                className="text-[#374151] hover:text-white"
+                className="text-[#374151] hover:text-[#09090B]"
               >
                 Edit
               </Button>
@@ -180,7 +180,7 @@ export function RFPDetail({ id }: { id: string }) {
               <Textarea
                 value={notesValue}
                 onChange={(e) => setNotesValue(e.target.value)}
-                className="min-h-32 border-[#E4E4E7] bg-white text-white"
+                className="min-h-32 border-[#E4E4E7] bg-white text-[#09090B]"
                 placeholder="Add analysis notes, key requirements, win probability..."
               />
               <div className="flex gap-2">
@@ -196,7 +196,7 @@ export function RFPDetail({ id }: { id: string }) {
                   size="sm"
                   variant="ghost"
                   onClick={() => setEditingNotes(false)}
-                  className="text-[#374151] hover:text-white"
+                  className="text-[#374151] hover:text-[#09090B]"
                 >
                   Cancel
                 </Button>
@@ -214,7 +214,7 @@ export function RFPDetail({ id }: { id: string }) {
       <Card className="border-[#E4E4E7] bg-white">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-base text-white">
+            <CardTitle className="text-base text-[#09090B]">
               Proposals ({rfp.proposals.length})
             </CardTitle>
             <Button
@@ -236,7 +236,7 @@ export function RFPDetail({ id }: { id: string }) {
                 <div key={proposal.id} className="rounded-lg border border-[#E4E4E7] p-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="font-medium text-white">{proposal.title}</p>
+                      <p className="font-medium text-[#09090B]">{proposal.title}</p>
                       <p className="mt-0.5 text-xs text-[#374151]">
                         {new Date(proposal.createdAt).toLocaleDateString()}
                       </p>

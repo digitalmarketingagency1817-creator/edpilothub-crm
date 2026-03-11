@@ -50,7 +50,7 @@ export function CRMSidebar({ onClose }: CRMSidebarProps) {
       <div className="flex h-16 items-center justify-between border-b border-[#E4E4E7] px-5">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#435EBD]">
-            <School className="h-4 w-4 text-white" />
+            <School className="h-4 w-4 text-[#09090B]" />
           </div>
           <span className="text-sm font-bold tracking-tight text-[#09090B]">EdPilotHub</span>
         </div>

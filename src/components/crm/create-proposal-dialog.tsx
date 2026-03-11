@@ -57,9 +57,9 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-[#E4E4E7] bg-white text-white sm:max-w-2xl">
+      <DialogContent className="border-[#E4E4E7] bg-white text-[#09090B] sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-white">Create Proposal</DialogTitle>
+          <DialogTitle className="text-[#09090B]">Create Proposal</DialogTitle>
           <p className="text-sm text-[#374151]">{rfpTitle}</p>
         </DialogHeader>
         <Form {...form}>
@@ -71,7 +71,7 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
                 <FormItem>
                   <FormLabel className="text-[#09090B]">Proposal Title</FormLabel>
                   <FormControl>
-                    <Input {...field} className="border-[#E4E4E7] bg-white text-white" />
+                    <Input {...field} className="border-[#E4E4E7] bg-white text-[#09090B]" />
                   </FormControl>
                 </FormItem>
               )}
@@ -88,7 +88,7 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="min-h-64 border-[#E4E4E7] bg-white font-mono text-sm text-white"
+                      className="min-h-64 border-[#E4E4E7] bg-white font-mono text-sm text-[#09090B]"
                       placeholder={`# Executive Summary\n\nWe are pleased to submit our proposal for...\n\n## Our Solution\n\n## Pricing\n\n## Timeline`}
                     />
                   </FormControl>
@@ -100,7 +100,7 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="text-[#09090B] hover:text-white"
+                className="text-[#09090B] hover:text-[#09090B]"
               >
                 Cancel
               </Button>
