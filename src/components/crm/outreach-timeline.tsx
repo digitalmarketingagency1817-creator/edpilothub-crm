@@ -11,15 +11,15 @@ const TYPE_ICONS = {
 };
 
 const TYPE_COLORS = {
-  CALL: "bg-blue-900/40 text-[#CABDFD] border-[#6247AA]/40",
+  CALL: "bg-blue-900/40 text-[#435EBD] border-[#435EBD]/40",
   EMAIL: "bg-purple-900/40 text-purple-400 border-purple-800",
   LINKEDIN: "bg-cyan-900/40 text-cyan-400 border-cyan-800",
-  OTHER: "bg-[#161617] text-[#6E6E73] border-[#2a2a2a]",
+  OTHER: "bg-[#FAFAFA] text-[#71717A] border-[#E4E4E7]",
 };
 
 const OUTCOME_COLORS: Record<string, string> = {
-  NO_ANSWER: "bg-[#161617] text-[#6E6E73]",
-  LEFT_VOICEMAIL: "bg-blue-900/50 text-[#CABDFD]",
+  NO_ANSWER: "bg-[#FAFAFA] text-[#71717A]",
+  LEFT_VOICEMAIL: "bg-blue-900/50 text-[#435EBD]",
   SPOKE_TO_GATEKEEPER: "bg-yellow-900/50 text-yellow-300",
   CONNECTED: "bg-emerald-900/50 text-emerald-300",
   MEETING_BOOKED: "bg-green-900/50 text-green-300",
@@ -58,7 +58,7 @@ interface Log {
 export function OutreachTimeline({ logs }: { logs: Log[] }) {
   if (logs.length === 0) {
     return (
-      <div className="rounded-lg border border-[#2a2a2a] p-12 text-center text-[#6E6E73]">
+      <div className="rounded-lg border border-[#E4E4E7] p-12 text-center text-[#71717A]">
         No outreach logged yet.
       </div>
     );
@@ -67,7 +67,7 @@ export function OutreachTimeline({ logs }: { logs: Log[] }) {
   return (
     <div className="relative flex flex-col gap-0">
       {/* Timeline line */}
-      <div className="absolute top-4 bottom-4 left-[22px] w-px bg-[#161617]" />
+      <div className="absolute top-4 bottom-4 left-[22px] w-px bg-[#FAFAFA]" />
 
       {logs.map((log) => {
         const Icon = TYPE_ICONS[log.type as keyof typeof TYPE_ICONS] ?? MessageSquare;
@@ -83,7 +83,7 @@ export function OutreachTimeline({ logs }: { logs: Log[] }) {
             </div>
 
             {/* Content */}
-            <div className="flex-1 rounded-lg border border-[#2a2a2a] bg-[#0F0F0F] p-4">
+            <div className="flex-1 rounded-lg border border-[#E4E4E7] bg-white p-4">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="text-sm font-medium text-white">
@@ -91,16 +91,16 @@ export function OutreachTimeline({ logs }: { logs: Log[] }) {
                   </span>
                   {log.outcome != null && (
                     <Badge
-                      className={`text-xs ${OUTCOME_COLORS[String(log.outcome)] ?? "bg-[#161617] text-[#6E6E73]"}`}
+                      className={`text-xs ${OUTCOME_COLORS[String(log.outcome)] ?? "bg-[#FAFAFA] text-[#71717A]"}`}
                     >
                       {OUTCOME_LABELS[String(log.outcome)] ?? String(log.outcome)}
                     </Badge>
                   )}
                   {log.contact && (
-                    <span className="text-xs text-[#6E6E73]">with {log.contact.name}</span>
+                    <span className="text-xs text-[#71717A]">with {log.contact.name}</span>
                   )}
                 </div>
-                <span className="text-xs text-[#6E6E73]">
+                <span className="text-xs text-[#71717A]">
                   {new Date(log.createdAt).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
@@ -111,11 +111,11 @@ export function OutreachTimeline({ logs }: { logs: Log[] }) {
                 </span>
               </div>
               {log.subject && (
-                <p className="mt-1 text-sm font-medium text-[#F2F2F2]">{log.subject}</p>
+                <p className="mt-1 text-sm font-medium text-[#09090B]">{log.subject}</p>
               )}
-              {log.notes && <p className="mt-2 text-sm text-[#6E6E73]">{log.notes}</p>}
+              {log.notes && <p className="mt-2 text-sm text-[#71717A]">{log.notes}</p>}
               {log.scheduledFollowUp && (
-                <p className="mt-2 text-xs text-[#CABDFD]">
+                <p className="mt-2 text-xs text-[#435EBD]">
                   📅 Follow-up: {new Date(log.scheduledFollowUp).toLocaleDateString()}
                 </p>
               )}

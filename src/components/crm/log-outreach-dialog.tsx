@@ -91,7 +91,7 @@ export function LogOutreachDialog({ schoolId, onClose }: LogOutreachDialogProps)
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-[#2a2a2a] bg-[#0F0F0F] text-white sm:max-w-md">
+      <DialogContent className="border-[#E4E4E7] bg-white text-white sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-white">Log Outreach</DialogTitle>
         </DialogHeader>
@@ -103,14 +103,14 @@ export function LogOutreachDialog({ schoolId, onClose }: LogOutreachDialogProps)
                 name="type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#F2F2F2]">Type *</FormLabel>
+                    <FormLabel className="text-[#09090B]">Type *</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="border-[#2a2a2a] bg-[#161617] text-white">
+                        <SelectTrigger className="border-[#E4E4E7] bg-white text-white">
                           <SelectValue />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+                      <SelectContent className="border-[#E4E4E7] bg-white">
                         <SelectItem value="CALL" className="text-white">
                           📞 Call
                         </SelectItem>
@@ -133,14 +133,14 @@ export function LogOutreachDialog({ schoolId, onClose }: LogOutreachDialogProps)
                 name="direction"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#F2F2F2]">Direction</FormLabel>
+                    <FormLabel className="text-[#09090B]">Direction</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="border-[#2a2a2a] bg-[#161617] text-white">
+                        <SelectTrigger className="border-[#E4E4E7] bg-white text-white">
                           <SelectValue />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+                      <SelectContent className="border-[#E4E4E7] bg-white">
                         <SelectItem value="OUTBOUND" className="text-white">
                           Outbound
                         </SelectItem>
@@ -158,14 +158,14 @@ export function LogOutreachDialog({ schoolId, onClose }: LogOutreachDialogProps)
               name="outcome"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Outcome</FormLabel>
+                  <FormLabel className="text-[#09090B]">Outcome</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="border-[#2a2a2a] bg-[#161617] text-white">
+                      <SelectTrigger className="border-[#E4E4E7] bg-white text-white">
                         <SelectValue placeholder="Select outcome…" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+                    <SelectContent className="border-[#E4E4E7] bg-white">
                       {OUTCOMES.map((o) => (
                         <SelectItem key={o.value} value={o.value} className="text-white">
                           {o.label}
@@ -181,11 +181,11 @@ export function LogOutreachDialog({ schoolId, onClose }: LogOutreachDialogProps)
               name="subject"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Subject</FormLabel>
+                  <FormLabel className="text-[#09090B]">Subject</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-[#2a2a2a] bg-[#161617] text-white"
+                      className="border-[#E4E4E7] bg-white text-white"
                       placeholder="Brief subject"
                     />
                   </FormControl>
@@ -197,11 +197,11 @@ export function LogOutreachDialog({ schoolId, onClose }: LogOutreachDialogProps)
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Notes</FormLabel>
+                  <FormLabel className="text-[#09090B]">Notes</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border-[#2a2a2a] bg-[#161617] text-white"
+                      className="border-[#E4E4E7] bg-white text-white"
                       rows={3}
                       placeholder="What happened?"
                     />
@@ -214,12 +214,12 @@ export function LogOutreachDialog({ schoolId, onClose }: LogOutreachDialogProps)
               name="scheduledFollowUp"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Schedule Follow-up</FormLabel>
+                  <FormLabel className="text-[#09090B]">Schedule Follow-up</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       type="date"
-                      className="border-[#2a2a2a] bg-[#161617] text-white"
+                      className="border-[#E4E4E7] bg-white text-white"
                     />
                   </FormControl>
                 </FormItem>
@@ -230,14 +230,14 @@ export function LogOutreachDialog({ schoolId, onClose }: LogOutreachDialogProps)
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="text-[#F2F2F2] hover:text-white"
+                className="text-[#09090B] hover:text-white"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="bg-[#6247AA] text-white hover:bg-[#5239A1]"
+                className="bg-[#435EBD] text-white hover:bg-[#3B52A8]"
               >
                 {isPending ? "Logging…" : "Log Outreach"}
               </Button>

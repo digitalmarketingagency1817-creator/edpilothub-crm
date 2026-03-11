@@ -41,15 +41,15 @@ const PIPELINE_STAGE_LABELS: Record<string, string> = {
 };
 
 const PIPELINE_STAGE_COLORS: Record<string, string> = {
-  UNCONTACTED: "bg-[#2a2a2a] text-[#F2F2F2]",
-  CONTACTED: "bg-blue-900 text-[#CABDFD]",
+  UNCONTACTED: "bg-white text-[#09090B]",
+  CONTACTED: "bg-blue-900 text-[#435EBD]",
   ENGAGED: "bg-indigo-900 text-indigo-300",
   DEMO_SCHEDULED: "bg-purple-900 text-purple-300",
   PROPOSAL_SENT: "bg-yellow-900 text-yellow-300",
   NEGOTIATING: "bg-orange-900 text-orange-300",
   CLOSED_WON: "bg-green-900 text-green-300",
   CLOSED_LOST: "bg-red-900 text-red-300",
-  NOT_A_FIT: "bg-[#2a2a2a] text-[#6E6E73]",
+  NOT_A_FIT: "bg-white text-[#71717A]",
 };
 
 export function SchoolsBrowser() {
@@ -85,9 +85,9 @@ export function SchoolsBrowser() {
         <div>
           <h1 className="text-2xl font-bold text-white">Schools</h1>
           <div className="flex items-center gap-3">
-            <p className="text-sm text-[#6E6E73]">{total.toLocaleString()} schools in database</p>
+            <p className="text-sm text-[#71717A]">{total.toLocaleString()} schools in database</p>
             {isFetching && (
-              <div className="flex items-center gap-1.5 text-xs text-[#6E6E73]">
+              <div className="flex items-center gap-1.5 text-xs text-[#71717A]">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
                 Updating…
               </div>
@@ -97,7 +97,7 @@ export function SchoolsBrowser() {
         {isAdmin && (
           <Button
             onClick={() => setShowAdd(true)}
-            className="bg-[#6247AA] text-white hover:bg-[#5239A1]"
+            className="bg-[#435EBD] text-white hover:bg-[#3B52A8]"
           >
             <Plus className="mr-2 h-4 w-4" />
             Add School
@@ -108,7 +108,7 @@ export function SchoolsBrowser() {
       {/* Filters */}
       <div className="flex flex-wrap gap-3">
         <div className="relative flex-1" style={{ minWidth: "260px" }}>
-          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6E6E73]" />
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#71717A]" />
           <Input
             placeholder="Search by name, city, county…"
             value={search}
@@ -116,7 +116,7 @@ export function SchoolsBrowser() {
               void setSearch(e.target.value || null);
               void setPage(1);
             }}
-            className="border-[#2a2a2a] bg-[#161617] pl-9 text-white placeholder:text-[#6E6E73]"
+            className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#71717A]"
           />
         </div>
 
@@ -127,10 +127,10 @@ export function SchoolsBrowser() {
             void setPage(1);
           }}
         >
-          <SelectTrigger className="w-44 border-[#2a2a2a] bg-[#161617] text-white">
+          <SelectTrigger className="w-44 border-[#E4E4E7] bg-white text-white">
             <SelectValue placeholder="School Type" />
           </SelectTrigger>
-          <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+          <SelectContent className="border-[#E4E4E7] bg-white">
             <SelectItem value="all" className="text-white">
               All Types
             </SelectItem>
@@ -153,10 +153,10 @@ export function SchoolsBrowser() {
             void setPage(1);
           }}
         >
-          <SelectTrigger className="w-48 border-[#2a2a2a] bg-[#161617] text-white">
+          <SelectTrigger className="w-48 border-[#E4E4E7] bg-white text-white">
             <SelectValue placeholder="Pipeline Stage" />
           </SelectTrigger>
-          <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+          <SelectContent className="border-[#E4E4E7] bg-white">
             <SelectItem value="all" className="text-white">
               All Stages
             </SelectItem>
@@ -170,24 +170,24 @@ export function SchoolsBrowser() {
       </div>
 
       {/* Table */}
-      <div className="overflow-hidden rounded-lg border border-[#2a2a2a]">
+      <div className="overflow-hidden rounded-lg border border-[#E4E4E7]">
         <Table>
           <TableHeader>
-            <TableRow className="border-[#2a2a2a] hover:bg-transparent">
-              <TableHead className="text-[#6E6E73]">Name</TableHead>
-              <TableHead className="text-[#6E6E73]">City</TableHead>
-              <TableHead className="hidden text-[#6E6E73] md:table-cell">County</TableHead>
-              <TableHead className="text-[#6E6E73]">Type</TableHead>
-              <TableHead className="hidden text-[#6E6E73] lg:table-cell">Tech Stack</TableHead>
-              <TableHead className="text-[#6E6E73]">Pipeline</TableHead>
-              <TableHead className="hidden text-[#6E6E73] lg:table-cell">Last Contact</TableHead>
-              <TableHead className="text-[#6E6E73]"></TableHead>
+            <TableRow className="border-[#E4E4E7] hover:bg-transparent">
+              <TableHead className="text-[#71717A]">Name</TableHead>
+              <TableHead className="text-[#71717A]">City</TableHead>
+              <TableHead className="hidden text-[#71717A] md:table-cell">County</TableHead>
+              <TableHead className="text-[#71717A]">Type</TableHead>
+              <TableHead className="hidden text-[#71717A] lg:table-cell">Tech Stack</TableHead>
+              <TableHead className="text-[#71717A]">Pipeline</TableHead>
+              <TableHead className="hidden text-[#71717A] lg:table-cell">Last Contact</TableHead>
+              <TableHead className="text-[#71717A]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {schools.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="py-12 text-center text-[#6E6E73]">
+                <TableCell colSpan={8} className="py-12 text-center text-[#71717A]">
                   No schools found. Try adjusting your filters.
                 </TableCell>
               </TableRow>
@@ -195,15 +195,15 @@ export function SchoolsBrowser() {
               schools.map((school) => (
                 <TableRow
                   key={school.id}
-                  className="cursor-pointer border-[#2a2a2a] hover:bg-[#161617]/50"
+                  className="cursor-pointer border-[#E4E4E7] hover:bg-white/50"
                 >
                   <TableCell className="font-medium text-white">
                     <Link href={`/schools/${school.id}` as Parameters<typeof Link>[0]["href"]}>
-                      <span className="hover:text-[#CABDFD]">{school.name}</span>
+                      <span className="hover:text-[#435EBD]">{school.name}</span>
                     </Link>
                   </TableCell>
-                  <TableCell className="text-[#F2F2F2]">{school.city ?? "—"}</TableCell>
-                  <TableCell className="hidden text-[#F2F2F2] md:table-cell">
+                  <TableCell className="text-[#09090B]">{school.city ?? "—"}</TableCell>
+                  <TableCell className="hidden text-[#09090B] md:table-cell">
                     {school.county ?? "—"}
                   </TableCell>
                   <TableCell>
@@ -211,7 +211,7 @@ export function SchoolsBrowser() {
                       variant="outline"
                       className={
                         school.schoolType === "PUBLIC"
-                          ? "border-[#6247AA]/40 text-[#CABDFD]"
+                          ? "border-[#435EBD]/40 text-[#435EBD]"
                           : school.schoolType === "PRIVATE"
                             ? "border-purple-800 text-purple-400"
                             : "border-green-800 text-green-400"
@@ -224,7 +224,7 @@ export function SchoolsBrowser() {
                     {school.techStack ? (
                       <span className="text-sm text-emerald-400">{school.techStack}</span>
                     ) : (
-                      <span className="text-sm text-[#6E6E73]">Unknown</span>
+                      <span className="text-sm text-[#71717A]">Unknown</span>
                     )}
                   </TableCell>
                   <TableCell>
@@ -237,10 +237,10 @@ export function SchoolsBrowser() {
                         {PIPELINE_STAGE_LABELS[school.pipelineStatus.stage]}
                       </span>
                     ) : (
-                      <span className="text-xs text-[#6E6E73]">—</span>
+                      <span className="text-xs text-[#71717A]">—</span>
                     )}
                   </TableCell>
-                  <TableCell className="text-sm text-[#6E6E73]">
+                  <TableCell className="text-sm text-[#71717A]">
                     {school.pipelineStatus?.lastContactedAt
                       ? new Date(school.pipelineStatus.lastContactedAt).toLocaleDateString()
                       : "—"}
@@ -250,7 +250,7 @@ export function SchoolsBrowser() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-8 px-2 text-[#6E6E73] hover:text-white"
+                        className="h-8 px-2 text-[#71717A] hover:text-white"
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                       </Button>
@@ -266,7 +266,7 @@ export function SchoolsBrowser() {
       {/* Pagination */}
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm">
-          <span className="text-[#6E6E73]">
+          <span className="text-[#71717A]">
             Page {page} of {pages} ({total.toLocaleString()} total)
           </span>
           <div className="flex gap-2">
@@ -275,7 +275,7 @@ export function SchoolsBrowser() {
               size="sm"
               onClick={() => void setPage(page - 1)}
               disabled={page <= 1}
-              className="border-[#2a2a2a] bg-[#161617] text-[#F2F2F2] hover:bg-[#2a2a2a]"
+              className="border-[#E4E4E7] bg-white text-[#09090B] hover:bg-white"
             >
               <ChevronLeft className="h-4 w-4" />
               Prev
@@ -285,7 +285,7 @@ export function SchoolsBrowser() {
               size="sm"
               onClick={() => void setPage(page + 1)}
               disabled={page >= pages}
-              className="border-[#2a2a2a] bg-[#161617] text-[#F2F2F2] hover:bg-[#2a2a2a]"
+              className="border-[#E4E4E7] bg-white text-[#09090B] hover:bg-white"
             >
               Next
               <ChevronRight className="h-4 w-4" />

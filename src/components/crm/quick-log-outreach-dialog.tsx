@@ -93,7 +93,7 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-[#2a2a2a] bg-[#0F0F0F] text-white sm:max-w-md">
+      <DialogContent className="border-[#E4E4E7] bg-white text-white sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-white">Log Outreach Activity</DialogTitle>
         </DialogHeader>
@@ -101,9 +101,9 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {/* School search */}
             <FormItem>
-              <FormLabel className="text-[#F2F2F2]">School *</FormLabel>
+              <FormLabel className="text-[#09090B]">School *</FormLabel>
               {selectedSchool ? (
-                <div className="flex items-center justify-between rounded-lg border border-[#2a2a2a] bg-[#161617] px-3 py-2">
+                <div className="flex items-center justify-between rounded-lg border border-[#E4E4E7] bg-white px-3 py-2">
                   <span className="text-sm text-white">{selectedSchool.name}</span>
                   <button
                     type="button"
@@ -111,7 +111,7 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                       setSelectedSchool(null);
                       form.setValue("schoolId", "");
                     }}
-                    className="text-xs text-[#6E6E73] hover:text-white"
+                    className="text-xs text-[#71717A] hover:text-white"
                   >
                     Change
                   </button>
@@ -119,16 +119,16 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
               ) : (
                 <div className="space-y-2">
                   <div className="relative">
-                    <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6E6E73]" />
+                    <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#71717A]" />
                     <Input
                       value={schoolSearch}
                       onChange={(e) => setSchoolSearch(e.target.value)}
                       placeholder="Search school name..."
-                      className="border-[#2a2a2a] bg-[#161617] pl-9 text-white placeholder:text-[#6E6E73]"
+                      className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#71717A]"
                     />
                   </div>
                   {schoolSearch && (schoolData?.schools?.length ?? 0) > 0 && (
-                    <div className="rounded-lg border border-[#2a2a2a] bg-[#161617]">
+                    <div className="rounded-lg border border-[#E4E4E7] bg-white">
                       {(schoolData?.schools ?? []).map((school) => (
                         <button
                           key={school.id}
@@ -138,10 +138,10 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                             form.setValue("schoolId", school.id);
                             setSchoolSearch("");
                           }}
-                          className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[#F2F2F2] first:rounded-t-lg last:rounded-b-lg hover:bg-[#2a2a2a] hover:text-white"
+                          className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[#09090B] first:rounded-t-lg last:rounded-b-lg hover:bg-white hover:text-white"
                         >
                           <span className="font-medium">{school.name}</span>
-                          {school.city && <span className="text-[#6E6E73]">{school.city}</span>}
+                          {school.city && <span className="text-[#71717A]">{school.city}</span>}
                         </button>
                       ))}
                     </div>
@@ -155,14 +155,14 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Type *</FormLabel>
+                  <FormLabel className="text-[#09090B]">Type *</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className="border-[#2a2a2a] bg-[#161617] text-white">
+                      <SelectTrigger className="border-[#E4E4E7] bg-white text-white">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+                    <SelectContent className="border-[#E4E4E7] bg-white">
                       <SelectItem value="CALL" className="text-white">
                         📞 Call
                       </SelectItem>
@@ -186,14 +186,14 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
               name="outcome"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Outcome</FormLabel>
+                  <FormLabel className="text-[#09090B]">Outcome</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="border-[#2a2a2a] bg-[#161617] text-white">
+                      <SelectTrigger className="border-[#E4E4E7] bg-white text-white">
                         <SelectValue placeholder="Select outcome…" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+                    <SelectContent className="border-[#E4E4E7] bg-white">
                       {OUTCOMES.map((o) => (
                         <SelectItem key={o.value} value={o.value} className="text-white">
                           {o.label}
@@ -210,11 +210,11 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Notes</FormLabel>
+                  <FormLabel className="text-[#09090B]">Notes</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border-[#2a2a2a] bg-[#161617] text-white"
+                      className="border-[#E4E4E7] bg-white text-white"
                       rows={3}
                       placeholder="What happened?"
                     />
@@ -228,12 +228,12 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
               name="scheduledFollowUp"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Schedule Follow-up</FormLabel>
+                  <FormLabel className="text-[#09090B]">Schedule Follow-up</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       type="date"
-                      className="border-[#2a2a2a] bg-[#161617] text-white"
+                      className="border-[#E4E4E7] bg-white text-white"
                     />
                   </FormControl>
                 </FormItem>
@@ -245,14 +245,14 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="text-[#F2F2F2] hover:text-white"
+                className="text-[#09090B] hover:text-white"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="bg-[#6247AA] text-white hover:bg-[#5239A1]"
+                className="bg-[#435EBD] text-white hover:bg-[#3B52A8]"
               >
                 {isPending ? "Logging…" : "Log Activity"}
               </Button>

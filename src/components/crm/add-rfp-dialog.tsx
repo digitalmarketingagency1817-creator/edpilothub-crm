@@ -75,7 +75,7 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="border-[#2a2a2a] bg-[#0F0F0F] text-white sm:max-w-lg">
+      <DialogContent className="border-[#E4E4E7] bg-white text-white sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="text-white">Add RFP Opportunity</DialogTitle>
         </DialogHeader>
@@ -86,11 +86,11 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Title *</FormLabel>
+                  <FormLabel className="text-[#09090B]">Title *</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-[#2a2a2a] bg-[#161617] text-white"
+                      className="border-[#E4E4E7] bg-white text-white"
                       placeholder="RFP for Learning Management System"
                     />
                   </FormControl>
@@ -103,11 +103,11 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                 name="agencyName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#F2F2F2]">Agency *</FormLabel>
+                    <FormLabel className="text-[#09090B]">Agency *</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#2a2a2a] bg-[#161617] text-white"
+                        className="border-[#E4E4E7] bg-white text-white"
                         placeholder="Miami-Dade County Schools"
                       />
                     </FormControl>
@@ -119,11 +119,11 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                 name="agencyState"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#F2F2F2]">State</FormLabel>
+                    <FormLabel className="text-[#09090B]">State</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#2a2a2a] bg-[#161617] text-white"
+                        className="border-[#E4E4E7] bg-white text-white"
                         placeholder="FL"
                       />
                     </FormControl>
@@ -137,14 +137,14 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                 name="sourcePlatform"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#F2F2F2]">Source</FormLabel>
+                    <FormLabel className="text-[#09090B]">Source</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="border-[#2a2a2a] bg-[#161617] text-white">
+                        <SelectTrigger className="border-[#E4E4E7] bg-white text-white">
                           <SelectValue />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+                      <SelectContent className="border-[#E4E4E7] bg-white">
                         <SelectItem value="SAM_GOV" className="text-white">
                           SAM.gov
                         </SelectItem>
@@ -170,11 +170,11 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                 name="estimatedValue"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#F2F2F2]">Est. Value</FormLabel>
+                    <FormLabel className="text-[#09090B]">Est. Value</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#2a2a2a] bg-[#161617] text-white"
+                        className="border-[#E4E4E7] bg-white text-white"
                         placeholder="$50,000"
                       />
                     </FormControl>
@@ -188,12 +188,12 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                 name="postedDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#F2F2F2]">Posted Date</FormLabel>
+                    <FormLabel className="text-[#09090B]">Posted Date</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="date"
-                        className="border-[#2a2a2a] bg-[#161617] text-white"
+                        className="border-[#E4E4E7] bg-white text-white"
                       />
                     </FormControl>
                   </FormItem>
@@ -204,12 +204,12 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                 name="dueDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#F2F2F2]">Due Date</FormLabel>
+                    <FormLabel className="text-[#09090B]">Due Date</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="date"
-                        className="border-[#2a2a2a] bg-[#161617] text-white"
+                        className="border-[#E4E4E7] bg-white text-white"
                       />
                     </FormControl>
                   </FormItem>
@@ -221,11 +221,11 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
               name="sourceUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Source URL</FormLabel>
+                  <FormLabel className="text-[#09090B]">Source URL</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-[#2a2a2a] bg-[#161617] text-white"
+                      className="border-[#E4E4E7] bg-white text-white"
                       placeholder="https://sam.gov/opp/..."
                     />
                   </FormControl>
@@ -237,11 +237,11 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#F2F2F2]">Description</FormLabel>
+                  <FormLabel className="text-[#09090B]">Description</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="border-[#2a2a2a] bg-[#161617] text-white"
+                      className="border-[#E4E4E7] bg-white text-white"
                       rows={3}
                       placeholder="Brief description of the opportunity..."
                     />
@@ -254,14 +254,14 @@ export function AddRFPDialog({ onClose }: { onClose: () => void }) {
                 type="button"
                 variant="ghost"
                 onClick={onClose}
-                className="text-[#F2F2F2] hover:text-white"
+                className="text-[#09090B] hover:text-white"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="bg-[#6247AA] text-white hover:bg-[#5239A1]"
+                className="bg-[#435EBD] text-white hover:bg-[#3B52A8]"
               >
                 {isPending ? "Adding…" : "Add RFP"}
               </Button>

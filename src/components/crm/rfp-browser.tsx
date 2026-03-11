@@ -37,14 +37,14 @@ const RFP_STATUS_LABELS: Record<string, string> = {
 };
 
 const RFP_STATUS_COLORS: Record<string, string> = {
-  NEW: "bg-blue-900 text-[#CABDFD] border-[#6247AA]/40",
+  NEW: "bg-blue-900 text-[#435EBD] border-[#435EBD]/40",
   REVIEWING: "bg-yellow-900 text-yellow-300 border-yellow-800",
   PROPOSAL_REQUESTED: "bg-orange-900 text-orange-300 border-orange-800",
   PROPOSAL_DRAFTED: "bg-indigo-900 text-indigo-300 border-indigo-800",
   SUBMITTED: "bg-purple-900 text-purple-300 border-purple-800",
   WON: "bg-green-900 text-green-300 border-green-800",
   LOST: "bg-red-900 text-red-300 border-red-800",
-  PASSED: "bg-[#2a2a2a] text-[#6E6E73] border-slate-600",
+  PASSED: "bg-white text-[#71717A] border-[#E4E4E7]",
 };
 
 export function RFPBrowser() {
@@ -86,9 +86,9 @@ export function RFPBrowser() {
         <div>
           <h1 className="text-2xl font-bold text-white">RFP Radar</h1>
           <div className="flex items-center gap-3">
-            <p className="text-sm text-[#6E6E73]">{total.toLocaleString()} opportunities tracked</p>
+            <p className="text-sm text-[#71717A]">{total.toLocaleString()} opportunities tracked</p>
             {isFetching && (
-              <div className="flex items-center gap-1.5 text-xs text-[#6E6E73]">
+              <div className="flex items-center gap-1.5 text-xs text-[#71717A]">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
                 Updating…
               </div>
@@ -100,7 +100,7 @@ export function RFPBrowser() {
       {/* Filters */}
       <div className="flex flex-wrap gap-3">
         <div className="relative flex-1" style={{ minWidth: "260px" }}>
-          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6E6E73]" />
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#71717A]" />
           <Input
             placeholder="Search by title or agency…"
             value={search}
@@ -108,7 +108,7 @@ export function RFPBrowser() {
               void setSearch(e.target.value || null);
               void setPage(1);
             }}
-            className="border-[#2a2a2a] bg-[#161617] pl-9 text-white placeholder:text-[#6E6E73]"
+            className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#71717A]"
           />
         </div>
         <Select
@@ -118,10 +118,10 @@ export function RFPBrowser() {
             void setPage(1);
           }}
         >
-          <SelectTrigger className="w-52 border-[#2a2a2a] bg-[#161617] text-white">
+          <SelectTrigger className="w-52 border-[#E4E4E7] bg-white text-white">
             <SelectValue placeholder="All Statuses" />
           </SelectTrigger>
-          <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+          <SelectContent className="border-[#E4E4E7] bg-white">
             <SelectItem value="all" className="text-white">
               All Statuses
             </SelectItem>
@@ -135,48 +135,48 @@ export function RFPBrowser() {
       </div>
 
       {/* Table */}
-      <div className="overflow-hidden rounded-lg border border-[#2a2a2a]">
+      <div className="overflow-hidden rounded-lg border border-[#E4E4E7]">
         <Table>
           <TableHeader>
-            <TableRow className="border-[#2a2a2a] hover:bg-transparent">
-              <TableHead className="text-[#6E6E73]">Title</TableHead>
-              <TableHead className="text-[#6E6E73]">Agency</TableHead>
-              <TableHead className="text-[#6E6E73]">State</TableHead>
-              <TableHead className="text-[#6E6E73]">Due Date</TableHead>
-              <TableHead className="text-[#6E6E73]">Value</TableHead>
-              <TableHead className="text-[#6E6E73]">Proposals</TableHead>
-              <TableHead className="text-[#6E6E73]">Status</TableHead>
-              <TableHead className="text-[#6E6E73]"></TableHead>
+            <TableRow className="border-[#E4E4E7] hover:bg-transparent">
+              <TableHead className="text-[#71717A]">Title</TableHead>
+              <TableHead className="text-[#71717A]">Agency</TableHead>
+              <TableHead className="text-[#71717A]">State</TableHead>
+              <TableHead className="text-[#71717A]">Due Date</TableHead>
+              <TableHead className="text-[#71717A]">Value</TableHead>
+              <TableHead className="text-[#71717A]">Proposals</TableHead>
+              <TableHead className="text-[#71717A]">Status</TableHead>
+              <TableHead className="text-[#71717A]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {rfps.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="py-12 text-center text-[#6E6E73]">
+                <TableCell colSpan={8} className="py-12 text-center text-[#71717A]">
                   No RFP opportunities found.
                 </TableCell>
               </TableRow>
             ) : (
               rfps.map((rfp) => (
-                <TableRow key={rfp.id} className="border-[#2a2a2a] hover:bg-[#161617]/50">
+                <TableRow key={rfp.id} className="border-[#E4E4E7] hover:bg-white/50">
                   <TableCell className="max-w-xs">
                     <p className="truncate font-medium text-white">{rfp.title}</p>
-                    <p className="text-xs text-[#6E6E73]">{rfp.sourcePlatform}</p>
+                    <p className="text-xs text-[#71717A]">{rfp.sourcePlatform}</p>
                   </TableCell>
-                  <TableCell className="text-[#F2F2F2]">{rfp.agencyName}</TableCell>
-                  <TableCell className="text-[#F2F2F2]">{rfp.agencyState || "—"}</TableCell>
-                  <TableCell className="text-[#F2F2F2]">
+                  <TableCell className="text-[#09090B]">{rfp.agencyName}</TableCell>
+                  <TableCell className="text-[#09090B]">{rfp.agencyState || "—"}</TableCell>
+                  <TableCell className="text-[#09090B]">
                     {rfp.dueDate ? (
                       <span className="flex items-center gap-1 text-sm">
-                        <Calendar className="h-3.5 w-3.5 text-[#6E6E73]" />
+                        <Calendar className="h-3.5 w-3.5 text-[#71717A]" />
                         {new Date(rfp.dueDate).toLocaleDateString()}
                       </span>
                     ) : (
                       "—"
                     )}
                   </TableCell>
-                  <TableCell className="text-[#F2F2F2]">{rfp.estimatedValue || "—"}</TableCell>
-                  <TableCell className="text-center text-[#F2F2F2]">
+                  <TableCell className="text-[#09090B]">{rfp.estimatedValue || "—"}</TableCell>
+                  <TableCell className="text-center text-[#09090B]">
                     {rfp._count.proposals}
                   </TableCell>
                   <TableCell>
@@ -189,7 +189,7 @@ export function RFPBrowser() {
                       >
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="border-[#2a2a2a] bg-[#161617]">
+                      <SelectContent className="border-[#E4E4E7] bg-white">
                         {Object.entries(RFP_STATUS_LABELS).map(([value, label]) => (
                           <SelectItem key={value} value={value} className="text-xs text-white">
                             {label}
@@ -204,7 +204,7 @@ export function RFPBrowser() {
                         href={rfp.sourceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#6E6E73] hover:text-[#CABDFD]"
+                        className="text-[#71717A] hover:text-[#435EBD]"
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
@@ -220,7 +220,7 @@ export function RFPBrowser() {
       {/* Pagination */}
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm">
-          <span className="text-[#6E6E73]">
+          <span className="text-[#71717A]">
             Page {page} of {pages} ({total.toLocaleString()} total)
           </span>
           <div className="flex gap-2">
@@ -229,7 +229,7 @@ export function RFPBrowser() {
               size="sm"
               onClick={() => void setPage(page - 1)}
               disabled={page <= 1}
-              className="border-[#2a2a2a] bg-[#161617] text-[#F2F2F2] hover:bg-[#2a2a2a]"
+              className="border-[#E4E4E7] bg-white text-[#09090B] hover:bg-white"
             >
               <ChevronLeft className="h-4 w-4" />
               Prev
@@ -239,7 +239,7 @@ export function RFPBrowser() {
               size="sm"
               onClick={() => void setPage(page + 1)}
               disabled={page >= pages}
-              className="border-[#2a2a2a] bg-[#161617] text-[#F2F2F2] hover:bg-[#2a2a2a]"
+              className="border-[#E4E4E7] bg-white text-[#09090B] hover:bg-white"
             >
               Next
               <ChevronRight className="h-4 w-4" />
