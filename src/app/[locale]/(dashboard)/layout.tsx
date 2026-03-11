@@ -31,7 +31,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex h-14 shrink-0 items-center border-b border-[#E4E4E7] bg-white px-4 md:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="rounded-md p-2 text-[#71717A] hover:bg-[#F4F4F5] hover:text-[#09090B]"
+            className="rounded-md p-2 text-[#374151] hover:bg-[#F4F4F5] hover:text-[#09090B]"
           >
             <Menu className="h-5 w-5" />
           </button>

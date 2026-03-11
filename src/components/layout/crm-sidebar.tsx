@@ -57,7 +57,7 @@ export function CRMSidebar({ onClose }: CRMSidebarProps) {
         {onClose && (
           <button
             onClick={onClose}
-            className="rounded-md p-1 text-[#71717A] hover:bg-[#F4F4F5] hover:text-[#09090B] md:hidden"
+            className="rounded-md p-1 text-[#374151] hover:bg-[#F4F4F5] hover:text-[#09090B] md:hidden"
           >
             <X className="h-4 w-4" />
           </button>
@@ -66,7 +66,7 @@ export function CRMSidebar({ onClose }: CRMSidebarProps) {
 
       {/* Nav */}
       <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
-        <p className="mb-2 px-2 text-[10px] font-semibold tracking-widest text-[#A1A1AA] uppercase">
+        <p className="mb-2 px-2 text-[10px] font-semibold tracking-widest text-[#6B7280] uppercase">
           Menu
         </p>
         {navItems.map((item) => {
@@ -79,7 +79,7 @@ export function CRMSidebar({ onClose }: CRMSidebarProps) {
                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
                   active
                     ? "border-l-2 border-[#435EBD] bg-[#EEF2FF] pl-[10px] text-[#435EBD]"
-                    : "text-[#71717A] hover:bg-[#F4F4F5] hover:text-[#09090B]"
+                    : "text-[#374151] hover:bg-[#F4F4F5] hover:text-[#09090B]"
                 )}
               >
                 <Icon className="h-4 w-4 flex-shrink-0" />
@@ -91,7 +91,7 @@ export function CRMSidebar({ onClose }: CRMSidebarProps) {
 
         {isAdmin && (
           <>
-            <p className="mt-6 mb-2 px-2 text-[10px] font-semibold tracking-widest text-[#A1A1AA] uppercase">
+            <p className="mt-6 mb-2 px-2 text-[10px] font-semibold tracking-widest text-[#6B7280] uppercase">
               Admin
             </p>
             {adminItems.map((item) => {
@@ -104,7 +104,7 @@ export function CRMSidebar({ onClose }: CRMSidebarProps) {
                       "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
                       active
                         ? "border-l-2 border-[#435EBD] bg-[#EEF2FF] pl-[10px] text-[#435EBD]"
-                        : "text-[#71717A] hover:bg-[#F4F4F5] hover:text-[#09090B]"
+                        : "text-[#374151] hover:bg-[#F4F4F5] hover:text-[#09090B]"
                     )}
                   >
                     <Icon className="h-4 w-4 flex-shrink-0" />
@@ -125,11 +125,11 @@ export function CRMSidebar({ onClose }: CRMSidebarProps) {
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-[#09090B]">{user?.name ?? "User"}</p>
-            <p className="truncate text-xs text-[#71717A]">{user?.email}</p>
+            <p className="truncate text-xs text-[#374151]">{user?.email}</p>
           </div>
           <button
             onClick={() => void handleSignOut()}
-            className="rounded-md p-1.5 text-[#71717A] hover:bg-[#F4F4F5] hover:text-[#09090B]"
+            className="rounded-md p-1.5 text-[#374151] hover:bg-[#F4F4F5] hover:text-[#09090B]"
             title="Sign out"
           >
             <LogOut className="h-3.5 w-3.5" />

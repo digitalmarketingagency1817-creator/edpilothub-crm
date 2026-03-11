@@ -14,11 +14,11 @@ const TYPE_COLORS = {
   CALL: "bg-blue-900/40 text-[#435EBD] border-[#435EBD]/40",
   EMAIL: "bg-purple-900/40 text-purple-400 border-purple-800",
   LINKEDIN: "bg-cyan-900/40 text-cyan-400 border-cyan-800",
-  OTHER: "bg-[#FAFAFA] text-[#71717A] border-[#E4E4E7]",
+  OTHER: "bg-[#FAFAFA] text-[#374151] border-[#E4E4E7]",
 };
 
 const OUTCOME_COLORS: Record<string, string> = {
-  NO_ANSWER: "bg-[#FAFAFA] text-[#71717A]",
+  NO_ANSWER: "bg-[#FAFAFA] text-[#374151]",
   LEFT_VOICEMAIL: "bg-blue-900/50 text-[#435EBD]",
   SPOKE_TO_GATEKEEPER: "bg-yellow-900/50 text-yellow-300",
   CONNECTED: "bg-emerald-900/50 text-emerald-300",
@@ -58,7 +58,7 @@ interface Log {
 export function OutreachTimeline({ logs }: { logs: Log[] }) {
   if (logs.length === 0) {
     return (
-      <div className="rounded-lg border border-[#E4E4E7] p-12 text-center text-[#71717A]">
+      <div className="rounded-lg border border-[#E4E4E7] p-12 text-center text-[#374151]">
         No outreach logged yet.
       </div>
     );
@@ -91,16 +91,16 @@ export function OutreachTimeline({ logs }: { logs: Log[] }) {
                   </span>
                   {log.outcome != null && (
                     <Badge
-                      className={`text-xs ${OUTCOME_COLORS[String(log.outcome)] ?? "bg-[#FAFAFA] text-[#71717A]"}`}
+                      className={`text-xs ${OUTCOME_COLORS[String(log.outcome)] ?? "bg-[#FAFAFA] text-[#374151]"}`}
                     >
                       {OUTCOME_LABELS[String(log.outcome)] ?? String(log.outcome)}
                     </Badge>
                   )}
                   {log.contact && (
-                    <span className="text-xs text-[#71717A]">with {log.contact.name}</span>
+                    <span className="text-xs text-[#374151]">with {log.contact.name}</span>
                   )}
                 </div>
-                <span className="text-xs text-[#71717A]">
+                <span className="text-xs text-[#374151]">
                   {new Date(log.createdAt).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
@@ -113,7 +113,7 @@ export function OutreachTimeline({ logs }: { logs: Log[] }) {
               {log.subject && (
                 <p className="mt-1 text-sm font-medium text-[#09090B]">{log.subject}</p>
               )}
-              {log.notes && <p className="mt-2 text-sm text-[#71717A]">{log.notes}</p>}
+              {log.notes && <p className="mt-2 text-sm text-[#374151]">{log.notes}</p>}
               {log.scheduledFollowUp && (
                 <p className="mt-2 text-xs text-[#435EBD]">
                   📅 Follow-up: {new Date(log.scheduledFollowUp).toLocaleDateString()}

@@ -35,9 +35,9 @@ export function DistrictsBrowser() {
         <div>
           <h1 className="text-2xl font-bold text-white">Districts</h1>
           <div className="flex items-center gap-3">
-            <p className="text-sm text-[#71717A]">{total} districts</p>
+            <p className="text-sm text-[#374151]">{total} districts</p>
             {isFetching && (
-              <div className="flex items-center gap-1.5 text-xs text-[#71717A]">
+              <div className="flex items-center gap-1.5 text-xs text-[#374151]">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
                 Updating…
               </div>
@@ -47,7 +47,7 @@ export function DistrictsBrowser() {
       </div>
 
       <div className="relative max-w-sm">
-        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#71717A]" />
+        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#374151]" />
         <Input
           placeholder="Search districts…"
           value={search}
@@ -55,7 +55,7 @@ export function DistrictsBrowser() {
             void setSearch(e.target.value || null);
             void setPage(1);
           }}
-          className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#71717A]"
+          className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#374151]"
         />
       </div>
 
@@ -63,17 +63,17 @@ export function DistrictsBrowser() {
         <Table>
           <TableHeader>
             <TableRow className="border-[#E4E4E7] hover:bg-transparent">
-              <TableHead className="text-[#71717A]">District Name</TableHead>
-              <TableHead className="text-[#71717A]">County</TableHead>
-              <TableHead className="text-[#71717A]">City</TableHead>
-              <TableHead className="text-[#71717A]">Schools</TableHead>
-              <TableHead className="text-[#71717A]">Website</TableHead>
+              <TableHead className="text-[#374151]">District Name</TableHead>
+              <TableHead className="text-[#374151]">County</TableHead>
+              <TableHead className="text-[#374151]">City</TableHead>
+              <TableHead className="text-[#374151]">Schools</TableHead>
+              <TableHead className="text-[#374151]">Website</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {districts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="py-12 text-center text-[#71717A]">
+                <TableCell colSpan={5} className="py-12 text-center text-[#374151]">
                   No districts found.
                 </TableCell>
               </TableRow>
@@ -98,7 +98,7 @@ export function DistrictsBrowser() {
                         Visit
                       </a>
                     ) : (
-                      <span className="text-[#71717A]">—</span>
+                      <span className="text-[#374151]">—</span>
                     )}
                   </TableCell>
                 </TableRow>
@@ -110,7 +110,7 @@ export function DistrictsBrowser() {
 
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm">
-          <span className="text-[#71717A]">
+          <span className="text-[#374151]">
             Page {page} of {pages}
           </span>
           <div className="flex gap-2">

@@ -94,7 +94,7 @@ export function AddSchoolDialog({ onClose }: AddSchoolDialogProps) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-[#E4E4E7] bg-white text-white placeholder:text-[#71717A]"
+                      className="border-[#E4E4E7] bg-white text-white placeholder:text-[#374151]"
                       placeholder="Lincoln Elementary School"
                     />
                   </FormControl>
@@ -112,7 +112,7 @@ export function AddSchoolDialog({ onClose }: AddSchoolDialogProps) {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#71717A]"
+                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#374151]"
                         placeholder="Miami"
                       />
                     </FormControl>
@@ -128,7 +128,7 @@ export function AddSchoolDialog({ onClose }: AddSchoolDialogProps) {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#71717A]"
+                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#374151]"
                         placeholder="Miami-Dade"
                       />
                     </FormControl>
@@ -173,7 +173,7 @@ export function AddSchoolDialog({ onClose }: AddSchoolDialogProps) {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#71717A]"
+                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#374151]"
                         placeholder="33101"
                       />
                     </FormControl>
@@ -191,7 +191,7 @@ export function AddSchoolDialog({ onClose }: AddSchoolDialogProps) {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#71717A]"
+                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#374151]"
                         placeholder="K-5"
                       />
                     </FormControl>
@@ -208,7 +208,7 @@ export function AddSchoolDialog({ onClose }: AddSchoolDialogProps) {
                       <Input
                         {...field}
                         type="number"
-                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#71717A]"
+                        className="border-[#E4E4E7] bg-white text-white placeholder:text-[#374151]"
                         placeholder="500"
                       />
                     </FormControl>
