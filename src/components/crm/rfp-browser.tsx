@@ -44,7 +44,7 @@ const RFP_STATUS_COLORS: Record<string, string> = {
   SUBMITTED: "bg-purple-900 text-purple-300 border-purple-800",
   WON: "bg-green-900 text-green-300 border-green-800",
   LOST: "bg-red-900 text-red-300 border-red-800",
-  PASSED: "bg-white text-[#71717A] border-[#E4E4E7]",
+  PASSED: "bg-white text-[#1F2937] border-[#E4E4E7]",
 };
 
 export function RFPBrowser() {
@@ -86,9 +86,9 @@ export function RFPBrowser() {
         <div>
           <h1 className="text-2xl font-bold text-white">RFP Radar</h1>
           <div className="flex items-center gap-3">
-            <p className="text-sm text-[#71717A]">{total.toLocaleString()} opportunities tracked</p>
+            <p className="text-sm text-[#374151]">{total.toLocaleString()} opportunities tracked</p>
             {isFetching && (
-              <div className="flex items-center gap-1.5 text-xs text-[#71717A]">
+              <div className="flex items-center gap-1.5 text-xs text-[#374151]">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
                 Updating…
               </div>
@@ -100,7 +100,7 @@ export function RFPBrowser() {
       {/* Filters */}
       <div className="flex flex-wrap gap-3">
         <div className="relative flex-1" style={{ minWidth: "260px" }}>
-          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#71717A]" />
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#374151]" />
           <Input
             placeholder="Search by title or agency…"
             value={search}
@@ -108,7 +108,7 @@ export function RFPBrowser() {
               void setSearch(e.target.value || null);
               void setPage(1);
             }}
-            className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#71717A]"
+            className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#374151]"
           />
         </div>
         <Select
@@ -139,20 +139,20 @@ export function RFPBrowser() {
         <Table>
           <TableHeader>
             <TableRow className="border-[#E4E4E7] hover:bg-transparent">
-              <TableHead className="text-[#71717A]">Title</TableHead>
-              <TableHead className="text-[#71717A]">Agency</TableHead>
-              <TableHead className="text-[#71717A]">State</TableHead>
-              <TableHead className="text-[#71717A]">Due Date</TableHead>
-              <TableHead className="text-[#71717A]">Value</TableHead>
-              <TableHead className="text-[#71717A]">Proposals</TableHead>
-              <TableHead className="text-[#71717A]">Status</TableHead>
-              <TableHead className="text-[#71717A]"></TableHead>
+              <TableHead className="text-[#374151]">Title</TableHead>
+              <TableHead className="text-[#374151]">Agency</TableHead>
+              <TableHead className="text-[#374151]">State</TableHead>
+              <TableHead className="text-[#374151]">Due Date</TableHead>
+              <TableHead className="text-[#374151]">Value</TableHead>
+              <TableHead className="text-[#374151]">Proposals</TableHead>
+              <TableHead className="text-[#374151]">Status</TableHead>
+              <TableHead className="text-[#374151]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {rfps.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="py-12 text-center text-[#71717A]">
+                <TableCell colSpan={8} className="py-12 text-center text-[#374151]">
                   No RFP opportunities found.
                 </TableCell>
               </TableRow>
@@ -161,14 +161,14 @@ export function RFPBrowser() {
                 <TableRow key={rfp.id} className="border-[#E4E4E7] hover:bg-white/50">
                   <TableCell className="max-w-xs">
                     <p className="truncate font-medium text-white">{rfp.title}</p>
-                    <p className="text-xs text-[#71717A]">{rfp.sourcePlatform}</p>
+                    <p className="text-xs text-[#374151]">{rfp.sourcePlatform}</p>
                   </TableCell>
                   <TableCell className="text-[#09090B]">{rfp.agencyName}</TableCell>
                   <TableCell className="text-[#09090B]">{rfp.agencyState || "—"}</TableCell>
                   <TableCell className="text-[#09090B]">
                     {rfp.dueDate ? (
                       <span className="flex items-center gap-1 text-sm">
-                        <Calendar className="h-3.5 w-3.5 text-[#71717A]" />
+                        <Calendar className="h-3.5 w-3.5 text-[#374151]" />
                         {new Date(rfp.dueDate).toLocaleDateString()}
                       </span>
                     ) : (
@@ -204,7 +204,7 @@ export function RFPBrowser() {
                         href={rfp.sourceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#71717A] hover:text-[#435EBD]"
+                        className="text-[#374151] hover:text-[#435EBD]"
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
@@ -220,7 +220,7 @@ export function RFPBrowser() {
       {/* Pagination */}
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm">
-          <span className="text-[#71717A]">
+          <span className="text-[#374151]">
             Page {page} of {pages} ({total.toLocaleString()} total)
           </span>
           <div className="flex gap-2">

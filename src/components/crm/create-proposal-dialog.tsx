@@ -60,7 +60,7 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
       <DialogContent className="border-[#E4E4E7] bg-white text-white sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-white">Create Proposal</DialogTitle>
-          <p className="text-sm text-[#71717A]">{rfpTitle}</p>
+          <p className="text-sm text-[#374151]">{rfpTitle}</p>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -83,7 +83,7 @@ export function CreateProposalDialog({ rfpId, rfpTitle, onClose }: CreateProposa
                 <FormItem>
                   <FormLabel className="text-[#09090B]">
                     Proposal Content
-                    <span className="ml-2 text-xs text-[#71717A]">Markdown supported</span>
+                    <span className="ml-2 text-xs text-[#374151]">Markdown supported</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea

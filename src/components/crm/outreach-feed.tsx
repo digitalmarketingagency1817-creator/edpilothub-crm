@@ -29,7 +29,7 @@ const OUTCOME_LABELS: Record<string, string> = {
 };
 
 const OUTCOME_COLORS: Record<string, string> = {
-  NO_ANSWER: "text-[#71717A]",
+  NO_ANSWER: "text-[#374151]",
   LEFT_VOICEMAIL: "text-[#09090B]",
   SPOKE_TO_GATEKEEPER: "text-yellow-400",
   CONNECTED: "text-[#435EBD]",
@@ -74,9 +74,9 @@ export function OutreachFeed() {
         <div>
           <h1 className="text-2xl font-bold text-white">Outreach Log</h1>
           <div className="flex items-center gap-3">
-            <p className="text-sm text-[#71717A]">{total.toLocaleString()} activities recorded</p>
+            <p className="text-sm text-[#374151]">{total.toLocaleString()} activities recorded</p>
             {isFetching && (
-              <div className="flex items-center gap-1.5 text-xs text-[#71717A]">
+              <div className="flex items-center gap-1.5 text-xs text-[#374151]">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
                 Updating…
               </div>
@@ -120,7 +120,7 @@ export function OutreachFeed() {
       {/* Feed */}
       <div className="flex flex-col gap-2">
         {logs.length === 0 ? (
-          <div className="rounded-lg border border-[#E4E4E7] py-12 text-center text-[#71717A]">
+          <div className="rounded-lg border border-[#E4E4E7] py-12 text-center text-[#374151]">
             No outreach logged yet.
           </div>
         ) : (
@@ -130,7 +130,7 @@ export function OutreachFeed() {
               className="flex items-start gap-4 rounded-lg border border-[#E4E4E7] bg-white/50 p-4"
             >
               {/* Type icon */}
-              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white text-[#71717A]">
+              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white text-[#374151]">
                 {TYPE_ICONS[log.type] ?? <Clock className="h-3.5 w-3.5" />}
               </div>
 
@@ -145,9 +145,9 @@ export function OutreachFeed() {
                     {log.school.name}
                   </Link>
                   {log.school.city && (
-                    <span className="text-xs text-[#71717A]">{log.school.city}</span>
+                    <span className="text-xs text-[#374151]">{log.school.city}</span>
                   )}
-                  <span className="text-[#71717A]">·</span>
+                  <span className="text-[#374151]">·</span>
                   {/* Outcome */}
                   <span
                     className={`text-sm font-medium ${log.outcome != null ? (OUTCOME_COLORS[String(log.outcome)] ?? "text-[#09090B]") : "text-[#09090B]"}`}
@@ -158,22 +158,22 @@ export function OutreachFeed() {
                   </span>
                   {log.contact && (
                     <>
-                      <span className="text-[#71717A]">·</span>
-                      <span className="text-sm text-[#71717A]">
+                      <span className="text-[#374151]">·</span>
+                      <span className="text-sm text-[#374151]">
                         with {log.contact.name}
                         {log.contact.title ? ` (${log.contact.title})` : ""}
                       </span>
                     </>
                   )}
                 </div>
-                {log.subject && <p className="mt-0.5 text-sm text-[#71717A]">{log.subject}</p>}
+                {log.subject && <p className="mt-0.5 text-sm text-[#374151]">{log.subject}</p>}
                 {log.notes && (
-                  <p className="mt-1 line-clamp-2 text-xs text-[#71717A]">{log.notes}</p>
+                  <p className="mt-1 line-clamp-2 text-xs text-[#374151]">{log.notes}</p>
                 )}
               </div>
 
               {/* Timestamp */}
-              <div className="flex-shrink-0 text-xs text-[#71717A]">
+              <div className="flex-shrink-0 text-xs text-[#374151]">
                 {new Date(log.createdAt).toLocaleDateString()}
               </div>
             </div>
@@ -184,7 +184,7 @@ export function OutreachFeed() {
       {/* Pagination */}
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm">
-          <span className="text-[#71717A]">
+          <span className="text-[#374151]">
             Page {page} of {pages} ({total.toLocaleString()} total)
           </span>
           <div className="flex gap-2">

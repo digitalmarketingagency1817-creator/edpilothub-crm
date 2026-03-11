@@ -111,7 +111,7 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                       setSelectedSchool(null);
                       form.setValue("schoolId", "");
                     }}
-                    className="text-xs text-[#71717A] hover:text-white"
+                    className="text-xs text-[#374151] hover:text-white"
                   >
                     Change
                   </button>
@@ -119,12 +119,12 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
               ) : (
                 <div className="space-y-2">
                   <div className="relative">
-                    <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#71717A]" />
+                    <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#374151]" />
                     <Input
                       value={schoolSearch}
                       onChange={(e) => setSchoolSearch(e.target.value)}
                       placeholder="Search school name..."
-                      className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#71717A]"
+                      className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#374151]"
                     />
                   </div>
                   {schoolSearch && (schoolData?.schools?.length ?? 0) > 0 && (
@@ -141,7 +141,7 @@ export function QuickLogOutreachDialog({ onClose }: { onClose: () => void }) {
                           className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[#09090B] first:rounded-t-lg last:rounded-b-lg hover:bg-white hover:text-white"
                         >
                           <span className="font-medium">{school.name}</span>
-                          {school.city && <span className="text-[#71717A]">{school.city}</span>}
+                          {school.city && <span className="text-[#374151]">{school.city}</span>}
                         </button>
                       ))}
                     </div>

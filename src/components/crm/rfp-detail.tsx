@@ -28,7 +28,7 @@ const STATUS_COLORS: Record<string, string> = {
   SUBMITTED: "bg-purple-900/50 text-purple-300",
   WON: "bg-green-900/50 text-green-300",
   LOST: "bg-red-900/50 text-red-300",
-  PASSED: "bg-white text-[#71717A]",
+  PASSED: "bg-white text-[#374151]",
 };
 
 const PROPOSAL_STATUS_COLORS: Record<string, string> = {
@@ -74,7 +74,7 @@ export function RFPDetail({ id }: { id: string }) {
   return (
     <div className="flex max-w-4xl flex-col gap-6 p-6">
       <Link href={"/rfp" as Parameters<typeof Link>[0]["href"]}>
-        <Button variant="ghost" size="sm" className="gap-1.5 text-[#71717A] hover:text-white">
+        <Button variant="ghost" size="sm" className="gap-1.5 text-[#374151] hover:text-white">
           <ArrowLeft className="h-4 w-4" />
           RFP Radar
         </Button>
@@ -84,19 +84,19 @@ export function RFPDetail({ id }: { id: string }) {
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           <h1 className="text-2xl font-bold text-white">{rfp.title}</h1>
-          <p className="mt-1 text-[#71717A]">
+          <p className="mt-1 text-[#374151]">
             {rfp.agencyName}
             {rfp.agencyState ? ` · ${rfp.agencyState}` : ""}
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
             {rfp.dueDate && (
-              <span className="flex items-center gap-1 text-[#71717A]">
+              <span className="flex items-center gap-1 text-[#374151]">
                 <Calendar className="h-3.5 w-3.5" />
                 Due {new Date(rfp.dueDate).toLocaleDateString()}
               </span>
             )}
             {rfp.estimatedValue && (
-              <span className="flex items-center gap-1 text-[#71717A]">
+              <span className="flex items-center gap-1 text-[#374151]">
                 <DollarSign className="h-3.5 w-3.5" />
                 {rfp.estimatedValue}
               </span>
@@ -167,7 +167,7 @@ export function RFPDetail({ id }: { id: string }) {
                 variant="ghost"
                 size="sm"
                 onClick={startEditingNotes}
-                className="text-[#71717A] hover:text-white"
+                className="text-[#374151] hover:text-white"
               >
                 Edit
               </Button>
@@ -196,14 +196,14 @@ export function RFPDetail({ id }: { id: string }) {
                   size="sm"
                   variant="ghost"
                   onClick={() => setEditingNotes(false)}
-                  className="text-[#71717A] hover:text-white"
+                  className="text-[#374151] hover:text-white"
                 >
                   Cancel
                 </Button>
               </div>
             </div>
           ) : (
-            <p className="text-sm whitespace-pre-wrap text-[#71717A]">
+            <p className="text-sm whitespace-pre-wrap text-[#374151]">
               {rfp.analysisNotes || "No analysis notes yet. Click Edit to add."}
             </p>
           )}
@@ -229,7 +229,7 @@ export function RFPDetail({ id }: { id: string }) {
         </CardHeader>
         <CardContent>
           {rfp.proposals.length === 0 ? (
-            <p className="text-sm text-[#71717A]">No proposals yet.</p>
+            <p className="text-sm text-[#374151]">No proposals yet.</p>
           ) : (
             <div className="flex flex-col gap-3">
               {rfp.proposals.map((proposal) => (
@@ -237,7 +237,7 @@ export function RFPDetail({ id }: { id: string }) {
                   <div className="flex items-start justify-between">
                     <div>
                       <p className="font-medium text-white">{proposal.title}</p>
-                      <p className="mt-0.5 text-xs text-[#71717A]">
+                      <p className="mt-0.5 text-xs text-[#374151]">
                         {new Date(proposal.createdAt).toLocaleDateString()}
                       </p>
                     </div>
@@ -246,7 +246,7 @@ export function RFPDetail({ id }: { id: string }) {
                     </Badge>
                   </div>
                   {proposal.content && (
-                    <p className="mt-2 line-clamp-3 text-sm text-[#71717A]">{proposal.content}</p>
+                    <p className="mt-2 line-clamp-3 text-sm text-[#374151]">{proposal.content}</p>
                   )}
                 </div>
               ))}

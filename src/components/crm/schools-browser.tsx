@@ -49,7 +49,7 @@ const PIPELINE_STAGE_COLORS: Record<string, string> = {
   NEGOTIATING: "bg-orange-900 text-orange-300",
   CLOSED_WON: "bg-green-900 text-green-300",
   CLOSED_LOST: "bg-red-900 text-red-300",
-  NOT_A_FIT: "bg-white text-[#71717A]",
+  NOT_A_FIT: "bg-white text-[#374151]",
 };
 
 export function SchoolsBrowser() {
@@ -85,9 +85,9 @@ export function SchoolsBrowser() {
         <div>
           <h1 className="text-2xl font-bold text-white">Schools</h1>
           <div className="flex items-center gap-3">
-            <p className="text-sm text-[#71717A]">{total.toLocaleString()} schools in database</p>
+            <p className="text-sm text-[#374151]">{total.toLocaleString()} schools in database</p>
             {isFetching && (
-              <div className="flex items-center gap-1.5 text-xs text-[#71717A]">
+              <div className="flex items-center gap-1.5 text-xs text-[#374151]">
                 <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-500" />
                 Updating…
               </div>
@@ -108,7 +108,7 @@ export function SchoolsBrowser() {
       {/* Filters */}
       <div className="flex flex-wrap gap-3">
         <div className="relative flex-1" style={{ minWidth: "260px" }}>
-          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#71717A]" />
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#374151]" />
           <Input
             placeholder="Search by name, city, county…"
             value={search}
@@ -116,7 +116,7 @@ export function SchoolsBrowser() {
               void setSearch(e.target.value || null);
               void setPage(1);
             }}
-            className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#71717A]"
+            className="border-[#E4E4E7] bg-white pl-9 text-white placeholder:text-[#374151]"
           />
         </div>
 
@@ -174,20 +174,20 @@ export function SchoolsBrowser() {
         <Table>
           <TableHeader>
             <TableRow className="border-[#E4E4E7] hover:bg-transparent">
-              <TableHead className="text-[#71717A]">Name</TableHead>
-              <TableHead className="text-[#71717A]">City</TableHead>
-              <TableHead className="hidden text-[#71717A] md:table-cell">County</TableHead>
-              <TableHead className="text-[#71717A]">Type</TableHead>
-              <TableHead className="hidden text-[#71717A] lg:table-cell">Tech Stack</TableHead>
-              <TableHead className="text-[#71717A]">Pipeline</TableHead>
-              <TableHead className="hidden text-[#71717A] lg:table-cell">Last Contact</TableHead>
-              <TableHead className="text-[#71717A]"></TableHead>
+              <TableHead className="text-[#374151]">Name</TableHead>
+              <TableHead className="text-[#374151]">City</TableHead>
+              <TableHead className="hidden text-[#374151] md:table-cell">County</TableHead>
+              <TableHead className="text-[#374151]">Type</TableHead>
+              <TableHead className="hidden text-[#374151] lg:table-cell">Tech Stack</TableHead>
+              <TableHead className="text-[#374151]">Pipeline</TableHead>
+              <TableHead className="hidden text-[#374151] lg:table-cell">Last Contact</TableHead>
+              <TableHead className="text-[#374151]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {schools.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="py-12 text-center text-[#71717A]">
+                <TableCell colSpan={8} className="py-12 text-center text-[#374151]">
                   No schools found. Try adjusting your filters.
                 </TableCell>
               </TableRow>
@@ -224,7 +224,7 @@ export function SchoolsBrowser() {
                     {school.techStack ? (
                       <span className="text-sm text-emerald-400">{school.techStack}</span>
                     ) : (
-                      <span className="text-sm text-[#71717A]">Unknown</span>
+                      <span className="text-sm text-[#374151]">Unknown</span>
                     )}
                   </TableCell>
                   <TableCell>
@@ -237,10 +237,10 @@ export function SchoolsBrowser() {
                         {PIPELINE_STAGE_LABELS[school.pipelineStatus.stage]}
                       </span>
                     ) : (
-                      <span className="text-xs text-[#71717A]">—</span>
+                      <span className="text-xs text-[#374151]">—</span>
                     )}
                   </TableCell>
-                  <TableCell className="text-sm text-[#71717A]">
+                  <TableCell className="text-sm text-[#374151]">
                     {school.pipelineStatus?.lastContactedAt
                       ? new Date(school.pipelineStatus.lastContactedAt).toLocaleDateString()
                       : "—"}
@@ -250,7 +250,7 @@ export function SchoolsBrowser() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-8 px-2 text-[#71717A] hover:text-white"
+                        className="h-8 px-2 text-[#374151] hover:text-white"
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                       </Button>
@@ -266,7 +266,7 @@ export function SchoolsBrowser() {
       {/* Pagination */}
       {pages > 1 && (
         <div className="flex items-center justify-between text-sm">
-          <span className="text-[#71717A]">
+          <span className="text-[#374151]">
             Page {page} of {pages} ({total.toLocaleString()} total)
           </span>
           <div className="flex gap-2">

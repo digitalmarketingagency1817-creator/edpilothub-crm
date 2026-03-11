@@ -165,13 +165,13 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
       <div className="sticky top-0 z-10 border-b border-[#E4E4E7] bg-white/95 px-4 py-3 backdrop-blur-sm md:px-6">
         <div className="flex items-center gap-3">
           <Link href="/schools">
-            <button className="rounded-md p-1.5 text-[#71717A] hover:bg-white hover:text-[#09090B]">
+            <button className="rounded-md p-1.5 text-[#374151] hover:bg-white hover:text-[#09090B]">
               <ArrowLeft className="h-4 w-4" />
             </button>
           </Link>
           <div className="min-w-0 flex-1">
             <h1 className="truncate text-lg font-semibold text-[#09090B]">{school.name}</h1>
-            <p className="text-xs text-[#71717A]">
+            <p className="text-xs text-[#374151]">
               {school.city}
               {school.county ? `, ${school.county}` : ""} · {school.schoolType}
             </p>
@@ -188,7 +188,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
       <div className="space-y-0 px-4 py-6 md:px-6">
         {/* Section: School Info */}
         <section className="pb-6">
-          <h2 className="mb-4 text-xs font-semibold tracking-wider text-[#71717A] uppercase">
+          <h2 className="mb-4 text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
             School Info
           </h2>
 
@@ -196,7 +196,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
           <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {school.studentCount != null && (
               <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
-                <div className="flex items-center gap-1.5 text-[#71717A]">
+                <div className="flex items-center gap-1.5 text-[#374151]">
                   <Users className="h-3.5 w-3.5" />
                   <span className="text-xs">Enrollment</span>
                 </div>
@@ -207,7 +207,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             )}
             {school.gradeRange && (
               <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
-                <div className="flex items-center gap-1.5 text-[#71717A]">
+                <div className="flex items-center gap-1.5 text-[#374151]">
                   <GraduationCap className="h-3.5 w-3.5" />
                   <span className="text-xs">Grades</span>
                 </div>
@@ -215,7 +215,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
               </div>
             )}
             <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
-              <div className="flex items-center gap-1.5 text-[#71717A]">
+              <div className="flex items-center gap-1.5 text-[#374151]">
                 <Building2 className="h-3.5 w-3.5" />
                 <span className="text-xs">Type</span>
               </div>
@@ -223,7 +223,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             </div>
             {school.district && (
               <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
-                <div className="flex items-center gap-1.5 text-[#71717A]">
+                <div className="flex items-center gap-1.5 text-[#374151]">
                   <Building2 className="h-3.5 w-3.5" />
                   <span className="text-xs">District</span>
                 </div>
@@ -238,7 +238,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
           <div className="flex flex-col gap-2 text-sm">
             {school.address && (
               <div className="flex items-start gap-2 text-[#09090B]">
-                <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#71717A]" />
+                <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#374151]" />
                 <span>
                   {school.address}
                   {school.zipCode ? ` ${school.zipCode}` : ""}
@@ -247,7 +247,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             )}
             {school.phone && (
               <div className="flex items-center gap-2 text-[#09090B]">
-                <Phone className="h-4 w-4 flex-shrink-0 text-[#71717A]" />
+                <Phone className="h-4 w-4 flex-shrink-0 text-[#374151]" />
                 <a href={`tel:${school.phone}`} className="hover:text-[#435EBD]">
                   {school.phone}
                 </a>
@@ -255,7 +255,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             )}
             {school.email && (
               <div className="flex items-center gap-2 text-[#09090B]">
-                <Mail className="h-4 w-4 flex-shrink-0 text-[#71717A]" />
+                <Mail className="h-4 w-4 flex-shrink-0 text-[#374151]" />
                 <a href={`mailto:${school.email}`} className="truncate hover:text-[#435EBD]">
                   {school.email}
                 </a>
@@ -263,14 +263,14 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             )}
             {/* Website — editable */}
             <div className="flex items-center gap-2 text-[#09090B]">
-              <Globe className="h-4 w-4 flex-shrink-0 text-[#71717A]" />
+              <Globe className="h-4 w-4 flex-shrink-0 text-[#374151]" />
               {isEditingWebsite ? (
                 <div className="flex flex-1 items-center gap-2">
                   <Input
                     value={websiteValue}
                     onChange={(e) => setWebsiteValue(e.target.value)}
                     placeholder="https://school.example.com"
-                    className="h-7 flex-1 border-[#E4E4E7] bg-white text-sm text-[#09090B] placeholder:text-[#71717A]"
+                    className="h-7 flex-1 border-[#E4E4E7] bg-white text-sm text-[#09090B] placeholder:text-[#374151]"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") handleSaveWebsite();
                       if (e.key === "Escape") handleCancelWebsite();
@@ -290,7 +290,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                     size="sm"
                     variant="ghost"
                     onClick={handleCancelWebsite}
-                    className="h-7 w-7 p-0 text-[#71717A] hover:text-[#09090B]"
+                    className="h-7 w-7 p-0 text-[#374151] hover:text-[#09090B]"
                   >
                     <X className="h-3.5 w-3.5" />
                   </Button>
@@ -313,14 +313,14 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                       setWebsiteValue(school.website ?? "");
                       setIsEditingWebsite(true);
                     }}
-                    className="h-6 w-6 p-0 text-[#71717A] hover:text-[#09090B]"
+                    className="h-6 w-6 p-0 text-[#374151] hover:text-[#09090B]"
                   >
                     <Pencil className="h-3 w-3" />
                   </Button>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
-                  <span className="text-[#71717A]">—</span>
+                  <span className="text-[#374151]">—</span>
                   <Button
                     size="sm"
                     variant="ghost"
@@ -328,7 +328,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                       setWebsiteValue("");
                       setIsEditingWebsite(true);
                     }}
-                    className="h-6 px-2 text-xs text-[#71717A] hover:text-[#435EBD]"
+                    className="h-6 px-2 text-xs text-[#374151] hover:text-[#435EBD]"
                   >
                     <Pencil className="mr-1 h-3 w-3" />
                     Add website
@@ -338,7 +338,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             </div>
             {school.techStack && (
               <div className="flex items-center gap-2">
-                <span className="text-xs tracking-wider text-[#71717A] uppercase">Tech Stack:</span>
+                <span className="text-xs tracking-wider text-[#4B5563] uppercase">Tech Stack:</span>
                 <span className="text-sm text-emerald-400">{school.techStack}</span>
               </div>
             )}
@@ -348,7 +348,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
 
         {/* Section: Pipeline */}
         <section className="py-6">
-          <h2 className="mb-4 text-xs font-semibold tracking-wider text-[#71717A] uppercase">
+          <h2 className="mb-4 text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
             Pipeline
           </h2>
           <Form {...pipelineForm}>
@@ -361,7 +361,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                 name="stage"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#71717A]">Stage</FormLabel>
+                    <FormLabel className="text-[#374151]">Stage</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger className="border-[#E4E4E7] bg-white text-[#09090B]">
@@ -385,7 +385,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                   name="lastContactedAt"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#71717A]">Last Contacted</FormLabel>
+                      <FormLabel className="text-[#374151]">Last Contacted</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -401,7 +401,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                   name="nextFollowUpAt"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#71717A]">Next Follow-up</FormLabel>
+                      <FormLabel className="text-[#374151]">Next Follow-up</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -418,11 +418,11 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                 name="notes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#71717A]">Notes</FormLabel>
+                    <FormLabel className="text-[#374151]">Notes</FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
-                        className="border-[#E4E4E7] bg-white text-[#09090B] placeholder:text-[#71717A]"
+                        className="border-[#E4E4E7] bg-white text-[#09090B] placeholder:text-[#374151]"
                         rows={3}
                         placeholder="Pipeline notes..."
                       />
@@ -445,7 +445,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
         {/* Section: Contacts */}
         <section className="py-6">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xs font-semibold tracking-wider text-[#71717A] uppercase">
+            <h2 className="text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
               Contacts
               {school.contacts.length > 0 && (
                 <span className="ml-2 text-[#435EBD] normal-case">({school.contacts.length})</span>
@@ -459,7 +459,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             </button>
           </div>
           {school.contacts.length === 0 ? (
-            <p className="text-sm text-[#71717A]">No contacts yet.</p>
+            <p className="text-sm text-[#374151]">No contacts yet.</p>
           ) : (
             <div className="flex flex-col gap-2">
               {school.contacts.map((contact) => (
@@ -472,8 +472,8 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                       </Badge>
                     )}
                   </div>
-                  {contact.title && <p className="text-xs text-[#71717A]">{contact.title}</p>}
-                  <div className="mt-1 flex flex-wrap gap-3 text-xs text-[#71717A]">
+                  {contact.title && <p className="text-xs text-[#374151]">{contact.title}</p>}
+                  <div className="mt-1 flex flex-wrap gap-3 text-xs text-[#374151]">
                     {contact.email && (
                       <a href={`mailto:${contact.email}`} className="hover:text-[#435EBD]">
                         {contact.email}
@@ -495,7 +495,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
         {/* Section: Outreach History */}
         <section className="py-6">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xs font-semibold tracking-wider text-[#71717A] uppercase">
+            <h2 className="text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
               Outreach History
               {school.outreachLogs.length > 0 && (
                 <span className="ml-2 text-[#435EBD] normal-case">
@@ -511,7 +511,7 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             </button>
           </div>
           {school.outreachLogs.length === 0 ? (
-            <p className="text-sm text-[#71717A]">No outreach recorded yet.</p>
+            <p className="text-sm text-[#374151]">No outreach recorded yet.</p>
           ) : (
             <div className="flex flex-col gap-2">
               {school.outreachLogs.map((log) => (
@@ -527,22 +527,22 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                         </span>
                         <Badge
                           variant="outline"
-                          className="h-4 border-[#E4E4E7] px-1.5 text-[10px] text-[#71717A]"
+                          className="h-4 border-[#E4E4E7] px-1.5 text-[10px] text-[#374151]"
                         >
                           {log.outcome != null
                             ? (OUTREACH_OUTCOME_LABELS[String(log.outcome)] ?? String(log.outcome))
                             : "—"}
                         </Badge>
                         {log.contact && (
-                          <span className="text-[#71717A]">with {log.contact.name}</span>
+                          <span className="text-[#374151]">with {log.contact.name}</span>
                         )}
                       </div>
-                      {log.subject && <p className="mt-0.5 text-[#71717A]">{log.subject}</p>}
+                      {log.subject && <p className="mt-0.5 text-[#374151]">{log.subject}</p>}
                       {log.notes && (
-                        <p className="mt-1 line-clamp-2 text-xs text-[#71717A]">{log.notes}</p>
+                        <p className="mt-1 line-clamp-2 text-xs text-[#374151]">{log.notes}</p>
                       )}
                     </div>
-                    <div className="flex flex-shrink-0 items-center gap-1 text-xs text-[#71717A]">
+                    <div className="flex flex-shrink-0 items-center gap-1 text-xs text-[#374151]">
                       <Clock className="h-3 w-3" />
                       {new Date(log.createdAt).toLocaleDateString()}
                     </div>
