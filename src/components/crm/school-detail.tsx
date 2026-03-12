@@ -28,7 +28,21 @@ import {
   Pencil,
   X,
   Check,
+  Trash2,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useSession } from "@/server/auth/client";
+import { useRouter } from "next/navigation";
 import { PipelineStage } from "@/generated/prisma";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -81,6 +95,9 @@ interface SchoolDetailProps {
 export function SchoolDetail({ id }: SchoolDetailProps) {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const { data: session } = useSession();
+  const isAdmin = (session?.user as { role?: string } | undefined)?.role === "ADMIN";
 
   const { data: _school } = useSuspenseQuery(trpc.school.getById.queryOptions({ id }));
   const school = _school as unknown as SchoolWithDetails;
@@ -130,6 +147,16 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
     setIsEditingWebsite(false);
   };
 
+  const { mutate: deleteSchool, isPending: isDeleting } = useMutation(
+    trpc.school.delete.mutationOptions({
+      onSuccess: () => {
+        toast.success("School deleted");
+        router.push("/schools");
+      },
+      onError: (err) => toast.error(err.message),
+    })
+  );
+
   return (
     <div className="min-h-screen bg-[#F3F4F6]">
       {/* Sticky header */}
@@ -167,6 +194,38 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
           >
             Log Activity
           </button>
+          {isAdmin && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 border-[#E4E4E7] px-2 text-red-600 hover:border-red-300 hover:bg-red-50 hover:text-red-700"
+                  disabled={isDeleting}
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete School</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure? This will permanently delete this school and all related data.
+                    This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => deleteSchool({ id })}
+                    className="bg-red-600 hover:bg-red-700"
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
         </div>
       </div>
 
