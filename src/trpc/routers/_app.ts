@@ -7,6 +7,7 @@ import { proposalRouter } from "./proposal";
 import { outreachRouter } from "./outreach";
 import { pipelineRouter } from "./pipeline";
 import { noteRouter } from "./note";
+import { opportunityRouter } from "./opportunity";
 
 export const appRouter = createTRPCRouter({
   school: schoolRouter,
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
   outreach: outreachRouter,
   pipeline: pipelineRouter,
   note: noteRouter,
+  opportunity: opportunityRouter,
 });
 
 export type AppRouter = typeof appRouter;

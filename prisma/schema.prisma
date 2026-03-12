@@ -89,6 +89,15 @@ enum PipelineStage {
   NOT_A_FIT
 }
 
+enum OpportunityStage {
+  NEW
+  QUALIFIED
+  PROPOSAL
+  NEGOTIATION
+  WON
+  LOST
+}
+
 // ===== Better Auth Tables =====
 
 model User {
@@ -110,6 +119,7 @@ model User {
   proposals            Proposal[]
   schoolPipelineItems  SchoolPipelineStatus[]
   schoolNotes          SchoolNote[]
+  opportunities        Opportunity[]
 }
 
 model Session {
@@ -203,6 +213,7 @@ model School {
   outreachLogs  OutreachLog[]
   pipelineStatus SchoolPipelineStatus?
   notes         SchoolNote[]
+  opportunities Opportunity[]
 
   @@index([city])
   @@index([county])
@@ -327,6 +338,29 @@ model SchoolPipelineStatus {
   @@index([stage])
   @@index([agentId])
   @@index([nextFollowUpAt])
+}
+
+model Opportunity {
+  id          String           @id @default(cuid())
+  title       String
+  value       Float?
+  stage       OpportunityStage @default(NEW)
+  closeDate   DateTime?
+  notes       String?          @db.Text
+
+  schoolId    String
+  school      School           @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  ownerId     String
+  owner       User             @relation(fields: [ownerId], references: [id])
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@index([schoolId])
+  @@index([stage])
+  @@index([ownerId])
+  @@index([closeDate])
 }
 
 model SchoolNote {
