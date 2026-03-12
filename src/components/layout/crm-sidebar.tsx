@@ -3,13 +3,23 @@
 import { usePathname } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
 import { signOut, useSession } from "@/server/auth/client";
-import { School, Building2, FileText, MessageSquare, Settings, LogOut, X } from "lucide-react";
+import {
+  School,
+  Building2,
+  FileText,
+  MessageSquare,
+  Settings,
+  LogOut,
+  X,
+  Kanban,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const navItems = [
   { href: "/schools", label: "Schools", icon: School },
+  { href: "/pipeline", label: "Pipeline", icon: Kanban },
   { href: "/districts", label: "Districts", icon: Building2 },
   { href: "/rfp", label: "RFP Radar", icon: FileText },
   { href: "/outreach", label: "Outreach", icon: MessageSquare },
