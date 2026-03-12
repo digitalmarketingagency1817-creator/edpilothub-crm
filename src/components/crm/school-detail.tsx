@@ -29,6 +29,7 @@ import {
   X,
   Check,
   Trash2,
+  DollarSign,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -111,7 +112,22 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
     school.pipelineStatus?.stage ?? PipelineStage.UNCONTACTED
   );
 
-  const { mutate: savePipeline } = useMutation(
+  const [dealValue, setDealValue] = useState<string>(
+    school.pipelineStatus?.dealValue != null ? String(school.pipelineStatus.dealValue) : ""
+  );
+  const [closeDate, setCloseDate] = useState<string>(
+    school.pipelineStatus?.closeDate
+      ? new Date(school.pipelineStatus.closeDate).toISOString().split("T")[0]
+      : ""
+  );
+  const [rfpReference, setRfpReference] = useState<string>(
+    school.pipelineStatus?.rfpReference ?? ""
+  );
+  const [probability, setProbability] = useState<string>(
+    school.pipelineStatus?.probability != null ? String(school.pipelineStatus.probability) : ""
+  );
+
+  const { mutate: savePipeline, isPending: isSavingDeal } = useMutation(
     trpc.pipeline.upsert.mutationOptions({
       onSuccess: () => {
         toast.success("Stage updated");
@@ -124,6 +140,18 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
   const handleStageChange = (stage: PipelineStage) => {
     setCurrentStage(stage);
     savePipeline({ schoolId: id, stage });
+  };
+
+  const handleSaveDealInfo = () => {
+    savePipeline({
+      schoolId: id,
+      stage: currentStage,
+      dealValue: dealValue !== "" ? parseFloat(dealValue) : undefined,
+      closeDate: closeDate !== "" ? new Date(closeDate) : null,
+      rfpReference: rfpReference !== "" ? rfpReference : null,
+      probability: probability !== "" ? parseInt(probability, 10) : null,
+    });
+    toast.success("Deal info saved");
   };
 
   const { mutate: updateSchool, isPending: isUpdatingWebsite } = useMutation(
@@ -388,6 +416,78 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
             )}
           </div>
         </section>
+
+        {/* Section: Deal Info */}
+        <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
+          <h2 className="mb-4 flex items-center gap-2 text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
+            <DollarSign className="h-3.5 w-3.5" />
+            Deal Info
+          </h2>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-medium text-[#374151]">Deal Value</label>
+              <div className="relative">
+                <span className="absolute top-1/2 left-3 -translate-y-1/2 text-sm text-[#374151]">
+                  $
+                </span>
+                <Input
+                  type="number"
+                  placeholder="e.g. 14400"
+                  value={dealValue}
+                  onChange={(e) => setDealValue(e.target.value)}
+                  className="h-8 border-[#E4E4E7] bg-white pl-6 text-sm text-[#09090B] placeholder:text-[#9CA3AF]"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-medium text-[#374151]">Close Date</label>
+              <Input
+                type="date"
+                value={closeDate}
+                onChange={(e) => setCloseDate(e.target.value)}
+                className="h-8 border-[#E4E4E7] bg-white text-sm text-[#09090B]"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-medium text-[#374151]">RFP Reference</label>
+              <Input
+                type="text"
+                placeholder="e.g. RFP-2026-001"
+                value={rfpReference}
+                onChange={(e) => setRfpReference(e.target.value)}
+                className="h-8 border-[#E4E4E7] bg-white text-sm text-[#09090B] placeholder:text-[#9CA3AF]"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-medium text-[#374151]">Probability</label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  min={0}
+                  max={100}
+                  placeholder="0–100"
+                  value={probability}
+                  onChange={(e) => setProbability(e.target.value)}
+                  className="h-8 border-[#E4E4E7] bg-white pr-7 text-sm text-[#09090B] placeholder:text-[#9CA3AF]"
+                />
+                <span className="absolute top-1/2 right-3 -translate-y-1/2 text-sm text-[#374151]">
+                  %
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4">
+            <Button
+              size="sm"
+              onClick={handleSaveDealInfo}
+              disabled={isSavingDeal}
+              className="bg-[#435EBD] text-white hover:bg-[#3B52A8]"
+            >
+              Save Deal Info
+            </Button>
+          </div>
+        </section>
+
         {/* Section: Contacts */}
         <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">

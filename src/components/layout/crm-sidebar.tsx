@@ -21,7 +21,7 @@ import { toast } from "sonner";
 const navItems = [
   { href: "/schools", label: "Schools", icon: School },
   { href: "/pipeline", label: "Pipeline", icon: Kanban },
-  { href: "/opportunities", label: "Opportunities", icon: Target },
+  // { href: "/opportunities", label: "Opportunities", icon: Target },
   { href: "/districts", label: "Districts", icon: Building2 },
   { href: "/rfp", label: "RFP Radar", icon: FileText },
   { href: "/outreach", label: "Outreach", icon: MessageSquare },
