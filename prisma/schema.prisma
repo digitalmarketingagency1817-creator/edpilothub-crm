@@ -333,6 +333,11 @@ model SchoolPipelineStatus {
   nextFollowUpAt  DateTime?
   notes           String?   @db.Text
 
+  dealValue    Float?
+  closeDate    DateTime?
+  rfpReference String?
+  probability  Int?      // 0-100
+
   updatedAt DateTime @updatedAt
 
   @@index([stage])
