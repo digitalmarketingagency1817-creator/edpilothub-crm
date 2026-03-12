@@ -6,7 +6,7 @@ export const schoolRouter = createTRPCRouter({
   list: protectedProcedure
     .input(
       z.object({
-        limit: z.number().min(1).max(200).default(50),
+        limit: z.number().min(1).max(5000).default(50),
         page: z.number().min(1).default(1),
         search: z.string().optional(),
         schoolType: z.nativeEnum(SchoolType).optional(),
