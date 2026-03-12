@@ -1,11 +1,12 @@
 "use client";
 
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { keepPreviousData } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
-import { ExternalLink, Search, Kanban } from "lucide-react";
+import { toast } from "sonner";
+import { ExternalLink, Search, Kanban, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { PipelineStage } from "@/generated/prisma";
 
@@ -79,9 +80,22 @@ function SkeletonCard() {
 
 // ─── School Card ─────────────────────────────────────────────────────────────
 
-function SchoolCard({ school }: { school: School }) {
+function SchoolCard({ school, onRemoved }: { school: School; onRemoved?: () => void }) {
   const router = useRouter();
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
   const stage = school.pipelineStatus?.stage ?? PipelineStage.UNCONTACTED;
+
+  const { mutate: removeFromPipeline, isPending: isRemoving } = useMutation(
+    trpc.pipeline.remove.mutationOptions({
+      onSuccess: () => {
+        toast.success(`${school.name} removed from pipeline`);
+        void queryClient.invalidateQueries({ queryKey: trpc.school.list.queryKey() });
+        onRemoved?.();
+      },
+      onError: (err) => toast.error(err.message),
+    })
+  );
 
   const handleClick = () => {
     router.push(`/schools/${school.id}`);
@@ -94,23 +108,38 @@ function SchoolCard({ school }: { school: School }) {
     }
   };
 
+  const handleRemove = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    removeFromPipeline({ schoolId: school.id });
+  };
+
   return (
     <div
       onClick={handleClick}
-      className="mb-2 cursor-pointer rounded-lg border border-[#E4E4E7] bg-white p-3 transition-all hover:border-[#435EBD]/30 hover:shadow-md"
+      className="group mb-2 cursor-pointer rounded-lg border border-[#E4E4E7] bg-white p-3 transition-all hover:border-[#435EBD]/30 hover:shadow-md"
     >
       {/* School name */}
       <div className="mb-1 flex items-start justify-between gap-2">
         <p className="text-sm leading-tight font-semibold text-[#09090B]">{school.name}</p>
-        {school.website && (
+        <div className="mt-0.5 flex flex-shrink-0 items-center gap-1">
+          {school.website && (
+            <button
+              onClick={handleWebsite}
+              className="text-[#6B7280] hover:text-[#435EBD]"
+              title="Open website"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+            </button>
+          )}
           <button
-            onClick={handleWebsite}
-            className="mt-0.5 flex-shrink-0 text-[#6B7280] hover:text-[#435EBD]"
-            title="Open website"
+            onClick={handleRemove}
+            disabled={isRemoving}
+            title="Remove from pipeline"
+            className="text-[#9CA3AF] opacity-0 transition-opacity group-hover:opacity-100 hover:text-red-500 disabled:opacity-50"
           >
-            <ExternalLink className="h-3.5 w-3.5" />
+            <X className="h-3.5 w-3.5" />
           </button>
-        )}
+        </div>
       </div>
 
       {/* District */}
