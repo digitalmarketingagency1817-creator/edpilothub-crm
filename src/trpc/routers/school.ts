@@ -138,4 +138,15 @@ export const schoolRouter = createTRPCRouter({
       const { id, ...data } = input;
       return ctx.db.school.update({ where: { id }, data });
     }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      // Only admins can delete schools
+      const user = await ctx.db.user.findUniqueOrThrow({ where: { id: ctx.userId } });
+      if (user.role !== "ADMIN") {
+        throw new Error("Only admins can delete schools");
+      }
+      return ctx.db.school.delete({ where: { id: input.id } });
+    }),
 });

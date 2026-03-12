@@ -1,7 +1,7 @@
 "use client";
 
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useQueryState, parseAsInteger, parseAsString } from "nuqs";
 import {
   Table,
@@ -11,6 +11,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,11 +32,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "@/i18n/navigation";
-import { Search, ChevronLeft, ChevronRight, Plus, ExternalLink } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, Plus, ExternalLink, Trash2 } from "lucide-react";
 import { SchoolType, PipelineStage } from "@/generated/prisma";
 import { useSession } from "@/server/auth/client";
 import { AddSchoolDialog } from "./add-school-dialog";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const PIPELINE_STAGE_LABELS: Record<string, string> = {
   UNCONTACTED: "Uncontacted",
@@ -54,9 +65,25 @@ const PIPELINE_STAGE_COLORS: Record<string, string> = {
 
 export function SchoolsBrowser() {
   const trpc = useTRPC();
+  const queryClient = useQueryClient();
   const { data: session } = useSession();
   const isAdmin = (session?.user as { role?: string } | undefined)?.role === "ADMIN";
   const [showAdd, setShowAdd] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
+
+  const deleteMutation = useMutation(
+    trpc.school.delete.mutationOptions({
+      onSuccess: () => {
+        toast.success(`School deleted`);
+        setDeleteTarget(null);
+        void queryClient.invalidateQueries({ queryKey: trpc.school.list.queryKey() });
+      },
+      onError: (err) => {
+        toast.error(err.message ?? "Failed to delete school");
+        setDeleteTarget(null);
+      },
+    })
+  );
 
   const [search, setSearch] = useQueryState("q", parseAsString.withDefault(""));
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
@@ -302,15 +329,30 @@ export function SchoolsBrowser() {
                       : "—"}
                   </TableCell>
                   <TableCell>
-                    <Link href={`/schools/${school.id}` as Parameters<typeof Link>[0]["href"]}>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-8 px-2 text-[#374151] hover:text-[#09090B]"
-                      >
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </Button>
-                    </Link>
+                    <div className="flex items-center gap-1">
+                      <Link href={`/schools/${school.id}` as Parameters<typeof Link>[0]["href"]}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 px-2 text-[#374151] hover:text-[#09090B]"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </Button>
+                      </Link>
+                      {isAdmin && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 px-2 text-[#374151] hover:bg-red-50 hover:text-red-600"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDeleteTarget({ id: school.id, name: school.name });
+                          }}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      )}
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
@@ -351,6 +393,32 @@ export function SchoolsBrowser() {
       )}
 
       {showAdd && <AddSchoolDialog onClose={() => setShowAdd(false)} />}
+
+      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
+        <AlertDialogContent className="border-[#E4E4E7] bg-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-[#09090B]">Delete School</AlertDialogTitle>
+            <AlertDialogDescription className="text-[#374151]">
+              Are you sure you want to delete{" "}
+              <span className="font-semibold text-[#09090B]">{deleteTarget?.name}</span>? This will
+              permanently remove the school and all associated contacts, outreach logs, and pipeline
+              data. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-[#E4E4E7] bg-white text-[#09090B] hover:bg-[#F4F4F5]">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 text-white hover:bg-red-700"
+              onClick={() => deleteTarget && deleteMutation.mutate({ id: deleteTarget.id })}
+              disabled={deleteMutation.isPending}
+            >
+              {deleteMutation.isPending ? "Deleting…" : "Delete School"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
