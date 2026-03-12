@@ -6,7 +6,8 @@ export const pipelineRouter = createTRPCRouter({
   remove: protectedProcedure
     .input(z.object({ schoolId: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.schoolPipelineStatus.delete({
+      // deleteMany won't throw if no record exists (schools w/o a pipeline record show as UNCONTACTED)
+      return ctx.db.schoolPipelineStatus.deleteMany({
         where: { schoolId: input.schoolId },
       });
     }),
