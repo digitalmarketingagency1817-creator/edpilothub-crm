@@ -6,9 +6,19 @@ import { keepPreviousData } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
-import { ExternalLink, Search, Kanban, X } from "lucide-react";
+import { ExternalLink, Search, Kanban, X, UserCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { PipelineStage } from "@/generated/prisma";
+import { useSession } from "@/server/auth/client";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // ─── Stage Config ────────────────────────────────────────────────────────────
 
@@ -50,6 +60,13 @@ const PIPELINE_STAGE_COLORS: Record<PipelineStage, string> = {
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
+type TeamUser = {
+  id: string;
+  name: string | null;
+  email: string;
+  role: string;
+};
+
 type School = {
   id: string;
   name: string;
@@ -63,6 +80,7 @@ type School = {
     stage: PipelineStage;
     lastContactedAt?: Date | null;
     nextFollowUpAt?: Date | null;
+    assignedToId?: string | null;
   } | null;
 };
 
@@ -78,9 +96,114 @@ function SkeletonCard() {
   );
 }
 
+// ─── Initials helper ──────────────────────────────────────────────────────────
+
+function getInitials(name: string | null | undefined) {
+  if (!name) return "?";
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+}
+
+// ─── Assignee Popover ─────────────────────────────────────────────────────────
+
+function AssigneePopover({
+  school,
+  users,
+  onAssign,
+}: {
+  school: School;
+  users: TeamUser[];
+  onAssign: (userId: string | null) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const assignedToId = school.pipelineStatus?.assignedToId;
+  const assignee = assignedToId ? users.find((u) => u.id === assignedToId) : null;
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpen(true);
+          }}
+          title={
+            assignee ? `Assigned to ${assignee.name ?? assignee.email}` : "Assign to team member"
+          }
+          className="flex-shrink-0 focus:outline-none"
+        >
+          {assignee ? (
+            <div
+              className="flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold text-white"
+              style={{ backgroundColor: "#435EBD" }}
+            >
+              {getInitials(assignee.name)}
+            </div>
+          ) : (
+            <div className="flex h-6 w-6 items-center justify-center rounded-full border border-dashed border-[#9CA3AF] text-[#9CA3AF] opacity-0 transition-opacity group-hover:opacity-100">
+              <UserCheck className="h-3 w-3" />
+            </div>
+          )}
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className="w-52 p-1" onClick={(e) => e.stopPropagation()} align="end">
+        <button
+          className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-xs text-[#6B7280] hover:bg-[#F4F4F5]"
+          onClick={() => {
+            onAssign(null);
+            setOpen(false);
+          }}
+        >
+          Unassign
+        </button>
+        <div className="my-1 border-t border-[#F4F4F5]" />
+        {users.map((u) => (
+          <button
+            key={u.id}
+            className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-xs hover:bg-[#F4F4F5]"
+            onClick={() => {
+              onAssign(u.id);
+              setOpen(false);
+            }}
+          >
+            <div
+              className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full text-[9px] font-bold text-white"
+              style={{ backgroundColor: "#435EBD" }}
+            >
+              {getInitials(u.name)}
+            </div>
+            <span className="truncate text-[#09090B]">{u.name ?? u.email}</span>
+            <span
+              className={`ml-auto rounded-full px-1.5 py-0.5 text-[9px] font-medium ${
+                u.role === "ADMIN" ? "bg-blue-100 text-blue-700" : "bg-green-100 text-green-700"
+              }`}
+            >
+              {u.role === "ADMIN" ? "Admin" : "AS"}
+            </span>
+          </button>
+        ))}
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 // ─── School Card ─────────────────────────────────────────────────────────────
 
-function SchoolCard({ school, onRemoved }: { school: School; onRemoved?: () => void }) {
+function SchoolCard({
+  school,
+  users,
+  onAssign,
+  onRemoved,
+}: {
+  school: School;
+  users: TeamUser[];
+  onAssign: (schoolId: string, userId: string | null) => void;
+  onRemoved?: () => void;
+}) {
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -152,7 +275,7 @@ function SchoolCard({ school, onRemoved }: { school: School; onRemoved?: () => v
         </p>
       )}
 
-      {/* Grade range + student count */}
+      {/* Grade range + student count + stage badge + assignee */}
       <div className="flex flex-wrap items-center gap-1.5">
         {school.gradeRange && (
           <span className="rounded bg-[#F4F4F5] px-1.5 py-0.5 text-[10px] font-medium text-[#374151]">
@@ -169,6 +292,13 @@ function SchoolCard({ school, onRemoved }: { school: School; onRemoved?: () => v
         >
           {PIPELINE_STAGE_LABELS[stage]}
         </span>
+        <div className="ml-auto">
+          <AssigneePopover
+            school={school}
+            users={users}
+            onAssign={(uid) => onAssign(school.id, uid)}
+          />
+        </div>
       </div>
     </div>
   );
@@ -179,11 +309,15 @@ function SchoolCard({ school, onRemoved }: { school: School; onRemoved?: () => v
 function KanbanColumn({
   stage,
   schools,
+  users,
   isLoading,
+  onAssign,
 }: {
   stage: PipelineStage;
   schools: School[];
+  users: TeamUser[];
   isLoading: boolean;
+  onAssign: (schoolId: string, userId: string | null) => void;
 }) {
   return (
     <div className="flex w-72 flex-shrink-0 flex-col rounded-xl border border-[#E4E4E7] bg-white shadow-sm">
@@ -206,7 +340,7 @@ function KanbanColumn({
         ) : schools.length === 0 ? (
           <p className="py-4 text-center text-xs text-[#9CA3AF]">No schools</p>
         ) : (
-          schools.map((s) => <SchoolCard key={s.id} school={s} />)
+          schools.map((s) => <SchoolCard key={s.id} school={s} users={users} onAssign={onAssign} />)
         )}
       </div>
     </div>
@@ -272,20 +406,54 @@ function MobileStageSection({
 
 export function PipelineClient() {
   const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  const { data: session } = useSession();
+  const currentUserId = (session?.user as { id?: string } | undefined)?.id;
+
   const [search, setSearch] = useState("");
+  const [myCards, setMyCards] = useState(false);
+  const [agentFilter, setAgentFilter] = useState<string>("all");
 
   const { data, isLoading } = useQuery({
     ...trpc.school.list.queryOptions({ limit: 5000, page: 1 }),
     placeholderData: keepPreviousData,
   });
 
+  const { data: usersData } = useQuery(trpc.user.list.queryOptions());
+  const users: TeamUser[] = (usersData ?? []) as TeamUser[];
+
+  const { mutate: upsertPipeline } = useMutation(
+    trpc.pipeline.upsert.mutationOptions({
+      onSuccess: () => {
+        void queryClient.invalidateQueries({ queryKey: trpc.school.list.queryKey() });
+      },
+      onError: (err) => toast.error(err.message),
+    })
+  );
+
+  const handleAssign = (schoolId: string, userId: string | null) => {
+    const school = allSchools.find((s) => s.id === schoolId);
+    const stage = school?.pipelineStatus?.stage ?? PipelineStage.UNCONTACTED;
+    upsertPipeline({ schoolId, stage, assignedToId: userId });
+  };
+
   const allSchools = (data?.schools ?? []) as School[];
 
-  // Group by pipeline stage (schools without pipelineStatus → UNCONTACTED)
+  // Group by pipeline stage with search + filter
   const grouped = useMemo(() => {
     const q = search.toLowerCase().trim();
 
-    const filtered = q ? allSchools.filter((s) => s.name.toLowerCase().includes(q)) : allSchools;
+    let filtered = q ? allSchools.filter((s) => s.name.toLowerCase().includes(q)) : allSchools;
+
+    // "My Cards" filter
+    if (myCards && currentUserId) {
+      filtered = filtered.filter((s) => s.pipelineStatus?.assignedToId === currentUserId);
+    }
+
+    // Agent filter (AND with myCards)
+    if (agentFilter !== "all") {
+      filtered = filtered.filter((s) => s.pipelineStatus?.assignedToId === agentFilter);
+    }
 
     const map: Record<PipelineStage, School[]> = {} as Record<PipelineStage, School[]>;
     for (const stage of PIPELINE_STAGES) {
@@ -300,7 +468,7 @@ export function PipelineClient() {
     }
 
     return map;
-  }, [allSchools, search]);
+  }, [allSchools, search, myCards, agentFilter, currentUserId]);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F3F4F6]">
@@ -317,15 +485,52 @@ export function PipelineClient() {
             </div>
           </div>
 
-          {/* Search */}
-          <div className="relative w-full sm:w-72">
-            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#9CA3AF]" />
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Filter by school name…"
-              className="pl-9 text-sm"
-            />
+          {/* Filters */}
+          <div className="flex flex-wrap items-center gap-2">
+            {/* My Cards toggle */}
+            <Button
+              variant={myCards ? "default" : "outline"}
+              size="sm"
+              className="text-xs"
+              onClick={() => {
+                setMyCards((v) => !v);
+                if (!myCards) setAgentFilter("all"); // reset agent filter when enabling my cards
+              }}
+            >
+              My Cards
+            </Button>
+
+            {/* Agent filter */}
+            <Select
+              value={agentFilter}
+              onValueChange={(v) => {
+                setAgentFilter(v);
+                if (v !== "all") setMyCards(false); // reset myCards when selecting specific agent
+              }}
+            >
+              <SelectTrigger className="h-8 w-40 text-xs">
+                <SelectValue placeholder="All agents" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All agents</SelectItem>
+                {users.map((u) => (
+                  <SelectItem key={u.id} value={u.id}>
+                    {u.name ?? u.email}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Search */}
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#9CA3AF]" />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Filter by school name…"
+                className="pl-9 text-sm"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -338,7 +543,9 @@ export function PipelineClient() {
               key={stage}
               stage={stage}
               schools={grouped[stage] ?? []}
+              users={users}
               isLoading={isLoading}
+              onAssign={handleAssign}
             />
           ))}
         </div>
