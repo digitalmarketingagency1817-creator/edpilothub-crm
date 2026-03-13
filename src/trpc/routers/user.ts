@@ -3,6 +3,13 @@ import { createTRPCRouter, protectedProcedure } from "../init";
 import { UserRole } from "@/generated/prisma";
 
 export const userRouter = createTRPCRouter({
+  me: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.user.findUniqueOrThrow({
+      where: { id: ctx.userId },
+      select: { id: true, name: true, email: true, role: true },
+    });
+  }),
+
   list: protectedProcedure.query(async ({ ctx }) => {
     return ctx.db.user.findMany({
       select: { id: true, name: true, email: true, role: true, createdAt: true },
