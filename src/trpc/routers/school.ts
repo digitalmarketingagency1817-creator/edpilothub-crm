@@ -14,11 +14,27 @@ export const schoolRouter = createTRPCRouter({
         techDetected: z.boolean().optional(),
         county: z.string().optional(),
         state: z.string().optional(),
+        assignedToId: z.string().optional(),
+        myCards: z.boolean().optional(),
       })
     )
     .query(async ({ ctx, input }) => {
-      const { limit, page, search, schoolType, pipelineStage, techDetected, county, state } = input;
+      const {
+        limit,
+        page,
+        search,
+        schoolType,
+        pipelineStage,
+        techDetected,
+        county,
+        state,
+        assignedToId,
+        myCards,
+      } = input;
       const skip = (page - 1) * limit;
+
+      // Determine effective assignedToId filter
+      const effectiveAssignedToId = myCards ? ctx.userId : assignedToId;
 
       const where = {
         ...(search && {
@@ -39,6 +55,12 @@ export const schoolRouter = createTRPCRouter({
         ...(pipelineStage && {
           pipelineStatus: { stage: pipelineStage },
         }),
+        ...(effectiveAssignedToId && {
+          pipelineStatus: {
+            ...(pipelineStage ? { stage: pipelineStage } : {}),
+            assignedToId: effectiveAssignedToId,
+          },
+        }),
       };
 
       const [schools, total] = await Promise.all([
@@ -50,7 +72,12 @@ export const schoolRouter = createTRPCRouter({
           include: {
             district: { select: { id: true, name: true } },
             pipelineStatus: {
-              select: { stage: true, lastContactedAt: true, nextFollowUpAt: true },
+              select: {
+                stage: true,
+                lastContactedAt: true,
+                nextFollowUpAt: true,
+                assignedToId: true,
+              },
             },
           },
         }),

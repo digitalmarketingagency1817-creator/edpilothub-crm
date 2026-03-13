@@ -32,6 +32,7 @@ export const pipelineRouter = createTRPCRouter({
         closeDate: z.coerce.date().optional().nullable(),
         rfpReference: z.string().optional().nullable(),
         probability: z.number().min(0).max(100).optional().nullable(),
+        assignedToId: z.string().optional().nullable(),
       })
     )
     .mutation(async ({ ctx, input }) => {

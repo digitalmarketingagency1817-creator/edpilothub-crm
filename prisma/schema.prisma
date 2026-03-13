@@ -11,7 +11,7 @@ datasource db {
 
 enum UserRole {
   ADMIN
-  AGENT
+  APPOINTMENT_SETTER
 }
 
 enum SchoolType {
@@ -106,7 +106,7 @@ model User {
   email         String   @unique
   emailVerified Boolean  @default(false)
   image         String?
-  role          UserRole @default(AGENT)
+  role          UserRole @default(APPOINTMENT_SETTER)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -120,6 +120,7 @@ model User {
   schoolPipelineItems  SchoolPipelineStatus[]
   schoolNotes          SchoolNote[]
   opportunities        Opportunity[]
+  pipelineAssignments  SchoolPipelineStatus[] @relation("PipelineAssignments")
 }
 
 model Session {
@@ -327,6 +328,9 @@ model SchoolPipelineStatus {
   agentId String?
   agent   User?   @relation(fields: [agentId], references: [id], onDelete: SetNull)
 
+  assignedToId String?
+  assignedTo   User?   @relation("PipelineAssignments", fields: [assignedToId], references: [id], onDelete: SetNull)
+
   stage PipelineStage @default(UNCONTACTED)
 
   lastContactedAt DateTime?
@@ -342,6 +346,7 @@ model SchoolPipelineStatus {
 
   @@index([stage])
   @@index([agentId])
+  @@index([assignedToId])
   @@index([nextFollowUpAt])
 }
 

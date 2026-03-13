@@ -14,6 +14,7 @@ import {
   Kanban,
   Target,
   BookOpen,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -23,6 +24,7 @@ const navItems = [
   { href: "/schools", label: "Schools", icon: School },
   { href: "/pipeline", label: "Pipeline", icon: Kanban },
   { href: "/playbook", label: "Playbook", icon: BookOpen },
+  { href: "/team", label: "Team", icon: Users },
   // { href: "/opportunities", label: "Opportunities", icon: Target },
   { href: "/districts", label: "Districts", icon: Building2 },
   { href: "/rfp", label: "RFP Radar", icon: FileText },
