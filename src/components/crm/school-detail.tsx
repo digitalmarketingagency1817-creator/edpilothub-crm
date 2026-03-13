@@ -31,6 +31,8 @@ import {
   Trash2,
   DollarSign,
 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CallGuide } from "./call-guide";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -257,345 +259,377 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
         </div>
       </div>
 
-      <div className="space-y-4 px-4 py-6 md:px-6">
-        {/* Section: School Info */}
-        <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
-          <h2 className="mb-4 text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
-            School Info
-          </h2>
-
-          {/* Stat cards */}
-          <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {school.studentCount != null && (
-              <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
-                <div className="flex items-center gap-1.5 text-[#374151]">
-                  <Users className="h-3.5 w-3.5" />
-                  <span className="text-xs">Enrollment</span>
-                </div>
-                <p className="mt-1 text-lg font-semibold text-[#09090B]">
-                  {school.studentCount.toLocaleString()}
-                </p>
-              </div>
-            )}
-            {school.gradeRange && (
-              <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
-                <div className="flex items-center gap-1.5 text-[#374151]">
-                  <GraduationCap className="h-3.5 w-3.5" />
-                  <span className="text-xs">Grades</span>
-                </div>
-                <p className="mt-1 text-lg font-semibold text-[#09090B]">{school.gradeRange}</p>
-              </div>
-            )}
-            <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
-              <div className="flex items-center gap-1.5 text-[#374151]">
-                <Building2 className="h-3.5 w-3.5" />
-                <span className="text-xs">Type</span>
-              </div>
-              <p className="mt-1 text-sm font-semibold text-[#09090B]">{school.schoolType}</p>
-            </div>
-            {school.district && (
-              <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
-                <div className="flex items-center gap-1.5 text-[#374151]">
-                  <Building2 className="h-3.5 w-3.5" />
-                  <span className="text-xs">District</span>
-                </div>
-                <p className="mt-1 truncate text-sm font-medium text-[#09090B]">
-                  {school.district.name}
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Detail rows */}
-          <div className="flex flex-col gap-2 text-sm">
-            {school.address && (
-              <div className="flex items-start gap-2 text-[#09090B]">
-                <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#374151]" />
-                <span>
-                  {school.address}
-                  {school.zipCode ? ` ${school.zipCode}` : ""}
-                </span>
-              </div>
-            )}
-            {school.phone && (
-              <div className="flex items-center gap-2 text-[#09090B]">
-                <Phone className="h-4 w-4 flex-shrink-0 text-[#374151]" />
-                <a href={`tel:${school.phone}`} className="hover:text-[#435EBD]">
-                  {school.phone}
-                </a>
-              </div>
-            )}
-            {school.email && (
-              <div className="flex items-center gap-2 text-[#09090B]">
-                <Mail className="h-4 w-4 flex-shrink-0 text-[#374151]" />
-                <a href={`mailto:${school.email}`} className="truncate hover:text-[#435EBD]">
-                  {school.email}
-                </a>
-              </div>
-            )}
-            {/* Website — editable */}
-            <div className="flex items-center gap-2 text-[#09090B]">
-              <Globe className="h-4 w-4 flex-shrink-0 text-[#374151]" />
-              {isEditingWebsite ? (
-                <div className="flex flex-1 items-center gap-2">
-                  <Input
-                    value={websiteValue}
-                    onChange={(e) => setWebsiteValue(e.target.value)}
-                    placeholder="https://school.example.com"
-                    className="h-7 flex-1 border-[#E4E4E7] bg-white text-sm text-[#09090B] placeholder:text-[#374151]"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") handleSaveWebsite();
-                      if (e.key === "Escape") handleCancelWebsite();
-                    }}
-                    autoFocus
-                  />
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={handleSaveWebsite}
-                    disabled={isUpdatingWebsite}
-                    className="h-7 w-7 p-0 text-green-400 hover:text-green-300"
-                  >
-                    <Check className="h-3.5 w-3.5" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={handleCancelWebsite}
-                    className="h-7 w-7 p-0 text-[#374151] hover:text-[#09090B]"
-                  >
-                    <X className="h-3.5 w-3.5" />
-                  </Button>
-                </div>
-              ) : school.website ? (
-                <div className="flex flex-1 items-center gap-2">
-                  <a
-                    href={school.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-1 truncate hover:text-[#435EBD]"
-                  >
-                    {school.website}
-                    <ExternalLink className="h-3 w-3 flex-shrink-0" />
-                  </a>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => {
-                      setWebsiteValue(school.website ?? "");
-                      setIsEditingWebsite(true);
-                    }}
-                    className="h-6 w-6 p-0 text-[#374151] hover:text-[#09090B]"
-                  >
-                    <Pencil className="h-3 w-3" />
-                  </Button>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <span className="text-[#374151]">—</span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => {
-                      setWebsiteValue("");
-                      setIsEditingWebsite(true);
-                    }}
-                    className="h-6 px-2 text-xs text-[#374151] hover:text-[#435EBD]"
-                  >
-                    <Pencil className="mr-1 h-3 w-3" />
-                    Add website
-                  </Button>
-                </div>
-              )}
-            </div>
-            {school.techStack && (
-              <div className="flex items-center gap-2">
-                <span className="text-xs tracking-wider text-[#4B5563] uppercase">Tech Stack:</span>
-                <span className="text-sm text-emerald-400">{school.techStack}</span>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Section: Deal Info */}
-        <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
-          <h2 className="mb-4 flex items-center gap-2 text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
-            <DollarSign className="h-3.5 w-3.5" />
-            Deal Info
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-[#374151]">Deal Value</label>
-              <div className="relative">
-                <span className="absolute top-1/2 left-3 -translate-y-1/2 text-sm text-[#374151]">
-                  $
-                </span>
-                <Input
-                  type="number"
-                  placeholder="e.g. 14400"
-                  value={dealValue}
-                  onChange={(e) => setDealValue(e.target.value)}
-                  className="h-8 border-[#E4E4E7] bg-white pl-6 text-sm text-[#09090B] placeholder:text-[#9CA3AF]"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-[#374151]">Close Date</label>
-              <Input
-                type="date"
-                value={closeDate}
-                onChange={(e) => setCloseDate(e.target.value)}
-                className="h-8 border-[#E4E4E7] bg-white text-sm text-[#09090B]"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-[#374151]">RFP Reference</label>
-              <Input
-                type="text"
-                placeholder="e.g. RFP-2026-001"
-                value={rfpReference}
-                onChange={(e) => setRfpReference(e.target.value)}
-                className="h-8 border-[#E4E4E7] bg-white text-sm text-[#09090B] placeholder:text-[#9CA3AF]"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-[#374151]">Probability</label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  min={0}
-                  max={100}
-                  placeholder="0–100"
-                  value={probability}
-                  onChange={(e) => setProbability(e.target.value)}
-                  className="h-8 border-[#E4E4E7] bg-white pr-7 text-sm text-[#09090B] placeholder:text-[#9CA3AF]"
-                />
-                <span className="absolute top-1/2 right-3 -translate-y-1/2 text-sm text-[#374151]">
-                  %
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="mt-4">
-            <Button
-              size="sm"
-              onClick={handleSaveDealInfo}
-              disabled={isSavingDeal}
-              className="bg-[#435EBD] text-white hover:bg-[#3B52A8]"
+      <div className="px-4 py-6 md:px-6">
+        <Tabs defaultValue="details" className="space-y-4">
+          <TabsList className="bg-white shadow-sm">
+            <TabsTrigger
+              value="details"
+              className="text-xs data-[state=active]:bg-[#435EBD] data-[state=active]:text-white"
             >
-              Save Deal Info
-            </Button>
-          </div>
-        </section>
-
-        {/* Section: Contacts */}
-        <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
-              Contacts
-              {school.contacts.length > 0 && (
-                <span className="ml-2 text-[#435EBD] normal-case">({school.contacts.length})</span>
-              )}
-            </h2>
-            <button
-              onClick={() => setShowAddContact(true)}
-              className="text-xs text-[#435EBD] hover:text-[#6247AA]"
+              School Details
+            </TabsTrigger>
+            <TabsTrigger
+              value="call-guide"
+              className="gap-1.5 text-xs data-[state=active]:bg-[#435EBD] data-[state=active]:text-white"
             >
-              + Add
-            </button>
-          </div>
-          {school.contacts.length === 0 ? (
-            <p className="text-sm text-[#374151]">No contacts yet.</p>
-          ) : (
-            <div className="flex flex-col gap-2">
-              {school.contacts.map((contact) => (
-                <div key={contact.id} className="rounded-lg border border-[#E4E4E7] bg-white p-3">
+              <Phone className="h-3.5 w-3.5" />
+              Call Guide
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="details" className="space-y-4">
+            {/* Section: School Info */}
+            <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
+                School Info
+              </h2>
+
+              {/* Stat cards */}
+              <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {school.studentCount != null && (
+                  <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
+                    <div className="flex items-center gap-1.5 text-[#374151]">
+                      <Users className="h-3.5 w-3.5" />
+                      <span className="text-xs">Enrollment</span>
+                    </div>
+                    <p className="mt-1 text-lg font-semibold text-[#09090B]">
+                      {school.studentCount.toLocaleString()}
+                    </p>
+                  </div>
+                )}
+                {school.gradeRange && (
+                  <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
+                    <div className="flex items-center gap-1.5 text-[#374151]">
+                      <GraduationCap className="h-3.5 w-3.5" />
+                      <span className="text-xs">Grades</span>
+                    </div>
+                    <p className="mt-1 text-lg font-semibold text-[#09090B]">{school.gradeRange}</p>
+                  </div>
+                )}
+                <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
+                  <div className="flex items-center gap-1.5 text-[#374151]">
+                    <Building2 className="h-3.5 w-3.5" />
+                    <span className="text-xs">Type</span>
+                  </div>
+                  <p className="mt-1 text-sm font-semibold text-[#09090B]">{school.schoolType}</p>
+                </div>
+                {school.district && (
+                  <div className="rounded-lg border border-[#E4E4E7] bg-white p-3">
+                    <div className="flex items-center gap-1.5 text-[#374151]">
+                      <Building2 className="h-3.5 w-3.5" />
+                      <span className="text-xs">District</span>
+                    </div>
+                    <p className="mt-1 truncate text-sm font-medium text-[#09090B]">
+                      {school.district.name}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Detail rows */}
+              <div className="flex flex-col gap-2 text-sm">
+                {school.address && (
+                  <div className="flex items-start gap-2 text-[#09090B]">
+                    <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#374151]" />
+                    <span>
+                      {school.address}
+                      {school.zipCode ? ` ${school.zipCode}` : ""}
+                    </span>
+                  </div>
+                )}
+                {school.phone && (
+                  <div className="flex items-center gap-2 text-[#09090B]">
+                    <Phone className="h-4 w-4 flex-shrink-0 text-[#374151]" />
+                    <a href={`tel:${school.phone}`} className="hover:text-[#435EBD]">
+                      {school.phone}
+                    </a>
+                  </div>
+                )}
+                {school.email && (
+                  <div className="flex items-center gap-2 text-[#09090B]">
+                    <Mail className="h-4 w-4 flex-shrink-0 text-[#374151]" />
+                    <a href={`mailto:${school.email}`} className="truncate hover:text-[#435EBD]">
+                      {school.email}
+                    </a>
+                  </div>
+                )}
+                {/* Website — editable */}
+                <div className="flex items-center gap-2 text-[#09090B]">
+                  <Globe className="h-4 w-4 flex-shrink-0 text-[#374151]" />
+                  {isEditingWebsite ? (
+                    <div className="flex flex-1 items-center gap-2">
+                      <Input
+                        value={websiteValue}
+                        onChange={(e) => setWebsiteValue(e.target.value)}
+                        placeholder="https://school.example.com"
+                        className="h-7 flex-1 border-[#E4E4E7] bg-white text-sm text-[#09090B] placeholder:text-[#374151]"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") handleSaveWebsite();
+                          if (e.key === "Escape") handleCancelWebsite();
+                        }}
+                        autoFocus
+                      />
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={handleSaveWebsite}
+                        disabled={isUpdatingWebsite}
+                        className="h-7 w-7 p-0 text-green-400 hover:text-green-300"
+                      >
+                        <Check className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={handleCancelWebsite}
+                        className="h-7 w-7 p-0 text-[#374151] hover:text-[#09090B]"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
+                  ) : school.website ? (
+                    <div className="flex flex-1 items-center gap-2">
+                      <a
+                        href={school.website}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-1 truncate hover:text-[#435EBD]"
+                      >
+                        {school.website}
+                        <ExternalLink className="h-3 w-3 flex-shrink-0" />
+                      </a>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => {
+                          setWebsiteValue(school.website ?? "");
+                          setIsEditingWebsite(true);
+                        }}
+                        className="h-6 w-6 p-0 text-[#374151] hover:text-[#09090B]"
+                      >
+                        <Pencil className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <span className="text-[#374151]">—</span>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => {
+                          setWebsiteValue("");
+                          setIsEditingWebsite(true);
+                        }}
+                        className="h-6 px-2 text-xs text-[#374151] hover:text-[#435EBD]"
+                      >
+                        <Pencil className="mr-1 h-3 w-3" />
+                        Add website
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                {school.techStack && (
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-[#09090B]">{contact.name}</span>
-                    {contact.isPrimary && (
-                      <Badge className="h-4 bg-[#EEF2FF] px-1.5 text-[10px] text-[#435EBD]">
-                        Primary
-                      </Badge>
-                    )}
+                    <span className="text-xs tracking-wider text-[#4B5563] uppercase">
+                      Tech Stack:
+                    </span>
+                    <span className="text-sm text-emerald-400">{school.techStack}</span>
                   </div>
-                  {contact.title && <p className="text-xs text-[#374151]">{contact.title}</p>}
-                  <div className="mt-1 flex flex-wrap gap-3 text-xs text-[#374151]">
-                    {contact.email && (
-                      <a href={`mailto:${contact.email}`} className="hover:text-[#435EBD]">
-                        {contact.email}
-                      </a>
-                    )}
-                    {contact.phone && (
-                      <a href={`tel:${contact.phone}`} className="hover:text-[#435EBD]">
-                        {contact.phone}
-                      </a>
-                    )}
+                )}
+              </div>
+            </section>
+
+            {/* Section: Deal Info */}
+            <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
+              <h2 className="mb-4 flex items-center gap-2 text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
+                <DollarSign className="h-3.5 w-3.5" />
+                Deal Info
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-[#374151]">Deal Value</label>
+                  <div className="relative">
+                    <span className="absolute top-1/2 left-3 -translate-y-1/2 text-sm text-[#374151]">
+                      $
+                    </span>
+                    <Input
+                      type="number"
+                      placeholder="e.g. 14400"
+                      value={dealValue}
+                      onChange={(e) => setDealValue(e.target.value)}
+                      className="h-8 border-[#E4E4E7] bg-white pl-6 text-sm text-[#09090B] placeholder:text-[#9CA3AF]"
+                    />
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </section>
-        {/* Section: Outreach History */}
-        <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
-              Outreach History
-              {school.outreachLogs.length > 0 && (
-                <span className="ml-2 text-[#435EBD] normal-case">
-                  ({school.outreachLogs.length})
-                </span>
-              )}
-            </h2>
-            <button
-              onClick={() => setShowLogOutreach(true)}
-              className="text-xs text-[#435EBD] hover:text-[#6247AA]"
-            >
-              + Log
-            </button>
-          </div>
-          {school.outreachLogs.length === 0 ? (
-            <p className="text-sm text-[#374151]">No outreach recorded yet.</p>
-          ) : (
-            <div className="flex flex-col gap-2">
-              {school.outreachLogs.map((log) => (
-                <div
-                  key={log.id}
-                  className="rounded-lg border border-[#E4E4E7] bg-white p-3 text-sm"
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-[#374151]">Close Date</label>
+                  <Input
+                    type="date"
+                    value={closeDate}
+                    onChange={(e) => setCloseDate(e.target.value)}
+                    className="h-8 border-[#E4E4E7] bg-white text-sm text-[#09090B]"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-[#374151]">RFP Reference</label>
+                  <Input
+                    type="text"
+                    placeholder="e.g. RFP-2026-001"
+                    value={rfpReference}
+                    onChange={(e) => setRfpReference(e.target.value)}
+                    className="h-8 border-[#E4E4E7] bg-white text-sm text-[#09090B] placeholder:text-[#9CA3AF]"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-[#374151]">Probability</label>
+                  <div className="relative">
+                    <Input
+                      type="number"
+                      min={0}
+                      max={100}
+                      placeholder="0–100"
+                      value={probability}
+                      onChange={(e) => setProbability(e.target.value)}
+                      className="h-8 border-[#E4E4E7] bg-white pr-7 text-sm text-[#09090B] placeholder:text-[#9CA3AF]"
+                    />
+                    <span className="absolute top-1/2 right-3 -translate-y-1/2 text-sm text-[#374151]">
+                      %
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4">
+                <Button
+                  size="sm"
+                  onClick={handleSaveDealInfo}
+                  disabled={isSavingDeal}
+                  className="bg-[#435EBD] text-white hover:bg-[#3B52A8]"
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-medium text-[#09090B] capitalize">
-                          {log.type.toLowerCase()}
-                        </span>
-                        <Badge
-                          variant="outline"
-                          className="h-4 border-[#E4E4E7] px-1.5 text-[10px] text-[#374151]"
-                        >
-                          {log.outcome != null
-                            ? (OUTREACH_OUTCOME_LABELS[String(log.outcome)] ?? String(log.outcome))
-                            : "—"}
-                        </Badge>
-                        {log.contact && (
-                          <span className="text-[#374151]">with {log.contact.name}</span>
+                  Save Deal Info
+                </Button>
+              </div>
+            </section>
+
+            {/* Section: Contacts */}
+            <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
+                  Contacts
+                  {school.contacts.length > 0 && (
+                    <span className="ml-2 text-[#435EBD] normal-case">
+                      ({school.contacts.length})
+                    </span>
+                  )}
+                </h2>
+                <button
+                  onClick={() => setShowAddContact(true)}
+                  className="text-xs text-[#435EBD] hover:text-[#6247AA]"
+                >
+                  + Add
+                </button>
+              </div>
+              {school.contacts.length === 0 ? (
+                <p className="text-sm text-[#374151]">No contacts yet.</p>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  {school.contacts.map((contact) => (
+                    <div
+                      key={contact.id}
+                      className="rounded-lg border border-[#E4E4E7] bg-white p-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-[#09090B]">{contact.name}</span>
+                        {contact.isPrimary && (
+                          <Badge className="h-4 bg-[#EEF2FF] px-1.5 text-[10px] text-[#435EBD]">
+                            Primary
+                          </Badge>
                         )}
                       </div>
-                      {log.subject && <p className="mt-0.5 text-[#374151]">{log.subject}</p>}
-                      {log.notes && (
-                        <p className="mt-1 line-clamp-2 text-xs text-[#374151]">{log.notes}</p>
-                      )}
+                      {contact.title && <p className="text-xs text-[#374151]">{contact.title}</p>}
+                      <div className="mt-1 flex flex-wrap gap-3 text-xs text-[#374151]">
+                        {contact.email && (
+                          <a href={`mailto:${contact.email}`} className="hover:text-[#435EBD]">
+                            {contact.email}
+                          </a>
+                        )}
+                        {contact.phone && (
+                          <a href={`tel:${contact.phone}`} className="hover:text-[#435EBD]">
+                            {contact.phone}
+                          </a>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex flex-shrink-0 items-center gap-1 text-xs text-[#374151]">
-                      <Clock className="h-3 w-3" />
-                      {new Date(log.createdAt).toLocaleDateString()}
-                    </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
-        </section>
+              )}
+            </section>
+            {/* Section: Outreach History */}
+            <section className="rounded-xl border border-[#E4E4E7] bg-white p-5 shadow-sm">
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-xs font-semibold tracking-wider text-[#4B5563] uppercase">
+                  Outreach History
+                  {school.outreachLogs.length > 0 && (
+                    <span className="ml-2 text-[#435EBD] normal-case">
+                      ({school.outreachLogs.length})
+                    </span>
+                  )}
+                </h2>
+                <button
+                  onClick={() => setShowLogOutreach(true)}
+                  className="text-xs text-[#435EBD] hover:text-[#6247AA]"
+                >
+                  + Log
+                </button>
+              </div>
+              {school.outreachLogs.length === 0 ? (
+                <p className="text-sm text-[#374151]">No outreach recorded yet.</p>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  {school.outreachLogs.map((log) => (
+                    <div
+                      key={log.id}
+                      className="rounded-lg border border-[#E4E4E7] bg-white p-3 text-sm"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="font-medium text-[#09090B] capitalize">
+                              {log.type.toLowerCase()}
+                            </span>
+                            <Badge
+                              variant="outline"
+                              className="h-4 border-[#E4E4E7] px-1.5 text-[10px] text-[#374151]"
+                            >
+                              {log.outcome != null
+                                ? (OUTREACH_OUTCOME_LABELS[String(log.outcome)] ??
+                                  String(log.outcome))
+                                : "—"}
+                            </Badge>
+                            {log.contact && (
+                              <span className="text-[#374151]">with {log.contact.name}</span>
+                            )}
+                          </div>
+                          {log.subject && <p className="mt-0.5 text-[#374151]">{log.subject}</p>}
+                          {log.notes && (
+                            <p className="mt-1 line-clamp-2 text-xs text-[#374151]">{log.notes}</p>
+                          )}
+                        </div>
+                        <div className="flex flex-shrink-0 items-center gap-1 text-xs text-[#374151]">
+                          <Clock className="h-3 w-3" />
+                          {new Date(log.createdAt).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          </TabsContent>
+
+          <TabsContent value="call-guide" className="space-y-4">
+            <CallGuide school={school} />
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Dialogs */}
