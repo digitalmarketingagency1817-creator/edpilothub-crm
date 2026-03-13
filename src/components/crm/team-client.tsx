@@ -160,9 +160,11 @@ export function TeamClient() {
   const [showAddDialog, setShowAddDialog] = useState(false);
 
   const currentUser = session?.user as { id: string; role?: string } | undefined;
-  const isAdmin = currentUser?.role === "ADMIN";
 
   const { data: users, isLoading } = useQuery(trpc.user.list.queryOptions());
+
+  // Check admin from DB list (not session cache) so role changes take effect immediately
+  const isAdmin = users?.some((u) => u.id === currentUser?.id && u.role === "ADMIN") ?? false;
 
   const { mutate: deleteUser } = useMutation(
     trpc.user.delete.mutationOptions({
