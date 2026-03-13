@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { SignInForm } from "@/components/forms/sign-in-form";
 import { auth } from "@/server/auth";
 import Image from "next/image";
@@ -17,19 +17,16 @@ export default async function SignInPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-[#F3F4F6]">
-      <div className="mb-8">
-        <Image
-          src="/logo.jpg"
-          alt="EdPilotHub"
-          width={180}
-          height={48}
-          className="h-12 w-auto object-contain"
-          priority
-        />
-      </div>
       <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-[#09090B]">Welcome back</CardTitle>
+        <CardHeader className="flex flex-col items-center text-center">
+          <Image
+            src="/logo.jpg"
+            alt="EdPilotHub"
+            width={200}
+            height={52}
+            className="mb-2 h-13 w-auto object-contain"
+            priority
+          />
           <CardDescription className="text-[#6B7280]">Sign in to your CRM account</CardDescription>
         </CardHeader>
         <CardContent>
