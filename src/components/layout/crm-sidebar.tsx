@@ -16,6 +16,7 @@ import {
   Target,
   BookOpen,
   Users,
+  ScanSearch,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -32,7 +33,10 @@ const navItems = [
   { href: "/outreach", label: "Outreach", icon: MessageSquare },
 ];
 
-const adminItems = [{ href: "/settings", label: "Settings", icon: Settings }];
+const adminItems = [
+  { href: "/scan", label: "Website Scanner", icon: ScanSearch },
+  { href: "/settings", label: "Settings", icon: Settings },
+];
 
 interface CRMSidebarProps {
   onClose?: () => void;
