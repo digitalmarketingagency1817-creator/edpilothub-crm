@@ -436,6 +436,36 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                     <span className="text-sm text-emerald-400">{school.techStack}</span>
                   </div>
                 )}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs tracking-wider text-[#4B5563] uppercase">Platform:</span>
+                  {(school as unknown as { websitePlatform: string | null }).websitePlatform &&
+                  (school as unknown as { websitePlatform: string | null }).websitePlatform !==
+                    "Unknown" ? (
+                    <Badge
+                      variant="outline"
+                      className={
+                        {
+                          Finalsite: "border-blue-200 bg-blue-50 text-blue-700",
+                          WordPress: "border-gray-200 bg-gray-100 text-gray-600",
+                          Blackboard: "border-purple-200 bg-purple-50 text-purple-700",
+                          Edlio: "border-green-200 bg-green-50 text-green-700",
+                          Apptegy: "border-orange-200 bg-orange-50 text-orange-700",
+                          Wix: "border-yellow-200 bg-yellow-50 text-yellow-700",
+                          Squarespace: "border-pink-200 bg-pink-50 text-pink-700",
+                          Drupal: "border-indigo-200 bg-indigo-50 text-indigo-700",
+                          CivicPlus: "border-violet-200 bg-violet-50 text-violet-700",
+                          SchoolMessenger: "border-emerald-200 bg-emerald-50 text-emerald-700",
+                          PowerSchool: "border-sky-200 bg-sky-50 text-sky-700",
+                        }[(school as unknown as { websitePlatform: string }).websitePlatform] ??
+                        "border-gray-200 bg-gray-100 text-gray-500"
+                      }
+                    >
+                      {(school as unknown as { websitePlatform: string }).websitePlatform}
+                    </Badge>
+                  ) : (
+                    <span className="text-sm text-[#374151]">—</span>
+                  )}
+                </div>
               </div>
             </section>
 
