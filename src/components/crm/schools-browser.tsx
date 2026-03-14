@@ -39,6 +39,35 @@ import { AddSchoolDialog } from "./add-school-dialog";
 import { useState } from "react";
 import { toast } from "sonner";
 
+const PLATFORM_COLORS: Record<string, string> = {
+  Finalsite: "border-blue-200 bg-blue-50 text-blue-700",
+  WordPress: "border-gray-200 bg-gray-100 text-gray-600",
+  Blackboard: "border-purple-200 bg-purple-50 text-purple-700",
+  Edlio: "border-green-200 bg-green-50 text-green-700",
+  Apptegy: "border-orange-200 bg-orange-50 text-orange-700",
+  Wix: "border-yellow-200 bg-yellow-50 text-yellow-700",
+  Squarespace: "border-pink-200 bg-pink-50 text-pink-700",
+  Drupal: "border-indigo-200 bg-indigo-50 text-indigo-700",
+  Joomla: "border-red-200 bg-red-50 text-red-700",
+  Weebly: "border-teal-200 bg-teal-50 text-teal-700",
+  Revize: "border-cyan-200 bg-cyan-50 text-cyan-700",
+  CivicPlus: "border-violet-200 bg-violet-50 text-violet-700",
+  SchoolMessenger: "border-emerald-200 bg-emerald-50 text-emerald-700",
+  PowerSchool: "border-sky-200 bg-sky-50 text-sky-700",
+};
+
+function PlatformBadge({ platform }: { platform: string | null | undefined }) {
+  if (!platform || platform === "Unknown") {
+    return <span className="text-xs text-[#374151]">—</span>;
+  }
+  const cls = PLATFORM_COLORS[platform] ?? "border-gray-200 bg-gray-100 text-gray-500";
+  return (
+    <Badge variant="outline" className={`text-xs ${cls}`}>
+      {platform}
+    </Badge>
+  );
+}
+
 const PIPELINE_STAGE_LABELS: Record<string, string> = {
   UNCONTACTED: "Uncontacted",
   CONTACTED: "Contacted",
@@ -257,6 +286,7 @@ export function SchoolsBrowser() {
               <TableHead className="text-[#374151]">State</TableHead>
               <TableHead className="text-[#374151]">Type</TableHead>
               <TableHead className="hidden text-[#374151] lg:table-cell">Tech Stack</TableHead>
+              <TableHead className="hidden text-[#374151] lg:table-cell">Platform</TableHead>
               <TableHead className="text-[#374151]">Pipeline</TableHead>
               <TableHead className="hidden text-[#374151] lg:table-cell">Last Contact</TableHead>
               <TableHead className="text-[#374151]"></TableHead>
@@ -265,7 +295,7 @@ export function SchoolsBrowser() {
           <TableBody>
             {schools.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="py-12 text-center text-[#374151]">
+                <TableCell colSpan={9} className="py-12 text-center text-[#374151]">
                   No schools found. Try adjusting your filters.
                 </TableCell>
               </TableRow>
@@ -309,6 +339,13 @@ export function SchoolsBrowser() {
                     ) : (
                       <span className="text-sm text-[#374151]">Unknown</span>
                     )}
+                  </TableCell>
+                  <TableCell className="hidden lg:table-cell">
+                    <PlatformBadge
+                      platform={
+                        (school as unknown as { websitePlatform: string | null }).websitePlatform
+                      }
+                    />
                   </TableCell>
                   <TableCell>
                     {school.pipelineStatus ? (

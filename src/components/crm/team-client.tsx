@@ -160,9 +160,11 @@ export function TeamClient() {
   const [showAddDialog, setShowAddDialog] = useState(false);
 
   const currentUser = session?.user as { id: string; role?: string } | undefined;
-  const isAdmin = currentUser?.role === "ADMIN";
 
   const { data: users, isLoading } = useQuery(trpc.user.list.queryOptions());
+  // Read own role directly from DB — bypasses session cache entirely
+  const { data: me } = useQuery(trpc.user.me.queryOptions());
+  const isAdmin = me?.role === "ADMIN";
 
   const { mutate: deleteUser } = useMutation(
     trpc.user.delete.mutationOptions({

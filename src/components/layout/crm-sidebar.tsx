@@ -3,6 +3,7 @@
 import { usePathname } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
 import { signOut, useSession } from "@/server/auth/client";
+import Image from "next/image";
 import {
   School,
   Building2,
@@ -15,6 +16,7 @@ import {
   Target,
   BookOpen,
   Users,
+  ScanSearch,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -31,7 +33,10 @@ const navItems = [
   { href: "/outreach", label: "Outreach", icon: MessageSquare },
 ];
 
-const adminItems = [{ href: "/settings", label: "Settings", icon: Settings }];
+const adminItems = [
+  { href: "/scan", label: "Website Scanner", icon: ScanSearch },
+  { href: "/settings", label: "Settings", icon: Settings },
+];
 
 interface CRMSidebarProps {
   onClose?: () => void;
@@ -64,11 +69,15 @@ export function CRMSidebar({ onClose }: CRMSidebarProps) {
     <aside className="flex h-screen w-64 flex-shrink-0 flex-col border-r border-[#E4E4E7] bg-white">
       {/* Logo */}
       <div className="flex h-16 items-center justify-between border-b border-[#E4E4E7] px-5">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#435EBD]">
-            <School className="h-4 w-4 text-[#09090B]" />
-          </div>
-          <span className="text-sm font-bold tracking-tight text-[#09090B]">EdPilotHub</span>
+        <div className="flex items-center">
+          <Image
+            src="/logo.jpg"
+            alt="EdPilotHub"
+            width={140}
+            height={36}
+            className="h-9 w-auto object-contain"
+            priority
+          />
         </div>
         {onClose && (
           <button
