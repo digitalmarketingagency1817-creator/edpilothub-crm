@@ -30,7 +30,14 @@ import {
   Check,
   Trash2,
   DollarSign,
+  MoreHorizontal,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CallGuide } from "./call-guide";
 import {
@@ -52,6 +59,7 @@ import { useState } from "react";
 import { useMemo } from "react";
 import { LogOutreachDialog } from "./log-outreach-dialog";
 import { AddContactDialog } from "./add-contact-dialog";
+import { EditContactDialog } from "./edit-contact-dialog";
 
 type SchoolWithDetails = Prisma.SchoolGetPayload<{
   include: {
@@ -108,6 +116,9 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
   const [showQuickLog, setShowQuickLog] = useState(false);
   const [showAddContact, setShowAddContact] = useState(false);
   const [showLogOutreach, setShowLogOutreach] = useState(false);
+  const [editingContact, setEditingContact] = useState<
+    SchoolWithDetails["contacts"][number] | null
+  >(null);
   const [isEditingWebsite, setIsEditingWebsite] = useState(false);
   const [websiteValue, setWebsiteValue] = useState(school.website ?? "");
   const [currentStage, setCurrentStage] = useState<PipelineStage>(
@@ -182,6 +193,16 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
       onSuccess: () => {
         toast.success("School deleted");
         router.push("/schools");
+      },
+      onError: (err) => toast.error(err.message),
+    })
+  );
+
+  const { mutate: deleteContact } = useMutation(
+    trpc.contact.delete.mutationOptions({
+      onSuccess: () => {
+        toast.success("Contact deleted");
+        void queryClient.invalidateQueries({ queryKey: trpc.school.getById.queryKey({ id }) });
       },
       onError: (err) => toast.error(err.message),
     })
@@ -567,26 +588,55 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
                       key={contact.id}
                       className="rounded-lg border border-[#E4E4E7] bg-white p-3"
                     >
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-[#09090B]">{contact.name}</span>
-                        {contact.isPrimary && (
-                          <Badge className="h-4 bg-[#EEF2FF] px-1.5 text-[10px] text-[#435EBD]">
-                            Primary
-                          </Badge>
-                        )}
-                      </div>
-                      {contact.title && <p className="text-xs text-[#374151]">{contact.title}</p>}
-                      <div className="mt-1 flex flex-wrap gap-3 text-xs text-[#374151]">
-                        {contact.email && (
-                          <a href={`mailto:${contact.email}`} className="hover:text-[#435EBD]">
-                            {contact.email}
-                          </a>
-                        )}
-                        {contact.phone && (
-                          <a href={`tel:${contact.phone}`} className="hover:text-[#435EBD]">
-                            {contact.phone}
-                          </a>
-                        )}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-[#09090B]">{contact.name}</span>
+                            {contact.isPrimary && (
+                              <Badge className="h-4 bg-[#EEF2FF] px-1.5 text-[10px] text-[#435EBD]">
+                                Primary
+                              </Badge>
+                            )}
+                          </div>
+                          {contact.title && (
+                            <p className="text-xs text-[#374151]">{contact.title}</p>
+                          )}
+                          <div className="mt-1 flex flex-wrap gap-3 text-xs text-[#374151]">
+                            {contact.email && (
+                              <a href={`mailto:${contact.email}`} className="hover:text-[#435EBD]">
+                                {contact.email}
+                              </a>
+                            )}
+                            {contact.phone && (
+                              <a href={`tel:${contact.phone}`} className="hover:text-[#435EBD]">
+                                {contact.phone}
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button className="rounded p-1 text-[#374151] hover:bg-[#F4F4F5] hover:text-[#09090B]">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="border-[#E4E4E7] bg-white">
+                            <DropdownMenuItem
+                              onClick={() => setEditingContact(contact)}
+                              className="cursor-pointer text-[#09090B]"
+                            >
+                              <Pencil className="mr-2 h-3.5 w-3.5" />
+                              Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => deleteContact({ id: contact.id })}
+                              className="cursor-pointer text-red-600 focus:text-red-600"
+                            >
+                              <Trash2 className="mr-2 h-3.5 w-3.5" />
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
                   ))}
@@ -669,6 +719,9 @@ export function SchoolDetail({ id }: SchoolDetailProps) {
       )}
       {showAddContact && (
         <AddContactDialog schoolId={id} onClose={() => setShowAddContact(false)} />
+      )}
+      {editingContact && (
+        <EditContactDialog contact={editingContact} onClose={() => setEditingContact(null)} />
       )}
     </div>
   );
