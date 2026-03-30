@@ -2,6 +2,47 @@ import { z } from "zod/v4";
 import { createTRPCRouter, protectedProcedure } from "../init";
 
 export const contactRouter = createTRPCRouter({
+  list: protectedProcedure
+    .input(
+      z.object({
+        schoolId: z.string().optional(),
+        search: z.string().optional(),
+        limit: z.number().min(1).max(500).default(100),
+        page: z.number().min(1).default(1),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { schoolId, search, limit, page } = input;
+      const skip = (page - 1) * limit;
+      const where = {
+        ...(schoolId && { schoolId }),
+        ...(search && {
+          OR: [
+            { name: { contains: search, mode: "insensitive" as const } },
+            { email: { contains: search, mode: "insensitive" as const } },
+          ],
+        }),
+      };
+      const [contacts, total] = await Promise.all([
+        ctx.db.contact.findMany({
+          where,
+          skip,
+          take: limit,
+          orderBy: [{ isPrimary: "desc" }, { name: "asc" }],
+          include: { school: { select: { id: true, name: true } } },
+        }),
+        ctx.db.contact.count({ where }),
+      ]);
+      return { contacts, total, pages: Math.ceil(total / limit) };
+    }),
+
+  get: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+    return ctx.db.contact.findUniqueOrThrow({
+      where: { id: input.id },
+      include: { school: { select: { id: true, name: true } } },
+    });
+  }),
+
   listBySchool: protectedProcedure
     .input(z.object({ schoolId: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -25,7 +66,6 @@ export const contactRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      // If setting as primary, unset other primaries
       if (input.isPrimary) {
         await ctx.db.contact.updateMany({
           where: { schoolId: input.schoolId },
@@ -50,7 +90,6 @@ export const contactRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;
-      // If setting as primary, unset others in the same school
       if (data.isPrimary) {
         const contact = await ctx.db.contact.findUniqueOrThrow({ where: { id } });
         await ctx.db.contact.updateMany({

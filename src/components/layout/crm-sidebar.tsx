@@ -17,6 +17,7 @@ import {
   BookOpen,
   Users,
   ScanSearch,
+  Contact,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -24,6 +25,7 @@ import { toast } from "sonner";
 
 const navItems = [
   { href: "/schools", label: "Schools", icon: School },
+  { href: "/contacts", label: "Contacts", icon: Contact },
   { href: "/pipeline", label: "Pipeline", icon: Kanban },
   { href: "/playbook", label: "Playbook", icon: BookOpen },
   { href: "/team", label: "Team", icon: Users },
