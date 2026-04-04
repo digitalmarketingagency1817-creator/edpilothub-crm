@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function ContactsPage() {
-  prefetch(trpc.contact.list.queryOptions({ limit: 100, page: 1 }));
+  prefetch(trpc.contact.list.queryOptions({ limit: 50, page: 1 }));
 
   return (
     <HydrateClient loadingFallback={<TableSkeleton />}>

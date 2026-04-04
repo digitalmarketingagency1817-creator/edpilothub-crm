@@ -1,7 +1,7 @@
 "use client";
 
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import {
   Table,
@@ -13,34 +13,45 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-import { Search, Mail, Phone, Users } from "lucide-react";
+import { Search, Mail, Phone, Users, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
+
+const PAGE_SIZE = 50;
 
 export function ContactsBrowser() {
   const trpc = useTRPC();
   const router = useRouter();
   const [search, setSearch] = useQueryState("q", parseAsString.withDefault(""));
-  const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
 
-  const { data, isLoading } = useQuery(
+  const { data } = useSuspenseQuery(
     trpc.contact.list.queryOptions({
       search: search || undefined,
       page,
-      limit: 100,
+      limit: PAGE_SIZE,
     })
   );
 
   const contacts = data?.contacts ?? [];
   const total = data?.total ?? 0;
+  const totalPages = data?.pages ?? 1;
 
   const handleSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       void setSearch(e.target.value || null);
+      void setPage(1); // reset to page 1 on new search
     },
-    [setSearch]
+    [setSearch, setPage]
   );
+
+  const handlePrev = () => void setPage(Math.max(1, page - 1));
+  const handleNext = () => void setPage(Math.min(totalPages, page + 1));
+
+  const startItem = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+  const endItem = Math.min(page * PAGE_SIZE, total);
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] p-4 md:p-6">
@@ -78,11 +89,7 @@ export function ContactsBrowser() {
 
       {/* Table */}
       <div className="overflow-hidden rounded-xl border border-[#E4E4E7] bg-white shadow-sm">
-        {isLoading ? (
-          <div className="flex items-center justify-center py-20 text-sm text-[#374151]">
-            Loading contacts…
-          </div>
-        ) : contacts.length === 0 ? (
+        {contacts.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 py-20 text-[#374151]">
             <Users className="h-10 w-10 opacity-30" />
             <p className="text-sm font-medium">
@@ -168,6 +175,45 @@ export function ContactsBrowser() {
           </Table>
         )}
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="mt-4 flex items-center justify-between">
+          <p className="text-sm text-[#374151]">
+            Showing{" "}
+            <span className="font-medium text-[#09090B]">
+              {startItem}–{endItem}
+            </span>{" "}
+            of <span className="font-medium text-[#09090B]">{total}</span> contacts
+          </p>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handlePrev}
+              disabled={page <= 1}
+              className="h-8 border-[#E4E4E7] px-3 text-sm"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Prev
+            </Button>
+            <span className="text-sm text-[#374151]">
+              Page <span className="font-medium text-[#09090B]">{page}</span> of{" "}
+              <span className="font-medium text-[#09090B]">{totalPages}</span>
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleNext}
+              disabled={page >= totalPages}
+              className="h-8 border-[#E4E4E7] px-3 text-sm"
+            >
+              Next
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
