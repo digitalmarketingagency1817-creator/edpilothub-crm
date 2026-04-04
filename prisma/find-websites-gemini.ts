@@ -14,8 +14,9 @@ const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter } as never);
 const p = prisma as any;
 
-const GEMINI_API_KEY = "REDACTED_API_KEY";
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY ?? "";
+if (!GEMINI_API_KEY) throw new Error("GEMINI_API_KEY not set in .env.local");
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 const BLOCKED_DOMAINS = [
   "facebook.com",
