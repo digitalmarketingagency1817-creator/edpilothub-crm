@@ -29,7 +29,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@prisma/adapter-neon": "^7.5.0",
     "@prisma/client": "^7.5.0",
-    "@react-email/components": "^1.0.8",
+    "@react-email/components": "^1.0.11",
     "@t3-oss/env-nextjs": "^0.13.10",
     "@tanstack/react-query": "^5.96.2",
     "@trpc/client": "^11.16.0",
