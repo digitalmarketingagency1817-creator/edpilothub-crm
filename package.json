@@ -24,8 +24,8 @@
     "setup": "node scripts/setup.mjs"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^3.0.41",
-    "@ai-sdk/react": "^3.0.118",
+    "@ai-sdk/openai": "^3.0.51",
+    "@ai-sdk/react": "^3.0.151",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/adapter-neon": "^7.5.0",
     "@prisma/client": "^7.5.0",
