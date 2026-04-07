@@ -36,7 +36,7 @@
     "@trpc/server": "^11.15.0",
     "@trpc/tanstack-react-query": "^11.15.0",
     "@types/bcryptjs": "^2.4.6",
-    "@vercel/blob": "^2.3.1",
+    "@vercel/blob": "^2.3.3",
     "ai": "^6.0.103",
     "bcryptjs": "^3.0.3",
     "better-auth": "^1.5.5",
